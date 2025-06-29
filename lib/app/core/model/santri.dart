@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/core/model/hujroh.dart';
+import 'package:afiyyah_connect/app/core/model/hujroh.dart';
 
 class Santri {
   String name;
