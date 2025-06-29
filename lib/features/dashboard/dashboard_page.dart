@@ -68,7 +68,7 @@ class _DashboardPageState extends State<DashboardPage> {
       bottomNavigationBar: _buildBottomNavigation(),
     );
   }
-
+  
   Widget _buildDateHeader(DateTime date) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
