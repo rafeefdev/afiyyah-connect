@@ -1,5 +1,5 @@
-import 'package:afiyyah_connect/app/core/extensions/texttheme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 
 Widget alertCard(
   BuildContext context, {
@@ -22,18 +22,8 @@ Widget alertCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: context.textTheme.titleMedium!.copyWith(
-                  color: Color(0xFFD32F2F),
-                ),
-              ),
-              Text(
-                alertMessage,
-                style: context.textTheme.bodyMedium!.copyWith(
-                  color: Color(0xFFD32F2F),
-                ),
-              ),
+              Text(title, style: context.theme.typography.xl2),
+              Text(alertMessage, style: context.theme.typography.sm),
             ],
           ),
         ),
@@ -43,10 +33,7 @@ Widget alertCard(
             color: const Color(0xFFD32F2F),
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Text(
-            'Lihat',
-            style: context.textTheme.bodyMedium!.copyWith(color: Colors.white),
-          ),
+          child: Text('Lihat', style: context.theme.typography.xl),
         ),
       ],
     ),

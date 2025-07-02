@@ -1,5 +1,5 @@
-import 'package:afiyyah_connect/app/core/extensions/texttheme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 
 class StatCard extends StatelessWidget {
   String title;
@@ -30,43 +30,25 @@ class StatCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(alignment: Alignment.topRight, child: CircleAvatar()),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: context.textTheme.titleMedium!.copyWith(
-                  color: Color(0xff64748B),
-                ),
-              ),
-              Text(
-                value,
-                style: context.textTheme.headlineMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  double fontSize = 12;
-                  if (constraints.maxWidth < 150) {
-                    fontSize = 10;
-                  } else if (constraints.maxWidth < 100) {
-                    fontSize = 8;
-                  }
-                  return Text(
-                    subtitle,
-                    style: context.textTheme.bodyMedium!.copyWith(
-                      color: Color(0xff64748B),
-                      fontSize: 12
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  );
-                },
-              ),
-            ],
+          Text(title, style: context.theme.typography.xl2),
+          Text(value, style: context.theme.typography.xl5),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              double fontSize = 12;
+              if (constraints.maxWidth < 150) {
+                fontSize = 10;
+              } else if (constraints.maxWidth < 100) {
+                fontSize = 8;
+              }
+              return Text(
+                subtitle,
+                style: context.theme.typography.sm,
+                overflow: TextOverflow.ellipsis,
+              );
+            },
           ),
         ],
       ),
