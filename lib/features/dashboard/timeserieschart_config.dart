@@ -28,7 +28,7 @@ class ChartConfig {
     this.primaryColor = Colors.blue,
     this.backgroundColor = Colors.transparent,
     this.lineWidth = 2.0,
-    this.dotRadius = 4.0,
+    this.dotRadius = 3.0,
     this.aspectRatio = 2.4,
     this.animationDuration = const Duration(milliseconds: 500),
     this.animationCurve = Curves.easeInOut,

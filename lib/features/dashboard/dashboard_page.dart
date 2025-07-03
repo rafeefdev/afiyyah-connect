@@ -1,4 +1,6 @@
 import 'package:afiyyah_connect/features/common/widgets/statcard_component.dart';
+import 'package:afiyyah_connect/features/dashboard/diseasedistributionchart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/timeserieschart_component.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 
@@ -73,7 +75,10 @@ class _DashboardPageState extends State<DashboardPage> {
               children: [
                 FTabEntry(
                   label: const Text('Ikhtisar'),
-                  child: FCard(child: const Text('Weekly Tren')),
+                  child: Timeserieschart(
+                    healthScores: [12, 23, 3, 21],
+                    title: 'Tren Mingguan',
+                  ),
                 ),
                 FTabEntry(
                   label: const Text('Kelas'),
@@ -92,7 +97,11 @@ class _DashboardPageState extends State<DashboardPage> {
                 FTabEntry(
                   label: const Text('Penyakit'),
                   child: FCard(
-                    child: const Text('Grafik persebaran jenis penyakit'),
+                    child: DiseaseDistributionChart(
+                      title: 'Persebaran Penyakit',
+                      diseaseData: DiseaseChartFactory.createSampleData(),
+                      height: 320,
+                    ),
                   ),
                 ),
               ],

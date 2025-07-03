@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/features/dashboard/timeserieschart_config.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 
 /// Widget untuk menampilkan chart kesehatan dengan periode weekly/monthly
 class Timeserieschart extends StatefulWidget {
@@ -70,40 +71,32 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.black, width: 0.2),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.title != null) ...[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                widget.title!,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-              ),
-            ),
-          ],
-          AspectRatio(
-            aspectRatio: widget.config.aspectRatio,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: LineChart(
-                _buildLineChartData(),
-                duration: widget.config.animationDuration,
-                curve: widget.config.animationCurve,
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.title != null) ...[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              widget.title!,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ],
-      ),
+        AspectRatio(
+          aspectRatio: widget.config.aspectRatio,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: LineChart(
+              _buildLineChartData(),
+              duration: widget.config.animationDuration,
+              curve: widget.config.animationCurve,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
