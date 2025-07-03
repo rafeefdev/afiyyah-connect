@@ -102,12 +102,11 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                     widget.titleStyle ??
                     typography.lg.copyWith(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 32),
               // Chart dan Legend
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  // Pie Chart dengan total tengah
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -123,7 +122,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                             alignment: Alignment.center,
                             children: [
                               AspectRatio(
-                                aspectRatio: 1.3,
+                                aspectRatio: 2.4,
                                 child: PieChart(
                                   PieChartData(
                                     pieTouchData: PieTouchData(
