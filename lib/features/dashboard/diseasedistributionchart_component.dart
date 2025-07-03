@@ -161,7 +161,6 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                                     style: TextStyle(
                                       fontSize: titleFontSize,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
                                     ),
                                   ),
                                   const SizedBox(height: 4),
@@ -169,7 +168,6 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                                     'Siswa',
                                     style: TextStyle(
                                       fontSize: legendFontSize,
-                                      color: Colors.white70,
                                     ),
                                   ),
                                 ],
