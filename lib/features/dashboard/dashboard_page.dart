@@ -1,4 +1,3 @@
-import 'package:afiyyah_connect/features/common/widgets/statcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/diseasedistributionchart_component.dart';
 import 'package:afiyyah_connect/features/dashboard/timeserieschart_component.dart';
 import 'package:flutter/material.dart';
@@ -75,9 +74,14 @@ class _DashboardPageState extends State<DashboardPage> {
               children: [
                 FTabEntry(
                   label: const Text('Ikhtisar'),
-                  child: Timeserieschart(
-                    healthScores: [12, 23, 3, 21],
-                    title: 'Tren Mingguan',
+                  child: FCard(
+                    child: SizedBox(
+                      height: 320,
+                      child: Timeserieschart(
+                        healthScores: [12, 23, 3, 21],
+                        title: 'Tren Mingguan',
+                      ),
+                    ),
                   ),
                 ),
                 FTabEntry(
