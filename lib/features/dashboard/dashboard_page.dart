@@ -39,42 +39,6 @@ class _DashboardPageState extends State<DashboardPage> {
             SizedBox(height: 16),
             _buildInsightsCard(textTheme),
             const SizedBox(height: 16),
-            // SizedBox(
-            //   width: double.infinity,
-            //   child: FCard(
-            //     child: Row(
-            //       children: [
-            //         HealthStatusCard(
-            //           title: 'title',
-            //           count: 21,
-            //           caseDetails: ['asdasd', 'asdasd'],
-            //         ),
-            //         FDivider(
-            //           axis: Axis.vertical,
-            //           style: FDividerStyle(
-            //             color: Colors.black,
-            //             padding: EdgeInsets.symmetric(
-            //               vertical: 8.0,
-            //               horizontal: 8.0,
-            //             ),
-            //           ),
-            //         ),
-            //         HealthStatusCard(
-            //           title: 'Kasus Hari Ini',
-            //           count: 24,
-            //           caseDetails: ['6 kasus flu, 4 demam, dll'],
-            //         ),
-            //         FDivider(axis: Axis.vertical),
-            //         HealthStatusCard(
-            //           title: 'Kasus Hari Ini',
-            //           count: 24,
-            //           caseDetails: ['6 kasus flu, 4 demam, dll'],
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(height: 16),
             FTabs(
               children: [
                 _buildIkhtisharTab(),
