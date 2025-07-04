@@ -1,20 +1,43 @@
-import 'package:afiyyah_connect/features/dashboard/timeserieschart_config.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
+
+enum ChartPeriod {
+  weekly(days: 7, label: 'Mingguan'),
+  monthly(days: 30, label: 'Bulanan');
+
+  const ChartPeriod({required this.days, required this.label});
+  final int days;
+  final String label;
+}
 
 /// Widget untuk menampilkan chart kesehatan dengan periode weekly/monthly
 class Timeserieschart extends StatefulWidget {
   final List<double> healthScores;
-  final ChartConfig config;
   final String? title;
   final ValueChanged<int>? onPointTapped;
+  final ChartPeriod period;
+  final Color? primaryColor;
+  final Color? backgroundColor;
+  final double lineWidth;
+  final double dotRadius;
+  final bool showHighestPointIndicator;
+  final Duration animationDuration;
+  final Curve animationCurve;
 
   const Timeserieschart({
     super.key,
     required this.healthScores,
-    this.config = const ChartConfig(),
     this.title,
     this.onPointTapped,
+    this.period = ChartPeriod.weekly,
+    this.primaryColor,
+    this.backgroundColor,
+    this.lineWidth = 2,
+    this.dotRadius = 4,
+    this.showHighestPointIndicator = true,
+    this.animationDuration = const Duration(milliseconds: 350),
+    this.animationCurve = Curves.easeInOut,
   });
 
   @override
@@ -38,7 +61,7 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
   void didUpdateWidget(Timeserieschart oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.healthScores != widget.healthScores ||
-        oldWidget.config.period != widget.config.period) {
+        oldWidget.period != widget.period) {
       _processData();
     }
   }
@@ -47,7 +70,7 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
   void _processData() {
     _processedScores = _padScoresToPeriod(
       widget.healthScores,
-      widget.config.period,
+      widget.period,
     );
     _highestScoreIndex = _findHighestScoreIndex(_processedScores);
     _maxValue = _processedScores.isEmpty
@@ -70,40 +93,31 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.black, width: 0.2),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.title != null) ...[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                widget.title!,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-              ),
-            ),
-          ],
-          AspectRatio(
-            aspectRatio: widget.config.aspectRatio,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: LineChart(
-                _buildLineChartData(),
-                duration: widget.config.animationDuration,
-                curve: widget.config.animationCurve,
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.title != null) ...[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              widget.title!,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ],
-      ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: LineChart(
+              _buildLineChartData(),
+              duration: widget.animationDuration,
+              curve: widget.animationCurve,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -153,15 +167,16 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
 
   /// Membuat konfigurasi tooltip
   LineTouchTooltipData _buildTooltipConfig() {
+    final primaryColor = widget.primaryColor ?? context.theme.colors.primary;
     return LineTouchTooltipData(
-      getTooltipColor: (color) => widget.config.primaryColor,
+      getTooltipColor: (color) => primaryColor,
       tooltipPadding: const EdgeInsets.all(8),
       getTooltipItems: (touchedSpots) {
         return touchedSpots.map((spot) {
-          final period = widget.config.period == ChartPeriod.weekly
+          final period = widget.period == ChartPeriod.weekly
               ? 'Hari'
               : 'Tanggal';
-          final label = _getXAxisLabel(spot.x.toInt(), widget.config.period);
+          final label = _getXAxisLabel(spot.x.toInt(), widget.period);
 
           return LineTooltipItem(
             '$period $label\n${spot.y.toStringAsFixed(0)} santri',
@@ -178,19 +193,20 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
 
   /// Membuat konfigurasi garis vertikal untuk indikator tertinggi
   List<VerticalLine> _buildHighestPointIndicator() {
-    if (!widget.config.showHighestPointIndicator) return [];
+    if (!widget.showHighestPointIndicator) return [];
+    final primaryColor = widget.primaryColor ?? context.theme.colors.primary;
 
     return [
       VerticalLine(
         x: _highestScoreIndex.toDouble(),
-        color: widget.config.primaryColor.withOpacity(0.7),
+        color: context.theme.colors.secondaryForeground,
         strokeWidth: 1.5,
         dashArray: [4, 2],
         label: VerticalLineLabel(
           show: true,
           alignment: Alignment.topCenter,
           style: TextStyle(
-            color: widget.config.primaryColor,
+            color: primaryColor,
             fontSize: 10,
             fontWeight: FontWeight.w600,
           ),
@@ -237,7 +253,7 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
         axisNameWidget: Padding(
           padding: const EdgeInsets.only(top: 24.0),
           child: Text(
-            widget.config.period.label,
+            widget.period.label,
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -252,7 +268,7 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
             return Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
-                _getXAxisLabel(value.toInt(), widget.config.period),
+                _getXAxisLabel(value.toInt(), widget.period),
                 style: TextStyle(
                   fontSize: 11,
                   color: Colors.grey[600],
@@ -312,14 +328,16 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
   }
 
   LineChartBarData _buildLineChartBarData() {
+    final primaryColor = widget.primaryColor ?? context.theme.colors.primary;
+    final backgroundColor = widget.backgroundColor ?? context.theme.colors.background;
     return LineChartBarData(
       spots: List.generate(
         _processedScores.length,
         (index) => FlSpot(index.toDouble(), _processedScores[index]),
       ),
       isCurved: true,
-      color: widget.config.primaryColor,
-      barWidth: widget.config.lineWidth,
+      color: Colors.grey,
+      barWidth: widget.lineWidth,
       dotData: FlDotData(
         show: true,
         getDotPainter: (spot, percent, barData, index) {
@@ -328,11 +346,9 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
 
           return FlDotCirclePainter(
             radius: isHighest || isTouched
-                ? widget.config.dotRadius + 2
-                : widget.config.dotRadius,
-            color: isHighest
-                ? widget.config.primaryColor.withOpacity(0.8)
-                : widget.config.primaryColor,
+                ? widget.dotRadius + 2
+                : widget.dotRadius,
+            color:Colors.black87,
             strokeWidth: 2,
             strokeColor: Colors.white,
           );
@@ -342,8 +358,9 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
         show: true,
         gradient: LinearGradient(
           colors: [
-            widget.config.primaryColor.withOpacity(0.3),
-            widget.config.backgroundColor,
+            Colors.blue,
+            // primaryColor.withOpacity(0.3),
+            backgroundColor,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
