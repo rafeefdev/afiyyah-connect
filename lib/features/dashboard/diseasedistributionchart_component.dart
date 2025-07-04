@@ -125,22 +125,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                                 aspectRatio: 2.4,
                                 child: PieChart(
                                   PieChartData(
-                                    pieTouchData: PieTouchData(
-                                      touchCallback: (event, pieTouchResponse) {
-                                        setState(() {
-                                          if (!event.isInterestedForInteractions ||
-                                              pieTouchResponse == null ||
-                                              pieTouchResponse.touchedSection ==
-                                                  null) {
-                                            touchedIndex = -1;
-                                            return;
-                                          }
-                                          touchedIndex = pieTouchResponse
-                                              .touchedSection!
-                                              .touchedSectionIndex;
-                                        });
-                                      },
-                                    ),
+                                    pieTouchData: _pieTouchData(),
                                     borderData: FlBorderData(show: false),
                                     sectionsSpace: 1,
                                     centerSpaceRadius: centerSpaceRadius,
@@ -166,9 +151,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                                   const SizedBox(height: 4),
                                   Text(
                                     'Siswa',
-                                    style: TextStyle(
-                                      fontSize: legendFontSize,
-                                    ),
+                                    style: TextStyle(fontSize: legendFontSize),
                                   ),
                                 ],
                               ),
@@ -185,13 +168,32 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                       top: 10,
                       right: 10,
                       child: _buildFloatingLegend(
-                          displayedData[touchedIndex], totalCount, legendFontSize),
+                        displayedData[touchedIndex],
+                        totalCount,
+                        legendFontSize,
+                      ),
                     ),
                 ],
               ),
             ],
           ),
         );
+      },
+    );
+  }
+
+  PieTouchData _pieTouchData() {
+    return PieTouchData(
+      touchCallback: (event, pieTouchResponse) {
+        setState(() {
+          if (!event.isInterestedForInteractions ||
+              pieTouchResponse == null ||
+              pieTouchResponse.touchedSection == null) {
+            touchedIndex = -1;
+            return;
+          }
+          touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+        });
       },
     );
   }
@@ -225,7 +227,8 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
           const SizedBox(width: 8),
           Text(
             '${item.name}: ${item.count} ($percentage%)',
-            style: widget.legendStyle ??
+            style:
+                widget.legendStyle ??
                 context.theme.typography.sm.copyWith(
                   fontSize: fontSize,
                   color: Colors.white,
@@ -253,9 +256,10 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
       return PieChartSectionData(
         color: data.color,
         value: data.count.toDouble(),
-        title: widget.showPercentage ? '$percentage%' : '',
+        title: entry.value.name,
+        // widget.showPercentage ? '$percentage%' : '',
         radius: sectionRadius,
-        titleStyle: context.theme.typography.sm.copyWith(color: Colors.white),
+        titleStyle: context.theme.typography.xs.copyWith(color: Colors.white),
       );
     }).toList();
   }
