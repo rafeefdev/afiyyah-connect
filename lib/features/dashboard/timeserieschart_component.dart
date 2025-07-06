@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
 
 enum ChartPeriod {
   weekly(days: 7, label: 'Mingguan'),
@@ -167,7 +166,7 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
 
   /// Membuat konfigurasi tooltip
   LineTouchTooltipData _buildTooltipConfig() {
-    final primaryColor = widget.primaryColor ?? context.theme.colors.primary;
+    final primaryColor = widget.primaryColor ?? Theme.of(context).colorScheme.primary;
     return LineTouchTooltipData(
       getTooltipColor: (color) => primaryColor,
       tooltipPadding: const EdgeInsets.all(8),
@@ -194,12 +193,12 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
   /// Membuat konfigurasi garis vertikal untuk indikator tertinggi
   List<VerticalLine> _buildHighestPointIndicator() {
     if (!widget.showHighestPointIndicator) return [];
-    final primaryColor = widget.primaryColor ?? context.theme.colors.primary;
+    final primaryColor = widget.primaryColor ?? Theme.of(context).colorScheme.primary;
 
     return [
       VerticalLine(
         x: _highestScoreIndex.toDouble(),
-        color: context.theme.colors.secondaryForeground,
+        color: Theme.of(context).colorScheme.secondary,
         strokeWidth: 1.5,
         dashArray: [4, 2],
         label: VerticalLineLabel(
@@ -328,8 +327,8 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
   }
 
   LineChartBarData _buildLineChartBarData() {
-    final primaryColor = widget.primaryColor ?? context.theme.colors.primary;
-    final backgroundColor = widget.backgroundColor ?? context.theme.colors.background;
+    final primaryColor = widget.primaryColor ?? Theme.of(context).colorScheme.primary;
+    final backgroundColor = widget.backgroundColor ?? Theme.of(context).colorScheme.background;
     return LineChartBarData(
       spots: List.generate(
         _processedScores.length,

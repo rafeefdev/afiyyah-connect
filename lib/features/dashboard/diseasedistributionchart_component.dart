@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:forui/forui.dart';
 
 // Model untuk data penyakit
 class DiseaseData {
@@ -55,7 +54,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
 
   @override
   Widget build(BuildContext context) {
-    final typography = context.theme.typography;
+    final textTheme = Theme.of(context).textTheme;
 
     // Total semua penyakit
     final totalCount = widget.diseaseData.fold<int>(
@@ -100,7 +99,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                 widget.title,
                 style:
                     widget.titleStyle ??
-                    typography.lg.copyWith(fontWeight: FontWeight.bold),
+                    textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 32),
               // Chart dan Legend
@@ -229,7 +228,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
             '${item.name}: ${item.count} ($percentage%)',
             style:
                 widget.legendStyle ??
-                context.theme.typography.sm.copyWith(
+                Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: fontSize,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -259,7 +258,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
         title: entry.value.name,
         // widget.showPercentage ? '$percentage%' : '',
         radius: sectionRadius,
-        titleStyle: context.theme.typography.xs.copyWith(color: Colors.white),
+        titleStyle: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white),
       );
     }).toList();
   }
