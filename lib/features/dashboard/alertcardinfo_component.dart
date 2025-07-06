@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
 
 Widget alertCard(
   BuildContext context, {
@@ -22,8 +21,8 @@ Widget alertCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: context.theme.typography.xl2),
-              Text(alertMessage, style: context.theme.typography.sm),
+              Text(title, style: Theme.of(context).textTheme.titleLarge),
+              Text(alertMessage, style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
         ),
@@ -33,7 +32,7 @@ Widget alertCard(
             color: const Color(0xFFD32F2F),
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Text('Lihat', style: context.theme.typography.xl),
+          child: Text('Lihat', style: Theme.of(context).textTheme.labelLarge),
         ),
       ],
     ),

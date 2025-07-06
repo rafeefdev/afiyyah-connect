@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
 
 Widget displayCard(
   BuildContext context, {
@@ -15,6 +14,6 @@ Widget displayCard(
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.circular(12),
     ),
-    child: Center(child: Text(label, style: context.theme.typography.xl2)),
+    child: Center(child: Text(label, style: Theme.of(context).textTheme.titleLarge)),
   );
 }

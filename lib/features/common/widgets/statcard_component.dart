@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
 
 class StatCard extends StatelessWidget {
-  String title;
-  String value;
-  String subtitle;
-  StatCard({
+  final String title;
+  final String value;
+  final String subtitle;
+
+  const StatCard({
     required this.title,
     required this.value,
     required this.subtitle,
@@ -33,22 +33,14 @@ class StatCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: context.theme.typography.xl2),
-          Text(value, style: context.theme.typography.xl5),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              double fontSize = 12;
-              if (constraints.maxWidth < 150) {
-                fontSize = 10;
-              } else if (constraints.maxWidth < 100) {
-                fontSize = 8;
-              }
-              return Text(
-                subtitle,
-                style: context.theme.typography.sm,
-                overflow: TextOverflow.ellipsis,
-              );
-            },
+          Text(title, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 8),
+          Text(value, style: Theme.of(context).textTheme.headlineMedium),
+          const SizedBox(height: 8),
+          Text(
+            subtitle,
+            style: Theme.of(context).textTheme.bodySmall,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

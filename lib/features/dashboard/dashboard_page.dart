@@ -4,7 +4,6 @@ import 'package:afiyyah_connect/features/dashboard/horizontalstatcard_component.
 import 'package:afiyyah_connect/features/dashboard/timeserieschart_component.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
 
 class DashboardPage extends StatefulWidget {
   final String role;
@@ -14,138 +13,166 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final textTheme = context.theme.typography;
+    final textTheme = Theme.of(context).textTheme;
 
-    return FScaffold(
-      header: FHeader(title: const Text('Beranda')),
-      child: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Beranda')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
             Text(
               DateTime.now().toString(),
-              style: textTheme.base.copyWith(color: Colors.grey),
+              style: textTheme.bodySmall?.copyWith(color: Colors.grey),
             ),
             const SizedBox(height: 16),
-            FAlert(
-              title: const Text('Rujukan Rumah Sakit'),
-              subtitle: const Text('2 Santri butuh penangangan rumah sakit'),
-              icon: Icon(FIcons.badgeAlert),
-              style: FAlertStyle.destructive,
+            Card(
+              color: Colors.red[50],
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.warning_amber_rounded, color: Colors.red[700]),
+                    const SizedBox(width: 16),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Rujukan Rumah Sakit',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text('2 Santri butuh penangangan rumah sakit'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            SizedBox(height: 16),
-            _buildInsightsCard(textTheme),
             const SizedBox(height: 16),
-            FTabs(
-              children: [
-                _buildIkhtisharTab(),
-                _buildKelasTab(),
-                // FTabEntry(
-                //   label: const Text('Gedung'),
-                //   child: FCard(child: Text('gedung')),
-                // ),
-                _buildGedungTab(),
-                _buildPenyakitTab(),
+            _buildInsightsCard(context),
+            const SizedBox(height: 16),
+            TabBar(
+              controller: _tabController,
+              tabs: const [
+                Tab(text: 'Ikhtisar'),
+                Tab(text: 'Kelas'),
+                Tab(text: 'Gedung'),
+                Tab(text: 'Penyakit'),
               ],
             ),
-            SizedBox(height: 240),
+            SizedBox(
+              height: 350, // Adjust height as needed
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildIkhtisharTab(),
+                  _buildKelasTab(),
+                  _buildGedungTab(),
+                  _buildPenyakitTab(),
+                ],
+              ),
+            ),
+            const SizedBox(height: 240),
           ],
         ),
       ),
     );
   }
 
-  FTabEntry _buildPenyakitTab() {
-    return FTabEntry(
-      label: const Text('Penyakit'),
-      child: FCard(
-        child: DiseaseDistributionChart(
-          title: 'Persebaran Penyakit',
-          diseaseData: DiseaseChartFactory.createSampleData(),
-          height: 320,
+  Widget _buildPenyakitTab() {
+    return Card(
+      child: DiseaseDistributionChart(
+        title: 'Persebaran Penyakit',
+        diseaseData: DiseaseChartFactory.createSampleData(),
+        height: 320,
+      ),
+    );
+  }
+
+  Widget _buildGedungTab() {
+    return Card(
+      child: SizedBox(
+        height: 320,
+        child: DormBarChartComponent(
+          interval: 5,
+          autoScale: true,
+          dataList: [
+            BarData(color: Colors.blue, label: 'Umayyah', value: 20),
+            BarData(color: Colors.teal, label: 'Abbasiyyah', value: 12),
+          ],
+          title: 'Persebaran berdasarkan Asrama',
         ),
       ),
     );
   }
 
-  FTabEntry _buildGedungTab() {
-    return FTabEntry(
-      label: const Text('Gedung'),
-      child: FCard(
-        child: SizedBox(
-          height: 320,
-          child: DormBarChartComponent(
-            interval: 5,
-            autoScale: true,
-            dataList: [
-              BarData(color: Colors.blue, label: 'Umayyah', value: 20),
-              BarData(color: Colors.teal, label: 'Abbasiyyah', value: 12),
-            ],
-            title: 'Persebaran berdasarkan Asrama',
-          ),
-        ),
-      ),
-    );
+  Widget _buildKelasTab() {
+    return const Card(child: Center(child: Text('Disease Distribution on Clases')));
   }
 
-  FTabEntry _buildKelasTab() {
-    return FTabEntry(
-      label: const Text('Kelas'),
-      child: FCard(child: const Text('Disease Distribution on Clases')),
-    );
-  }
-
-  FTabEntry _buildIkhtisharTab() {
-    return FTabEntry(
-      label: const Text('Ikhtisar'),
-      child: FCard(
-        child: SizedBox(
-          height: 320,
-          child: Timeserieschart(
-            healthScores: [12, 23, 3, 21],
-            title: 'Tren Mingguan',
-          ),
+  Widget _buildIkhtisharTab() {
+    return Card(
+      child: SizedBox(
+        height: 320,
+        child: Timeserieschart(
+          healthScores: const [12, 23, 3, 21],
+          title: 'Tren Mingguan',
         ),
       ),
     );
   }
 }
 
-Widget _buildInsightsCard(FTypography textTheme) {
+Widget _buildInsightsCard(BuildContext context) {
   return Column(
     children: [
       Row(
-        spacing: 8,
         children: [
           insightCard(
-            textTheme,
+            context,
             title: 'Total Sakit',
             value: '78',
             explanation: '+12% dari pekan lalu',
           ),
+          const SizedBox(width: 8),
           insightCard(
-            textTheme,
+            context,
             title: 'Kasus Terbanyak',
             value: 'Flu',
             explanation: '35 siswa terdampak',
           ),
         ],
       ),
-      SizedBox(height: 8),
+      const SizedBox(height: 8),
       Row(
-        spacing: 8,
         children: [
           insightCard(
-            textTheme,
+            context,
             title: 'Butuh Istirahat Maskan',
             value: '23',
             explanation: 'Disetujui : 18\nPending : 5',
           ),
+          const SizedBox(width: 8),
           insightCard(
-            textTheme,
+            context,
             title: 'Kasus Hari Ini',
             value: '12',
             explanation: '6 Kasus flu, 4 demam, 2 lainnya',
@@ -157,45 +184,37 @@ Widget _buildInsightsCard(FTypography textTheme) {
 }
 
 Widget insightCard(
-  FTypography textTheme, {
+  BuildContext context, {
   required String title,
   required String value,
   required String explanation,
 }) {
+  final textTheme = Theme.of(context).textTheme;
   return Expanded(
     child: SizedBox(
       height: 144,
-      child: FCard(
-        title: Text(title),
-        subtitle: Text(value),
-        style: FCardStyle(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 0.065),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          contentStyle: FCardContentStyle(
-            titleTextStyle: textTheme.base.copyWith(
-              fontWeight: FontWeight.w300,
-            ),
-            subtitleTextStyle: textTheme.xl2.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+      child: Card(
+        elevation: 1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(color: Colors.grey[300]!, width: 0.5),
         ),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            double fontSize = 12;
-            if (constraints.maxWidth < 150) {
-              fontSize = 10;
-            } else if (constraints.maxWidth < 100) {
-              fontSize = 8;
-            }
-            return Text(
-              explanation,
-              style: context.theme.typography.sm,
-              overflow: TextOverflow.visible,
-            );
-          },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: textTheme.titleSmall),
+              const SizedBox(height: 4),
+              Text(value, style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+              const Spacer(),
+              Text(
+                explanation,
+                style: textTheme.bodySmall,
+                overflow: TextOverflow.visible,
+              ),
+            ],
+          ),
         ),
       ),
     ),
