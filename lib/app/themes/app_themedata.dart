@@ -1,4 +1,72 @@
 import 'package:afiyyah_connect/app/themes/app_typography.dart';
 import 'package:flutter/material.dart';
 
-ThemeData appTheme = ThemeData(textTheme: AppTypography.plusJakartaTextTheme);
+ThemeData appTheme = ThemeData(
+  textTheme: AppTypography.plusJakartaTextTheme,
+  cardTheme: _cardThemeData(),
+  filledButtonTheme: _filledButtonThemeData(),
+  floatingActionButtonTheme: _floatingActionButtonThemeData(),
+  inputDecorationTheme: _inputDecorationTheme(),
+  outlinedButtonTheme: _outlinedButtonThemeData(),
+);
+
+OutlinedButtonThemeData _outlinedButtonThemeData() {
+  return OutlinedButtonThemeData(
+    style: ButtonStyle(
+      fixedSize: WidgetStatePropertyAll(Size.fromHeight(44)),
+      padding: WidgetStateProperty.all<EdgeInsets>(
+        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      ),
+      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    ),
+  );
+}
+
+InputDecorationTheme _inputDecorationTheme() {
+  return InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: const BorderSide(width: 2),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: BorderSide(width: 1.5, color: ThemeData().primaryColor),
+    ),
+    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+  );
+}
+
+CardThemeData _cardThemeData() {
+  return CardThemeData(
+    elevation: 2,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+  );
+}
+
+FloatingActionButtonThemeData _floatingActionButtonThemeData() {
+  return const FloatingActionButtonThemeData(
+    elevation: 2,
+    highlightElevation: 4,
+  );
+}
+
+FilledButtonThemeData _filledButtonThemeData() {
+  return FilledButtonThemeData(
+    style: ButtonStyle(
+      fixedSize: WidgetStatePropertyAll(Size.fromHeight(44)),
+      padding: WidgetStateProperty.all<EdgeInsets>(
+        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      ),
+      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+      elevation: WidgetStateProperty.all<double>(0), // rata tanpa bayangan
+    ),
+  );
+}

@@ -1,8 +1,8 @@
 class AppSpacing {
-  static int xs = 4;
-  static int s = 8;
-  static int m = 12;
-  static int l = 16;
-  static int xl = 24;
-  static int xxl = 32; 
+  static double xs = 4;
+  static double s = 8;
+  static double m = 12;
+  static double l = 16;
+  static double xl = 24;
+  static double xxl = 32; 
 }

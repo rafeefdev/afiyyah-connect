@@ -1,6 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extensions.dart';
-import 'package:afiyyah_connect/features/health_input/step5_periksaklinik.dart';
 import 'package:flutter/material.dart';
 
 class BottomSheetNavigator extends StatelessWidget {
@@ -10,7 +9,29 @@ class BottomSheetNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-      child: step5PeriksaKlinik(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              right: AppSpacing.m,
+              left: AppSpacing.m,
+              bottom: AppSpacing.l,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: AppSpacing.s,
+              children: [
+                Text('Cari Nama Santri', style: context.textTheme.titleLarge),
+                SizedBox(height: AppSpacing.xs),
+                LinearProgressIndicator(value: 5 / 6),
+                const Text('5 / 6'),
+              ],
+            ),
+          ),
+          step1CariSantri(context),
+        ],
+      ),
     );
   }
 
@@ -18,7 +39,7 @@ class BottomSheetNavigator extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Nama Santri', style: context.textTheme.titleLarge),
+        // Text('Cari Nama Santri', style: context.textTheme.titleLarge),
         SizedBox(height: AppSpacing.l),
         TextField(
           autofocus: true,
