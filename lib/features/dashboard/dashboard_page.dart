@@ -1,5 +1,7 @@
+import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extensions.dart';
+import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/alertcardinfo_component.dart';
 import 'package:afiyyah_connect/features/health_input/bottomsheet_navigator.dart';
 import 'package:afiyyah_connect/features/dashboard/diseasedistributionchart_component.dart';
@@ -76,6 +78,8 @@ class _DashboardPageState extends State<DashboardPage>
                 ],
               ),
             ),
+            SizedBox(height: 16),
+            listCardItem(context),
             const SizedBox(height: 240),
           ],
         ),

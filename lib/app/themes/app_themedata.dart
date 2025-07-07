@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 ThemeData appTheme = ThemeData(
   textTheme: AppTypography.plusJakartaTextTheme,
   cardTheme: _cardThemeData(),
-  filledButtonTheme: _filledButtonThemeData(),
+  // filledButtonTheme: _filledButtonThemeData(),
   floatingActionButtonTheme: _floatingActionButtonThemeData(),
   inputDecorationTheme: _inputDecorationTheme(),
   outlinedButtonTheme: _outlinedButtonThemeData(),

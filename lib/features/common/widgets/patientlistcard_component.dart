@@ -1,65 +1,73 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
-import 'package:afiyyah_connect/features/common/widgets/statuslabel_component.dart';
+import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
-Widget patientCard({
+String getInitials(String inputString) {
+  if (inputString.isEmpty) {
+    return ''; // Mengembalikan string kosong jika inputnya kosong
+  }
+
+  List<String> words = inputString.split(
+    ' ',
+  ); // Memisahkan string berdasarkan spasi
+  String initials = '';
+
+  for (String word in words) {
+    if (word.isNotEmpty) {
+      initials += word[0]
+          .toUpperCase(); // Mengambil huruf pertama dan mengubahnya menjadi huruf kapital
+    }
+  }
+
+  return initials;
+}
+
+Widget listCardItem(
+  BuildContext context, {
   required Santri santri,
-  required String condition,
-  required String avatar,
-  required String status,
-  required Color statusColor,
-  bool isReferral = true,
+  String status = 'SEGERA RUJUK',
+  bool isAlert = true,
+  Color customStatusColor = Colors.red,
 }) {
-  return Container(
-    padding: const EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.1),
-          spreadRadius: 1,
-          blurRadius: 4,
-          offset: const Offset(0, 2),
-        ),
-      ],
-    ),
-    child: Row(
-      children: [
-        CircleAvatar(
-          radius: 20,
-          backgroundColor: isReferral ? Colors.red : Color(0xFF1976D2),
-          child: Text(
-            avatar,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
+  String santriInitial = getInitials(santri.name);
+
+  return Card(
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          CircleAvatar(child: Text(santriInitial)),
+          SizedBox(width: AppSpacing.m),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              statusLabel(isReferral ? Color(0xFFFEE2E2) : statusColor, status),
-              Text(
-                santri.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
+              Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade100,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  status,
+                  style: context.textTheme.labelSmall!.copyWith(
+                    color: Colors.red.shade900,
+                  ),
                 ),
               ),
-              const SizedBox(height: 4),
+              Text('Ahmad Fulan', style: context.textTheme.bodyLarge),
               Text(
-                '${santri.kelasId} · ${santri.hujrohId} · $condition',
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                'Kelas 10A • Kamar A-15 • Alergi Akut',
+                style: context.textTheme.bodyMedium!.copyWith(
+                  color: Colors.grey.shade700,
+                ),
               ),
             ],
           ),
-        ),
-        FilledButton(onPressed: () {}, child: const Text('detail')),
-      ],
+          Spacer(),
+          FilledButton(onPressed: () {}, child: const Text('proses')),
+        ],
+      ),
     ),
   );
 }
