@@ -55,7 +55,7 @@ Widget listCardItem(
                   ),
                 ),
               ),
-              Text('Ahmad Fulan', style: context.textTheme.bodyLarge),
+              Text(santri.name, style: context.textTheme.bodyLarge),
               Text(
                 'Kelas 10A • Kamar A-15 • Alergi Akut',
                 style: context.textTheme.bodyMedium!.copyWith(
