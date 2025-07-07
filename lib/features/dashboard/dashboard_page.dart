@@ -41,6 +41,14 @@ class _DashboardPageState extends State<DashboardPage>
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
+    Santri johnDoe = Santri(
+      hujrohId: '',
+      id: 'as',
+      kelasId: '',
+      name: 'John Doe',
+      tahunMasuk: DateTime(2020),
+    );
+
     return Scaffold(
       appBar: AppBar(title: const Text('Beranda')),
       body: SingleChildScrollView(
@@ -79,7 +87,7 @@ class _DashboardPageState extends State<DashboardPage>
               ),
             ),
             SizedBox(height: 16),
-            listCardItem(context),
+            listCardItem(context, santri: johnDoe),
             const SizedBox(height: 240),
           ],
         ),
