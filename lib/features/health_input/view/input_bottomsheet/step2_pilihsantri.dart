@@ -1,5 +1,6 @@
+import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/common/utils/extensions.dart';
+import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,17 @@ class Step2PilihSantri extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //TODO : save real santri data that fetched from supabase
+
+    // Dummy santri data for demonstration
+    final santri = Santri(
+      id: '123',
+      name: 'Muhammad Isa',
+      tahunMasuk: DateTime(2022),
+      hujrohId: 'DMS',
+      kelasId: 'XIPA1',
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -24,7 +36,7 @@ class Step2PilihSantri extends ConsumerWidget {
             children: [
               const CircleAvatar(radius: 16),
               const SizedBox(width: 12),
-              const Text('Muhammad Isa'),
+              Text(santri.name),
             ],
           ),
         ),
@@ -36,7 +48,8 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  hintText: 'X IPA 1',
+                  // TODO: display kelas based on the id
+                  hintText: santri.kelasId,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -50,7 +63,8 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  hintText: 'Damaskus',
+                  // TODO: display hujroh based on the id
+                  hintText: santri.hujrohId,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -63,7 +77,6 @@ class Step2PilihSantri extends ConsumerWidget {
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          spacing: AppSpacing.xl,
           children: [
             TextButton(
               onPressed: () {
@@ -71,9 +84,12 @@ class Step2PilihSantri extends ConsumerWidget {
               },
               child: const Text('batal'),
             ),
+            SizedBox(width: AppSpacing.xl),
             FilledButton(
               onPressed: () {
-                //add value of step controller
+                // Set the santri in the state
+                ref.read(pendataanKesehatanProvider.notifier).setSantri(santri);
+                // Move to the next step
                 ref.read(stepcontrollerProviderProvider.notifier).next();
               },
               style: ButtonStyle(

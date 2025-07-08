@@ -1,6 +1,6 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/common/utils/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
+import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,27 +12,31 @@ class Step5PeriksaKlinik extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final klinikStatus =
+        ref.watch(pendataanKesehatanProvider).periksaKlinikStatus;
+    final notifier = ref.read(pendataanKesehatanProvider.notifier);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(
           children: [
-            RadioListTile(
-              value: 'sudah',
-              groupValue: null,
-              onChanged: (_) {},
+            RadioListTile<PeriksaKlinikStatus>(
+              value: PeriksaKlinikStatus.sudah,
+              groupValue: klinikStatus,
+              onChanged: (value) => notifier.setKlinikStatus(value!),
               title: const Text('Sudah periksa'),
             ),
-            RadioListTile(
-              value: 'belum',
-              groupValue: null,
-              onChanged: (_) {},
+            RadioListTile<PeriksaKlinikStatus>(
+              value: PeriksaKlinikStatus.belum,
+              groupValue: klinikStatus,
+              onChanged: (value) => notifier.setKlinikStatus(value!),
               title: const Text('Belum periksa'),
             ),
-            RadioListTile(
-              value: 'luar',
-              groupValue: null,
-              onChanged: (_) {},
+            RadioListTile<PeriksaKlinikStatus>(
+              value: PeriksaKlinikStatus.luar,
+              groupValue: klinikStatus,
+              onChanged: (value) => notifier.setKlinikStatus(value!),
               title: const Text('Sudah periksa di luar'),
             ),
           ],
@@ -41,29 +45,30 @@ class Step5PeriksaKlinik extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButton(onPressed: () {}, child: const Text('batal')),
-            Spacer(),
+            TextButton(
+              onPressed: () =>
+                  ref.read(stepcontrollerProviderProvider.notifier).previous(),
+              child: const Text('kembali'),
+            ),
+            const Spacer(),
             OutlinedButton(
               onPressed: () {
                 showDialog(
                   useSafeArea: true,
                   context: context,
-                  builder: (context) => Confirmationcard(
-                    name: 'Fulan John Doe',
-                    className: 'XA1',
-                    hujroh: 'Damaskus',
-                    keluhan: 'Lemas, Pusing, dll',
-                    kunjunganKlinik: 'Kemarin',
-                  ),
+                  builder: (context) => const Confirmationcard(),
                 );
               },
               child: const Text('cek data'),
             ),
             SizedBox(width: AppSpacing.l),
             FilledButton(
-              onPressed: () {
-                //TODO: implement send to database
-                Navigator.pop(context);
+              onPressed: () async {
+                await notifier.submitData();
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  ref.read(stepcontrollerProviderProvider.notifier).toStep(0);
+                }
               },
               child: const Text('Tambahkan Data'),
             ),

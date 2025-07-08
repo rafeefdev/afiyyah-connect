@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step1CariSantri extends ConsumerWidget {
-  static String stepTitle = 'Cari Nama Santri';
+  final nameController = TextEditingController();
 
-  const Step1CariSantri({super.key});
+  Step1CariSantri({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,8 +37,10 @@ class Step1CariSantri extends ConsumerWidget {
                 child: const Text('batal'),
               ),
               FilledButton(
-                onPressed: () =>
-                    ref.read(stepcontrollerProviderProvider.notifier).next(),
+                onPressed: () {
+                  //TODO : implement search algorythm
+                  ref.read(stepcontrollerProviderProvider.notifier).next();
+                },
                 child: const Text('cari'),
               ),
             ],

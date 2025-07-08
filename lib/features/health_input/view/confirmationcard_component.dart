@@ -1,25 +1,33 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extensions.dart';
+import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-class Confirmationcard extends StatelessWidget {
-  final String name;
-  final String className;
-  final String hujroh;
-  final String keluhan;
-  final String kunjunganKlinik;
-
+class Confirmationcard extends ConsumerWidget {
   const Confirmationcard({
     super.key,
-    required this.name,
-    required this.className,
-    required this.hujroh,
-    required this.keluhan,
-    required this.kunjunganKlinik,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(pendataanKesehatanProvider);
+    final santri = state.santri;
+    final keluhan = state.keluhan.join(', ');
+    final sickTime = state.sickStartTime != null
+        ? DateFormat('d MMMM y, HH:mm').format(state.sickStartTime!)
+        : 'Belum diisi';
+
+    if (santri == null) {
+      return const Dialog(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text('Data santri belum dipilih.'),
+        ),
+      );
+    }
+
     return Dialog(
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -44,7 +52,7 @@ class Confirmationcard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        santri.name,
                         style: context.textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
@@ -52,13 +60,13 @@ class Confirmationcard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        className,
+                        santri.kelasId,
                         style: context.textTheme.titleMedium?.copyWith(
                           color: Colors.black54,
                         ),
                       ),
                       Text(
-                        hujroh,
+                        santri.hujrohId,
                         style: context.textTheme.titleMedium?.copyWith(
                           color: Colors.black54,
                         ),
@@ -80,7 +88,7 @@ class Confirmationcard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              keluhan,
+              keluhan.isNotEmpty ? keluhan : 'Belum diisi',
               style: context.textTheme.bodyMedium?.copyWith(
                 color: Colors.black54,
               ),
@@ -95,7 +103,7 @@ class Confirmationcard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              kunjunganKlinik,
+              sickTime,
               style: context.textTheme.bodyMedium?.copyWith(
                 color: Colors.black54,
               ),
