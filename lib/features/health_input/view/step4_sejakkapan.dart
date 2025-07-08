@@ -19,6 +19,14 @@ class Step4SejakKapan extends ConsumerWidget {
             Expanded(
               child: TextField(
                 readOnly: true,
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2025, 1, 1),
+                    lastDate: DateTime(2030, 12, 30),
+                    initialDate: DateTime.now(),
+                  );
+                },
                 decoration: InputDecoration(
                   hintText: '26 Agustus 2025',
                   filled: true,
@@ -51,6 +59,16 @@ class Step4SejakKapan extends ConsumerWidget {
             Expanded(
               child: TextField(
                 readOnly: true,
+                onTap: () {
+                  DateTime currentTime = DateTime.now();
+                  showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay(
+                      hour: currentTime.hour,
+                      minute: currentTime.minute,
+                    ),
+                  );
+                },
                 decoration: InputDecoration(
                   hintText: '08:30',
                   filled: true,
