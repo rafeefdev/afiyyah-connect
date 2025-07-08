@@ -48,7 +48,7 @@ class Step5PeriksaKlinik extends ConsumerWidget {
                 showDialog(
                   useSafeArea: true,
                   context: context,
-                  builder: (context) => StudentBioWidget(
+                  builder: (context) => Confirmationcard(
                     name: 'Fulan John Doe',
                     className: 'XA1',
                     hujroh: 'Damaskus',
