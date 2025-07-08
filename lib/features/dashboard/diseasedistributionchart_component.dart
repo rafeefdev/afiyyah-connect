@@ -29,7 +29,7 @@ class DiseaseDistributionChart extends StatefulWidget {
   final double? centerSpaceRadius;
 
   const DiseaseDistributionChart({
-    Key? key,
+    super.key,
     required this.diseaseData,
     this.title = 'Distribusi Penyakit',
     this.width,
@@ -40,7 +40,7 @@ class DiseaseDistributionChart extends StatefulWidget {
     this.legendStyle,
     this.radius = 100,
     this.centerSpaceRadius,
-  }) : super(key: key);
+  });
 
   @override
   State<DiseaseDistributionChart> createState() =>
@@ -202,11 +202,11 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.75),
+        color: Colors.black.withAlpha(191),
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withAlpha(64),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -250,7 +250,6 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
       final data = entry.value;
       final isTouched = index == touchedIndex;
       final sectionRadius = isTouched ? radius + 10 : radius;
-      final percentage = ((data.count / total) * 100).toStringAsFixed(1);
 
       return PieChartSectionData(
         color: data.color,
