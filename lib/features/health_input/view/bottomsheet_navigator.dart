@@ -1,73 +1,50 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extensions.dart';
+import 'package:afiyyah_connect/features/health_input/view/step1_carisantri.dart';
+import 'package:afiyyah_connect/features/health_input/view/step2_pilihsantri.dart';
+import 'package:afiyyah_connect/features/health_input/view/step3_keluhan.dart';
+import 'package:afiyyah_connect/features/health_input/view/step4_sejakkapan.dart';
+import 'package:afiyyah_connect/features/health_input/view/step5_periksaklinik.dart';
+import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BottomSheetNavigator extends StatelessWidget {
+List<Widget> steps = [
+  Step1CariSantri(),
+  Step2PilihSantri(),
+  Step3Keluhan(keluhanList: keluhanList),
+  Step4SejakKapan(),
+  Step5PeriksaKlinik(),
+];
+
+List<String> titles = [
+  'Cari Nama Santri',
+  'Pilih Santri',
+  'Apa saja keluhannya ?',
+  'Sejak Kapan Sakitnya ?',
+  'Periksa Klinik',
+];
+
+class BottomSheetNavigator extends ConsumerWidget {
   const BottomSheetNavigator({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    int currentStep = ref.watch(stepcontrollerProviderProvider);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSpacing.xl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-              right: AppSpacing.m,
-              left: AppSpacing.m,
-              bottom: AppSpacing.l,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: AppSpacing.s,
-              children: [
-                Text('Cari Nama Santri', style: context.textTheme.titleLarge),
-                SizedBox(height: AppSpacing.xs),
-                LinearProgressIndicator(value: 5 / 6),
-                const Text('5 / 6'),
-              ],
-            ),
-          ),
-          step1CariSantri(context),
+          Text(titles[currentStep], style: context.textTheme.titleLarge),
+          SizedBox(height: AppSpacing.xs),
+          LinearProgressIndicator(value: (currentStep + 1) / 5),
+          Text('${currentStep + 1} / 5'),
+          SizedBox(height: AppSpacing.m),
+          Consumer(builder: (context, ref, _) => steps[currentStep]),
         ],
       ),
-    );
-  }
-
-  Widget step1CariSantri(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Text('Cari Nama Santri', style: context.textTheme.titleLarge),
-        SizedBox(height: AppSpacing.l),
-        TextField(
-          autofocus: true,
-          keyboardType: TextInputType.name,
-          decoration: InputDecoration(
-            hint: const Text('Ketik untuk mencari nama santri'),
-            label: const Text('Nama Santri'),
-            prefixIcon: const Icon(Icons.search_rounded),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-        ),
-        SizedBox(height: AppSpacing.l),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          spacing: AppSpacing.m,
-          children: [
-            Expanded(
-              child: TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('batal'),
-              ),
-            ),
-            Expanded(
-              child: FilledButton(onPressed: () {}, child: const Text('cari')),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
