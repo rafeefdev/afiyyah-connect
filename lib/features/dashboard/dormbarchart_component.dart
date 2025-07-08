@@ -111,7 +111,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
       touchTooltipData: BarTouchTooltipData(
         fitInsideHorizontally: true,
         fitInsideVertically: true,
-        getTooltipColor: (group) => Colors.black.withOpacity(0.8),
+        getTooltipColor: (group) => Colors.black.withAlpha(204),
         tooltipMargin: 8,
         tooltipPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         tooltipBorderRadius: BorderRadius.circular(8),

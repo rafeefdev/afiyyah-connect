@@ -1,10 +1,10 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extensions.dart';
-import 'package:afiyyah_connect/features/health_input/view/step1_carisantri.dart';
-import 'package:afiyyah_connect/features/health_input/view/step2_pilihsantri.dart';
-import 'package:afiyyah_connect/features/health_input/view/step3_keluhan.dart';
-import 'package:afiyyah_connect/features/health_input/view/step4_sejakkapan.dart';
-import 'package:afiyyah_connect/features/health_input/view/step5_periksaklinik.dart';
+import 'package:afiyyah_connect/features/health_input/view/input_bottomsheet/step1_carisantri.dart';
+import 'package:afiyyah_connect/features/health_input/view/input_bottomsheet/step2_pilihsantri.dart';
+import 'package:afiyyah_connect/features/health_input/view/input_bottomsheet/step3_keluhan.dart';
+import 'package:afiyyah_connect/features/health_input/view/input_bottomsheet/step4_sejakkapan.dart';
+import 'package:afiyyah_connect/features/health_input/view/input_bottomsheet/step5_periksaklinik.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +27,6 @@ List<String> titles = [
 
 class BottomSheetNavigator extends ConsumerWidget {
   const BottomSheetNavigator({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     int currentStep = ref.watch(stepcontrollerProviderProvider);

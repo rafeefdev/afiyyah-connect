@@ -327,8 +327,7 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
   }
 
   LineChartBarData _buildLineChartBarData() {
-    final primaryColor = widget.primaryColor ?? Theme.of(context).colorScheme.primary;
-    final backgroundColor = widget.backgroundColor ?? Theme.of(context).colorScheme.background;
+    final backgroundColor = widget.backgroundColor ?? Theme.of(context).colorScheme.surface;
     return LineChartBarData(
       spots: List.generate(
         _processedScores.length,

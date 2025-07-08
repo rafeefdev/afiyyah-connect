@@ -23,7 +23,7 @@ class StatCard extends StatelessWidget {
         border: Border.all(color: Colors.black, width: 0.1),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withAlpha(25),
             spreadRadius: 2,
             blurRadius: 4,
             offset: const Offset(0, 2),
