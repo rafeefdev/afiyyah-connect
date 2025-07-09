@@ -5,13 +5,7 @@ import 'package:afiyyah_connect/features/common/widgets/patientlistcard_componen
 import 'package:afiyyah_connect/features/dashboard/alertcardinfo_component.dart';
 import 'package:afiyyah_connect/features/dashboard/tabview_charts.dart';
 import 'package:afiyyah_connect/features/health_input/view/bottomsheet_navigator.dart';
-import 'package:afiyyah_connect/features/dashboard/diseasedistributionchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/dormbarchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/horizontalstatcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/insight_card.dart';
-import 'package:afiyyah_connect/features/dashboard/timeserieschart_component.dart';
-import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -38,29 +32,30 @@ class _DashboardPageState extends State<DashboardPage>
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Beranda')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildDateInfo(textTheme),
-            const SizedBox(height: 16),
-            alertCard(
-              context,
-              title: 'Rujukan Rumah Sakit',
-              alertMessage: '2 santri butuh penanganan rumah sakit',
-            ),
-            const SizedBox(height: 16),
-            _buildInsightsCard(context),
-            const SizedBox(height: 16),
-            const TabViewCharts(),
-            SizedBox(height: AppSpacing.l),
-            _buildRujukanRumahSakit(context),
-            SizedBox(height: AppSpacing.l),
-            _buildSantriSakitHariIni(context),
-            const SizedBox(height: 240),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildDateInfo(textTheme),
+              const SizedBox(height: 16),
+              alertCard(
+                context,
+                title: 'Rujukan Rumah Sakit',
+                alertMessage: '2 santri butuh penanganan rumah sakit',
+              ),
+              const SizedBox(height: 16),
+              _buildInsightsCard(context),
+              const SizedBox(height: 16),
+              const TabViewCharts(),
+              SizedBox(height: AppSpacing.l),
+              _buildRujukanRumahSakit(context),
+              SizedBox(height: AppSpacing.l),
+              _buildSantriSakitHariIni(context),
+              const SizedBox(height: 240),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
