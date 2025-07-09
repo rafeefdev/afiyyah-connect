@@ -38,23 +38,24 @@ class _DashboardPageState extends State<DashboardPage>
     super.dispose();
   }
 
+  Santri johnDoe = Santri(
+    hujrohId: '',
+    id: 'as',
+    kelasId: '',
+    name: 'John Doe',
+    tahunMasuk: DateTime(2020),
+  );
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
-    Santri johnDoe = Santri(
-      hujrohId: '',
-      id: 'as',
-      kelasId: '',
-      name: 'John Doe',
-      tahunMasuk: DateTime(2020),
-    );
 
     return Scaffold(
       appBar: AppBar(title: const Text('Beranda')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildDateInfo(textTheme),
             const SizedBox(height: 16),
@@ -87,8 +88,10 @@ class _DashboardPageState extends State<DashboardPage>
                 ],
               ),
             ),
-            SizedBox(height: 16),
-            listCardItem(context, santri: johnDoe),
+            SizedBox(height: AppSpacing.l),
+            _buildRujukanRumahSakit(context),
+            SizedBox(height: AppSpacing.l),
+            _buildSantriSakitHariIni(context),
             const SizedBox(height: 240),
           ],
         ),
@@ -100,6 +103,30 @@ class _DashboardPageState extends State<DashboardPage>
           _buildShowHealthInput(context);
         },
       ),
+    );
+  }
+
+  Widget _buildRujukanRumahSakit(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
+        SizedBox(height: AppSpacing.s),
+        // TODO : generate rujukan rumah sakit list
+        listCardItem(context, santri: johnDoe),
+      ],
+    );
+  }
+
+  Widget _buildSantriSakitHariIni(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Santri Sakit Hari Ini', style: context.textTheme.titleMedium),
+        SizedBox(height: AppSpacing.s),
+        // TODO : generate rujukan rumah sakit list
+        listCardItem(context, santri: johnDoe),
+      ],
     );
   }
 
