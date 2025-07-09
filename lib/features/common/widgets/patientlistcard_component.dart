@@ -29,8 +29,11 @@ Widget listCardItem(
   String status = 'SEGERA RUJUK',
   bool isAlert = true,
   Color customStatusColor = Colors.red,
+  List<String> secondaryInfo = const <String>[],
 }) {
   String santriInitial = getInitials(santri.name);
+  //TODO : implement real kelas
+  String kelas = santri.kelasId;
 
   return Card(
     child: Padding(

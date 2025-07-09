@@ -67,8 +67,9 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
   Future<void> _selectTime(BuildContext context) async {
     final notifier = ref.read(pendataanKesehatanProvider.notifier);
     final currentState = ref.read(pendataanKesehatanProvider);
-    final initialTime =
-        TimeOfDay.fromDateTime(currentState.sickStartTime ?? DateTime.now());
+    final initialTime = TimeOfDay.fromDateTime(
+      currentState.sickStartTime ?? DateTime.now(),
+    );
 
     final pickedTime = await showTimePicker(
       context: context,
@@ -96,35 +97,44 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
-          controller: _dateController,
-          readOnly: true,
-          onTap: () => _selectDate(context),
-          decoration: InputDecoration(
-            hintText: 'Pilih Tanggal',
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
+        Row(
+          children: [
+            Flexible(
+              child: TextField(
+                controller: _dateController,
+                readOnly: true,
+                onTap: () => _selectDate(context),
+                decoration: InputDecoration(
+                  hintText: 'Pilih Tanggal',
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                  prefixIcon: Icon(Icons.calendar_today),
+                ),
+              ),
             ),
-            prefixIcon: Icon(Icons.calendar_today),
-          ),
-        ),
-        const SizedBox(height: 12),
-        TextField(
-          controller: _timeController,
-          readOnly: true,
-          onTap: () => _selectTime(context),
-          decoration: InputDecoration(
-            hintText: 'Pilih Jam',
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
+            SizedBox(width: AppSpacing.m),
+            Flexible(
+              child: TextField(
+                controller: _timeController,
+                readOnly: true,
+                onTap: () => _selectTime(context),
+                decoration: InputDecoration(
+                  hintText: 'Pilih Jam',
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                  prefixIcon: Icon(Icons.access_time),
+                ),
+              ),
             ),
-            prefixIcon: Icon(Icons.access_time),
-          ),
+          ],
         ),
+
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
