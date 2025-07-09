@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:afiyyah_connect/features/common/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -93,13 +94,12 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
         return Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 widget.title,
-                style:
-                    widget.titleStyle ??
-                    textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                style: widget.titleStyle ?? context.textTheme.titleMedium,
               ),
               const SizedBox(height: 32),
               // Chart dan Legend
@@ -257,7 +257,9 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
         title: entry.value.name,
         // widget.showPercentage ? '$percentage%' : '',
         radius: sectionRadius,
-        titleStyle: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white),
+        titleStyle: Theme.of(
+          context,
+        ).textTheme.bodySmall?.copyWith(color: Colors.white),
       );
     }).toList();
   }

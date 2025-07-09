@@ -78,6 +78,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.title, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 16),
