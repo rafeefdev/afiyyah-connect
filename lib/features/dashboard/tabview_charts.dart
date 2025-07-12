@@ -31,7 +31,7 @@ class TabViewChartsState extends State<TabViewCharts>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TabBar(
+        TabBar.secondary(
           controller: _tabController,
           tabs: const [
             Tab(text: 'Ikhtisar'),

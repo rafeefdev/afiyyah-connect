@@ -1,51 +1,19 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:flutter/material.dart';
 
-class TabViewMonitoring extends StatefulWidget {
-  const TabViewMonitoring({super.key});
+class TabViewMonitoring extends StatelessWidget {
+  const TabViewMonitoring({super.key, required this.tabController});
 
-  @override
-  State<TabViewMonitoring> createState() => TabViewMonitoringState();
-}
-
-class TabViewMonitoringState extends State<TabViewMonitoring>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return TabBarView(
+      controller: tabController,
       children: [
-        TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(text: 'Kunjungan Klinik'),
-            Tab(text: 'Status Arahan'),
-            Tab(text: 'Rujukan Luar'),
-          ],
-        ),
-        IntrinsicHeight(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _buildKunjunganKlinikTab(),
-              _buildStatusArahanTab(),
-              _buildRujukanNTransportasiTab(),
-            ],
-          ),
-        ),
+        _buildKunjunganKlinikTab(),
+        _buildStatusArahanTab(),
+        _buildRujukanNTransportasiTab(),
       ],
     );
   }
