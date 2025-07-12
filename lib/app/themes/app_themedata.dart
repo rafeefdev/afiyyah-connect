@@ -7,6 +7,8 @@ ThemeData appTheme = ThemeData(
   floatingActionButtonTheme: _floatingActionButtonThemeData(),
   inputDecorationTheme: _inputDecorationTheme(),
   outlinedButtonTheme: _outlinedButtonThemeData(),
+  tabBarTheme: TabBarThemeData(dividerHeight: 0),
+  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal),
 );
 
 OutlinedButtonThemeData _outlinedButtonThemeData() {
@@ -54,3 +56,5 @@ FloatingActionButtonThemeData _floatingActionButtonThemeData() {
     highlightElevation: 4,
   );
 }
+
+// Alternatif: Jika ingin menggunakan custom indicator dengan border radius
