@@ -8,7 +8,7 @@ ThemeData appTheme = ThemeData(
   inputDecorationTheme: _inputDecorationTheme(),
   outlinedButtonTheme: _outlinedButtonThemeData(),
   tabBarTheme: TabBarThemeData(dividerHeight: 0),
-  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal),
+  // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal, ),
 );
 
 OutlinedButtonThemeData _outlinedButtonThemeData() {

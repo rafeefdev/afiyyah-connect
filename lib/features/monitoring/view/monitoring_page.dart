@@ -35,7 +35,7 @@ class _MonitoringPageState extends State<MonitoringPage>
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                toolbarHeight: 90,
+                toolbarHeight: 45,
                 flexibleSpace: InsightCardNDateInfo(value: 16),
               ),
               SliverToBoxAdapter(child: SizedBox(height: AppSpacing.m)),
@@ -44,7 +44,7 @@ class _MonitoringPageState extends State<MonitoringPage>
                   TabBar(
                     controller: _tabController,
                     tabs: const [
-                      Tab(text: 'Kunjungan Klinik'),
+                      Tab(text: 'KunjunganKlinik'),
                       Tab(text: 'Status Arahan'),
                       Tab(text: 'Rujukan Luar'),
                     ],
