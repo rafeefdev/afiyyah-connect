@@ -7,6 +7,7 @@ import 'package:afiyyah_connect/features/dashboard/alertcardinfo_component.dart'
 import 'package:afiyyah_connect/features/dashboard/tabview_charts.dart';
 import 'package:afiyyah_connect/features/health_input/view/bottomsheet_navigator.dart';
 import 'package:afiyyah_connect/features/dashboard/insight_card.dart';
+import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -61,9 +62,7 @@ class _DashboardPageState extends State<DashboardPage> {
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Input Data'),
         icon: const Icon(Icons.assignment_add),
-        onPressed: () {
-          _buildShowHealthInput(context);
-        },
+        onPressed: () => showBottomHealthInput(context),
       ),
     );
   }
@@ -108,20 +107,12 @@ class _DashboardPageState extends State<DashboardPage> {
         Text('Santri Sakit Hari Ini', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         // TODO : generate rujukan rumah sakit list
-        listCardItem(context, santri: johnDoe, info: 'Mual, Pusing, batuk, pilek, dll'),
+        listCardItem(
+          context,
+          santri: johnDoe,
+          info: 'Mual, Pusing, batuk, pilek, dll',
+        ),
       ],
-    );
-  }
-
-  Future<dynamic> _buildShowHealthInput(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      showDragHandle: true,
-      requestFocus: true,
-      useSafeArea: true,
-      builder: (context) {
-        return BottomSheetNavigator();
-      },
     );
   }
 }
