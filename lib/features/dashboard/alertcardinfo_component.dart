@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/features/common/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 Widget alertCard(
@@ -14,15 +15,20 @@ Widget alertCard(
         children: [
           Icon(Icons.warning_amber_rounded, color: Colors.red[700]),
           const SizedBox(width: 16),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Rujukan Rumah Sakit',
+                  title,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text('2 Santri butuh penangangan rumah sakit'),
+                Text(
+                  alertMessage,
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    color: Colors.blueGrey,
+                  ),
+                ),
               ],
             ),
           ),

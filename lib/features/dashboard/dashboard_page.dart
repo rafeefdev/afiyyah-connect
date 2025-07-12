@@ -1,17 +1,12 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extensions.dart';
+import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/alertcardinfo_component.dart';
 import 'package:afiyyah_connect/features/dashboard/tabview_charts.dart';
 import 'package:afiyyah_connect/features/health_input/view/bottomsheet_navigator.dart';
-import 'package:afiyyah_connect/features/dashboard/diseasedistributionchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/dormbarchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/horizontalstatcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/insight_card.dart';
-import 'package:afiyyah_connect/features/dashboard/timeserieschart_component.dart';
-import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -23,8 +18,7 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage>
-    with SingleTickerProviderStateMixin {
+class _DashboardPageState extends State<DashboardPage> {
   Santri johnDoe = Santri(
     hujrohId: '',
     id: 'as',
@@ -38,29 +32,30 @@ class _DashboardPageState extends State<DashboardPage>
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Beranda')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildDateInfo(textTheme),
-            const SizedBox(height: 16),
-            alertCard(
-              context,
-              title: 'Rujukan Rumah Sakit',
-              alertMessage: '2 santri butuh penanganan rumah sakit',
-            ),
-            const SizedBox(height: 16),
-            _buildInsightsCard(context),
-            const SizedBox(height: 16),
-            const TabViewCharts(),
-            SizedBox(height: AppSpacing.l),
-            _buildRujukanRumahSakit(context),
-            SizedBox(height: AppSpacing.l),
-            _buildSantriSakitHariIni(context),
-            const SizedBox(height: 240),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: AppSpacing.pagePadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildProfileBar(context, textTheme),
+              SizedBox(height: AppSpacing.l),
+              alertCard(
+                context,
+                title: 'Rujukan Rumah Sakit',
+                alertMessage: '2 santri butuh penanganan rumah sakit',
+              ),
+              SizedBox(height: AppSpacing.l),
+              _buildInsightsCard(context),
+              SizedBox(height: AppSpacing.l),
+              const TabViewCharts(),
+              SizedBox(height: AppSpacing.l),
+              _buildRujukanRumahSakit(context),
+              SizedBox(height: AppSpacing.l),
+              _buildSantriSakitHariIni(context),
+              const SizedBox(height: 240),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -73,6 +68,27 @@ class _DashboardPageState extends State<DashboardPage>
     );
   }
 
+  Widget _buildProfileBar(BuildContext context, TextTheme textTheme) {
+    return Row(
+      spacing: AppSpacing.m,
+      children: [
+        CircleAvatar(child: const Text('FD')),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Fulan Doe', style: context.textTheme.titleSmall),
+            Text(
+              'Resepsionis Klinik',
+              style: context.textTheme.bodySmall!.copyWith(color: Colors.grey),
+            ),
+          ],
+        ),
+        Spacer(),
+        DateInfo(textTheme: textTheme),
+      ],
+    );
+  }
+
   Widget _buildRujukanRumahSakit(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +96,7 @@ class _DashboardPageState extends State<DashboardPage>
         Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         // TODO : generate rujukan rumah sakit list
-        listCardItem(context, santri: johnDoe),
+        listCardItem(context, santri: johnDoe, info: 'Demam tinggi'),
       ],
     );
   }
@@ -92,7 +108,7 @@ class _DashboardPageState extends State<DashboardPage>
         Text('Santri Sakit Hari Ini', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         // TODO : generate rujukan rumah sakit list
-        listCardItem(context, santri: johnDoe),
+        listCardItem(context, santri: johnDoe, info: 'Mual, Pusing, batuk, pilek, dll'),
       ],
     );
   }
@@ -106,19 +122,6 @@ class _DashboardPageState extends State<DashboardPage>
       builder: (context) {
         return BottomSheetNavigator();
       },
-    );
-  }
-
-  Widget _buildDateInfo(TextTheme textTheme, {DateTime? date}) {
-    final now = date ?? DateTime.now();
-    final formatter = DateFormat(
-      'EEEE, d MMMM y • HH:mm',
-    ); // contoh: Minggu, 6 Juli 2025 • 14:45
-    final formatted = formatter.format(now);
-
-    return Text(
-      formatted,
-      style: textTheme.bodySmall?.copyWith(color: Colors.grey),
     );
   }
 }

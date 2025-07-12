@@ -32,7 +32,7 @@ Widget insightCard(
               const Spacer(),
               Text(
                 explanation,
-                style: textTheme.bodySmall,
+                style: textTheme.bodyMedium!.copyWith(color: Colors.blueGrey),
                 overflow: TextOverflow.visible,
               ),
             ],
