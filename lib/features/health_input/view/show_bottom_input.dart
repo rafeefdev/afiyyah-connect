@@ -5,7 +5,7 @@ Future<dynamic> showBottomHealthInput(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       showDragHandle: true,
-      requestFocus: true,
+      isScrollControlled: true,
       useSafeArea: true,
       builder: (context) {
         return BottomSheetNavigator();
