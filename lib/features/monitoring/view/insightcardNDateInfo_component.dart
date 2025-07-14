@@ -1,5 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/common/utils/extensions.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class InsightCardNDateInfo extends StatelessWidget {
     return Card(
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: AppSpacing.l,
+          horizontal: AppSpacing.m,
           vertical: AppSpacing.m,
         ),
         child: Row(
@@ -37,7 +37,7 @@ class InsightCardNDateInfo extends StatelessWidget {
                 ),
                 Text(
                   'Sakit di Maskan',
-                  style: context.textTheme.bodyMedium!.copyWith(
+                  style: context.textTheme.labelLarge!.copyWith(
                     fontWeight: FontWeight.w300,
                   ),
                 ),

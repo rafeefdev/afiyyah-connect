@@ -41,7 +41,7 @@ class TabViewChartsState extends State<TabViewCharts>
           ],
         ),
         SizedBox(
-          height: 350, // Adjust height as needed
+          height: 300, // Adjust height as needed
           child: TabBarView(
             controller: _tabController,
             children: [
@@ -63,7 +63,7 @@ class TabViewChartsState extends State<TabViewCharts>
         child: DiseaseDistributionChart(
           title: 'Persebaran Penyakit',
           diseaseData: DiseaseChartFactory.createSampleData(),
-          height: 320,
+          height: 300,
         ),
       ),
     );
@@ -74,7 +74,7 @@ class TabViewChartsState extends State<TabViewCharts>
       padding: EdgeInsets.only(top: AppSpacing.m),
       child: Card(
         child: SizedBox(
-          height: 320,
+          height: 300,
           child: DormBarChartComponent(
             interval: 5,
             autoScale: true,
@@ -103,7 +103,7 @@ class TabViewChartsState extends State<TabViewCharts>
       padding: EdgeInsets.only(top: AppSpacing.m),
       child: Card(
         child: SizedBox(
-          height: 320,
+          height: 300,
           child: Timeserieschart(
             healthScores: const [12, 23, 3, 21],
             title: 'Tren Mingguan',

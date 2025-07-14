@@ -1,12 +1,13 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/common/utils/extensions.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/alertcardinfo_component.dart';
 import 'package:afiyyah_connect/features/dashboard/tabview_charts.dart';
 import 'package:afiyyah_connect/features/health_input/view/bottomsheet_navigator.dart';
 import 'package:afiyyah_connect/features/dashboard/insight_card.dart';
+import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,37 +34,37 @@ class _DashboardPageState extends State<DashboardPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: ListView(
           padding: AppSpacing.pagePadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildProfileBar(context, textTheme),
-              SizedBox(height: AppSpacing.l),
-              alertCard(
-                context,
-                title: 'Rujukan Rumah Sakit',
-                alertMessage: '2 santri butuh penanganan rumah sakit',
-              ),
-              SizedBox(height: AppSpacing.l),
-              _buildInsightsCard(context),
-              SizedBox(height: AppSpacing.l),
-              const TabViewCharts(),
-              SizedBox(height: AppSpacing.l),
-              _buildRujukanRumahSakit(context),
-              SizedBox(height: AppSpacing.l),
-              _buildSantriSakitHariIni(context),
-              const SizedBox(height: 240),
-            ],
-          ),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildProfileBar(context, textTheme),
+                SizedBox(height: AppSpacing.l),
+                alertCard(
+                  context,
+                  title: 'Rujukan Rumah Sakit',
+                  alertMessage: '2 santri butuh penanganan rumah sakit',
+                ),
+                SizedBox(height: AppSpacing.l),
+                _buildInsightsCard(context),
+                SizedBox(height: AppSpacing.l),
+                const TabViewCharts(),
+                SizedBox(height: AppSpacing.l),
+                _buildRujukanRumahSakit(context),
+                SizedBox(height: AppSpacing.l),
+                _buildSantriSakitHariIni(context),
+                const SizedBox(height: 240),
+              ],
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Input Data'),
         icon: const Icon(Icons.assignment_add),
-        onPressed: () {
-          _buildShowHealthInput(context);
-        },
+        onPressed: () => showBottomHealthInput(context),
       ),
     );
   }
@@ -96,7 +97,10 @@ class _DashboardPageState extends State<DashboardPage> {
         Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         // TODO : generate rujukan rumah sakit list
-        listCardItem(context, santri: johnDoe, info: 'Demam tinggi'),
+        ListCardItem(
+          santri: johnDoe,
+          info: 'Demam tinggi',
+        ),
       ],
     );
   }
@@ -108,20 +112,14 @@ class _DashboardPageState extends State<DashboardPage> {
         Text('Santri Sakit Hari Ini', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         // TODO : generate rujukan rumah sakit list
-        listCardItem(context, santri: johnDoe, info: 'Mual, Pusing, batuk, pilek, dll'),
+        ...List.generate(
+          3,
+          (index) => ListCardItem(
+            santri: johnDoe,
+            info: 'Mual, Pusing, batuk, pilek, dll',
+          ),
+        ),
       ],
-    );
-  }
-
-  Future<dynamic> _buildShowHealthInput(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      showDragHandle: true,
-      requestFocus: true,
-      useSafeArea: true,
-      builder: (context) {
-        return BottomSheetNavigator();
-      },
     );
   }
 }
