@@ -44,9 +44,9 @@ class _MonitoringPageState extends State<MonitoringPage>
                   TabBar(
                     controller: _tabController,
                     tabs: const [
-                      Tab(text: 'KunjunganKlinik'),
-                      Tab(text: 'Status Arahan'),
-                      Tab(text: 'Rujukan Luar'),
+                      Tab(text: 'Periksa'),
+                      Tab(text: 'Arahan'),
+                      Tab(text: 'Rujukan RS'),
                     ],
                   ),
                 ),

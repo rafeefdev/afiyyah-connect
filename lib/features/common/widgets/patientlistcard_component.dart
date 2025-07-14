@@ -6,15 +6,13 @@ import 'package:flutter/material.dart';
 
 class ListCardItem extends StatelessWidget {
   final Santri santri;
-  final bool showNotchIndicator;
   final String info;
   final Color? customNotchColor;
 
   const ListCardItem({
     required this.santri,
-    this.showNotchIndicator = false,
     required this.info,
-    this.customNotchColor = Colors.red,
+    this.customNotchColor,
     super.key,
   });
 
@@ -36,7 +34,7 @@ class ListCardItem extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 8, right: 8, top: 8),
         child: Row(
           children: [
-            Visibility(visible: showNotchIndicator, child: notchIndicator),
+            Visibility(visible: customNotchColor != null, child: notchIndicator),
             const SizedBox(width: 16),
             CircleAvatar(child: Text(santriInitial)),
             SizedBox(width: AppSpacing.m),
@@ -59,22 +57,9 @@ class ListCardItem extends StatelessWidget {
                 ),
               ],
             ),
-            // Spacer(),
-            // FilledButton(
-            //   onPressed: () {},
-            //   child: const Text('proses'),
-            // ),
           ],
         ),
       ),
     );
   }
-}
-
-class NotchedListCardItem extends ListCardItem {
-  const NotchedListCardItem({
-    super.key,
-    required super.santri,
-    required super.info,
-  });
 }

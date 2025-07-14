@@ -99,7 +99,6 @@ class _DashboardPageState extends State<DashboardPage> {
         // TODO : generate rujukan rumah sakit list
         ListCardItem(
           santri: johnDoe,
-          showNotchIndicator: true,
           info: 'Demam tinggi',
         ),
       ],
