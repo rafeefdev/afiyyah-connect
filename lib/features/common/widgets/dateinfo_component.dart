@@ -6,21 +6,26 @@ class DateInfo extends StatelessWidget {
     super.key,
     required this.textTheme,
     this.date,
+    this.customTextStyle,
   });
 
   final TextTheme textTheme;
   final DateTime? date;
+  final TextStyle? customTextStyle;
 
   @override
   Widget build(BuildContext context) {
     final now = date ?? DateTime.now();
-    final formatter = DateFormat('EEEE\nd MMMM y'); // Dibuat const untuk efisiensi
+    final formatter = DateFormat(
+      'EEEE\nd MMMM y',
+    ); // Dibuat const untuk efisiensi
     final formatted = formatter.format(now);
 
     return Text(
       formatted,
       textAlign: TextAlign.right,
-      style: textTheme.labelLarge?.copyWith(color: Colors.grey),
+      style:
+          customTextStyle ?? textTheme.labelLarge?.copyWith(color: Colors.grey),
     );
   }
 }

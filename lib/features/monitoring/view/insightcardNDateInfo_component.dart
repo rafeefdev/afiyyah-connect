@@ -46,7 +46,12 @@ class InsightCardNDateInfo extends StatelessWidget {
             Spacer(),
             Align(
               alignment: Alignment.center,
-              child: DateInfo(textTheme: context.textTheme),
+              child: DateInfo(
+                textTheme: context.textTheme,
+                customTextStyle: context.textTheme.labelMedium!.copyWith(
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
           ],
         ),

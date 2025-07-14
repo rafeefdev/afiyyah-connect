@@ -5,11 +5,9 @@ import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart'
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/alertcardinfo_component.dart';
 import 'package:afiyyah_connect/features/dashboard/tabview_charts.dart';
-import 'package:afiyyah_connect/features/health_input/view/bottomsheet_navigator.dart';
 import 'package:afiyyah_connect/features/dashboard/insight_card.dart';
 import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class DashboardPage extends StatefulWidget {
   final String role;
@@ -20,14 +18,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  Santri johnDoe = Santri(
-    hujrohId: '',
-    id: 'as',
-    kelasId: '',
-    name: 'John Doe',
-    tahunMasuk: DateTime(2020),
-  );
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -85,7 +75,12 @@ class _DashboardPageState extends State<DashboardPage> {
           ],
         ),
         Spacer(),
-        DateInfo(textTheme: textTheme),
+        DateInfo(
+          textTheme: textTheme,
+          customTextStyle: context.textTheme.labelSmall!.copyWith(
+            fontWeight: FontWeight.w300,
+          ),
+        ),
       ],
     );
   }
@@ -97,10 +92,7 @@ class _DashboardPageState extends State<DashboardPage> {
         Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         // TODO : generate rujukan rumah sakit list
-        ListCardItem(
-          santri: johnDoe,
-          info: 'Demam tinggi',
-        ),
+        ListCardItem(santri: Santri.generateDummyData(), info: 'Demam tinggi'),
       ],
     );
   }
@@ -115,7 +107,7 @@ class _DashboardPageState extends State<DashboardPage> {
         ...List.generate(
           3,
           (index) => ListCardItem(
-            santri: johnDoe,
+            santri: Santri.generateDummyData(),
             info: 'Mual, Pusing, batuk, pilek, dll',
           ),
         ),
