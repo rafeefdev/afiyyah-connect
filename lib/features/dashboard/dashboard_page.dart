@@ -34,29 +34,31 @@ class _DashboardPageState extends State<DashboardPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: ListView(
           padding: AppSpacing.pagePadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildProfileBar(context, textTheme),
-              SizedBox(height: AppSpacing.l),
-              alertCard(
-                context,
-                title: 'Rujukan Rumah Sakit',
-                alertMessage: '2 santri butuh penanganan rumah sakit',
-              ),
-              SizedBox(height: AppSpacing.l),
-              _buildInsightsCard(context),
-              SizedBox(height: AppSpacing.l),
-              const TabViewCharts(),
-              SizedBox(height: AppSpacing.l),
-              _buildRujukanRumahSakit(context),
-              SizedBox(height: AppSpacing.l),
-              _buildSantriSakitHariIni(context),
-              const SizedBox(height: 240),
-            ],
-          ),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildProfileBar(context, textTheme),
+                SizedBox(height: AppSpacing.l),
+                alertCard(
+                  context,
+                  title: 'Rujukan Rumah Sakit',
+                  alertMessage: '2 santri butuh penanganan rumah sakit',
+                ),
+                SizedBox(height: AppSpacing.l),
+                _buildInsightsCard(context),
+                SizedBox(height: AppSpacing.l),
+                const TabViewCharts(),
+                SizedBox(height: AppSpacing.l),
+                _buildRujukanRumahSakit(context),
+                SizedBox(height: AppSpacing.l),
+                _buildSantriSakitHariIni(context),
+                const SizedBox(height: 240),
+              ],
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
