@@ -55,5 +55,3 @@ FloatingActionButtonThemeData _floatingActionButtonThemeData() {
     highlightElevation: 4,
   );
 }
-
-// Alternatif: Jika ingin menggunakan custom indicator dengan border radius
