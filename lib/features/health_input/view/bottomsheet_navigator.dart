@@ -33,7 +33,7 @@ class BottomSheetNavigator extends ConsumerWidget {
     int currentStep = ref.watch(stepcontrollerProviderProvider);
 
     return AnimatedPadding(
-      duration: Duration(milliseconds: 150),
+      duration: Duration(milliseconds: 50),
       padding: EdgeInsets.only(
         left: AppSpacing.xl,
         right: AppSpacing.xl,
