@@ -9,7 +9,7 @@ Widget insightCard(
   final textTheme = Theme.of(context).textTheme;
   return Expanded(
     child: SizedBox(
-      height: 144,
+      height: 150,
       child: Card(
         elevation: 1,
         shape: RoundedRectangleBorder(
