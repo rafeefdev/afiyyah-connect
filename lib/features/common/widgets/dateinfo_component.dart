@@ -14,12 +14,13 @@ class DateInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final now = date ?? DateTime.now();
-    final formatter = DateFormat('EEEE, d MMMM y'); // Dibuat const untuk efisiensi
+    final formatter = DateFormat('EEEE\nd MMMM y'); // Dibuat const untuk efisiensi
     final formatted = formatter.format(now);
 
     return Text(
       formatted,
-      style: textTheme.bodyMedium?.copyWith(color: Colors.grey),
+      textAlign: TextAlign.right,
+      style: textTheme.labelLarge?.copyWith(color: Colors.grey),
     );
   }
 }
