@@ -95,7 +95,7 @@ class _DashboardPageState extends State<DashboardPage> {
         Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         // TODO : generate rujukan rumah sakit list
-        listCardItem(context, santri: johnDoe, info: 'Demam tinggi'),
+        ListCardItem(santri: johnDoe, isAlert: true, info: 'Demam tinggi'),
       ],
     );
   }
@@ -109,8 +109,7 @@ class _DashboardPageState extends State<DashboardPage> {
         // TODO : generate rujukan rumah sakit list
         ...List.generate(
           3,
-          (index) => listCardItem(
-            context,
+          (index) => ListCardItem(
             santri: johnDoe,
             info: 'Mual, Pusing, batuk, pilek, dll',
           ),
