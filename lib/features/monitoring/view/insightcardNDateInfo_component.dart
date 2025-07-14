@@ -13,7 +13,7 @@ class InsightCardNDateInfo extends StatelessWidget {
     return Card(
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: AppSpacing.l,
+          horizontal: AppSpacing.m,
           vertical: AppSpacing.m,
         ),
         child: Row(
@@ -37,7 +37,7 @@ class InsightCardNDateInfo extends StatelessWidget {
                 ),
                 Text(
                   'Sakit di Maskan',
-                  style: context.textTheme.bodyMedium!.copyWith(
+                  style: context.textTheme.labelLarge!.copyWith(
                     fontWeight: FontWeight.w300,
                   ),
                 ),

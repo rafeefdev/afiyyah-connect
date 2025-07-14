@@ -6,13 +6,15 @@ import 'package:flutter/material.dart';
 
 class ListCardItem extends StatelessWidget {
   final Santri santri;
-  final bool isAlert;
+  final bool showNotchIndicator;
   final String info;
+  final Color? customNotchColor;
 
   const ListCardItem({
     required this.santri,
-    this.isAlert = false,
+    this.showNotchIndicator = false,
     required this.info,
+    this.customNotchColor = Colors.red,
     super.key,
   });
 
@@ -21,22 +23,20 @@ class ListCardItem extends StatelessWidget {
     String santriInitial = getInitials(santri.name);
     //TODO : implement real kelas
     String kelas = santri.kelasId;
+    var notchIndicator = Container(
+      width: 8,
+      height: 45,
+      decoration: BoxDecoration(
+        color: customNotchColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
     return Card(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8, right: 8, top: 8),
         child: Row(
           children: [
-            Visibility(
-              visible: isAlert,
-              child: Container(
-                width: 8,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
+            Visibility(visible: showNotchIndicator, child: notchIndicator),
             const SizedBox(width: 16),
             CircleAvatar(child: Text(santriInitial)),
             SizedBox(width: AppSpacing.m),
@@ -44,6 +44,7 @@ class ListCardItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(santri.name, style: context.textTheme.titleSmall),
+                // TODO : display kelas and hujroh
                 Text(
                   'Kelas 10A • Kamar A-15',
                   style: context.textTheme.bodyMedium!.copyWith(
@@ -68,4 +69,12 @@ class ListCardItem extends StatelessWidget {
       ),
     );
   }
+}
+
+class NotchedListCardItem extends ListCardItem {
+  const NotchedListCardItem({
+    super.key,
+    required super.santri,
+    required super.info,
+  });
 }
