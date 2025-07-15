@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
@@ -12,32 +13,37 @@ class Step5PeriksaKlinik extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final klinikStatus =
-        ref.watch(pendataanKesehatanProvider).periksaKlinikStatus;
+    final klinikStatus = ref
+        .watch(pendataanKesehatanProvider)
+        .periksaKlinikStatus;
     final notifier = ref.read(pendataanKesehatanProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RadioListTile<PeriksaKlinikStatus>(
+            _buildRadioOption(
+              context,
+              label: 'Sudah periksa',
               value: PeriksaKlinikStatus.sudah,
               groupValue: klinikStatus,
-              onChanged: (value) => notifier.setKlinikStatus(value!),
-              title: const Text('Sudah periksa'),
+              onChanged: notifier.setKlinikStatus,
             ),
-            RadioListTile<PeriksaKlinikStatus>(
+            _buildRadioOption(
+              context,
+              label: 'Belum periksa',
               value: PeriksaKlinikStatus.belum,
               groupValue: klinikStatus,
-              onChanged: (value) => notifier.setKlinikStatus(value!),
-              title: const Text('Belum periksa'),
+              onChanged: notifier.setKlinikStatus,
             ),
-            RadioListTile<PeriksaKlinikStatus>(
+            _buildRadioOption(
+              context,
+              label: 'Sudah periksa di luar',
               value: PeriksaKlinikStatus.luar,
               groupValue: klinikStatus,
-              onChanged: (value) => notifier.setKlinikStatus(value!),
-              title: const Text('Sudah periksa di luar'),
+              onChanged: notifier.setKlinikStatus,
             ),
           ],
         ),
@@ -52,6 +58,12 @@ class Step5PeriksaKlinik extends ConsumerWidget {
             ),
             const Spacer(),
             OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                fixedSize: Size.fromHeight(40),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
               onPressed: () {
                 showDialog(
                   useSafeArea: true,
@@ -59,9 +71,9 @@ class Step5PeriksaKlinik extends ConsumerWidget {
                   builder: (context) => const Confirmationcard(),
                 );
               },
-              child: const Text('cek data'),
+              child: const Text('cek'),
             ),
-            SizedBox(width: AppSpacing.l),
+            SizedBox(width: AppSpacing.s),
             FilledButton(
               onPressed: () async {
                 await notifier.submitData();
@@ -70,11 +82,44 @@ class Step5PeriksaKlinik extends ConsumerWidget {
                   ref.read(stepcontrollerProviderProvider.notifier).toStep(0);
                 }
               },
-              child: const Text('Tambahkan Data'),
+              child: const Text('Tambahkan'),
             ),
           ],
         ),
       ],
     );
   }
+}
+
+Widget _buildRadioOption(
+  BuildContext context, {
+  required String label,
+  required PeriksaKlinikStatus value,
+  required PeriksaKlinikStatus groupValue,
+  required ValueChanged<PeriksaKlinikStatus> onChanged,
+}) {
+  return GestureDetector(
+    onTap: () => onChanged(value),
+    behavior: HitTestBehavior.opaque,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Radio<PeriksaKlinikStatus>(
+            value: value,
+            groupValue: groupValue,
+            onChanged: (v) => onChanged(v!),
+            visualDensity: const VisualDensity(
+              horizontal: -4,
+              vertical: -4,
+            ), // lebih kompak
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          const SizedBox(width: 8), // Atur jarak antara radio dan teks di sini
+          Expanded(child: Text(label, style: context.textTheme.bodyMedium)),
+        ],
+      ),
+    ),
+  );
 }
