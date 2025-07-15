@@ -1,14 +1,8 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
+import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pendataan_kesehatan_provider.g.dart';
-
-enum PeriksaKlinikStatus {
-  sudah,
-  belum,
-  luar,
-  none,
-}
 
 class PendataanKesehatanState {
   final Santri? santri;
