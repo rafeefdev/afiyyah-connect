@@ -1,6 +1,8 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
+import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
 import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
+import 'package:afiyyah_connect/features/health_input/view/statuskunjunganselector_component.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,31 +23,9 @@ class Step5PeriksaKlinik extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildRadioOption(
-              context,
-              label: 'Sudah periksa',
-              value: PeriksaKlinikStatus.sudah,
-              groupValue: klinikStatus,
-              onChanged: notifier.setKlinikStatus,
-            ),
-            _buildRadioOption(
-              context,
-              label: 'Belum periksa',
-              value: PeriksaKlinikStatus.belum,
-              groupValue: klinikStatus,
-              onChanged: notifier.setKlinikStatus,
-            ),
-            _buildRadioOption(
-              context,
-              label: 'Sudah periksa di luar',
-              value: PeriksaKlinikStatus.luar,
-              groupValue: klinikStatus,
-              onChanged: notifier.setKlinikStatus,
-            ),
-          ],
+        KlinikStatusSelector(
+          selectedStatus: klinikStatus,
+          onChanged: (value)=>notifier.setKlinikStatus(value),
         ),
         const SizedBox(height: 20),
         Row(
