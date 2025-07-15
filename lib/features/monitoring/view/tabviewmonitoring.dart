@@ -20,26 +20,20 @@ class TabViewMonitoring extends StatelessWidget {
     );
   }
 
-  Widget _buildLegend(BuildContext context) {
+  Widget _buildLegend(
+    BuildContext context, {
+    required List<Color> indicatorColors,
+    required List<String> labels,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        ...List.generate(3, (index) {
-          List<MaterialColor> colors = [
-            Colors.green,
-            Colors.orange,
-            Colors.red,
-          ];
-          List<String> desc = [
-            'Lanjut\nKegiatan',
-            'Istirahat\nMaskan',
-            'Rujuk\nKeluar',
-          ];
+        ...List.generate(indicatorColors.length, (index) {
           return Row(
             spacing: 8,
             children: [
-              Container(height: 18, width: 18, color: colors[index]),
-              Text(desc[index], style: context.textTheme.labelSmall),
+              Container(height: 18, width: 18, color: indicatorColors[index]),
+              Text(labels[index], style: context.textTheme.labelSmall),
             ],
           );
         }),
@@ -49,22 +43,12 @@ class TabViewMonitoring extends StatelessWidget {
 
   Widget _buildPeriksaTab(BuildContext context) {
     List<MaterialColor> colors = [Colors.orange, Colors.blue];
-    List<String> desc = ['Belum\nPeriksa', 'Sudah\nPeriksa'];
     return ListView(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ...List.generate(2, (index) {
-              return Row(
-                spacing: 8,
-                children: [
-                  Container(height: 18, width: 18, color: colors[index]),
-                  Text(desc[index], style: context.textTheme.labelSmall),
-                ],
-              );
-            }),
-          ],
+        _buildLegend(
+          context,
+          indicatorColors: colors,
+          labels: ['Belum\nPeriksa', 'Sudah\nPeriksa'],
         ),
         const SizedBox(height: 12),
         //TODO : fetch to real data
@@ -81,10 +65,13 @@ class TabViewMonitoring extends StatelessWidget {
 
   Widget _buildArahan(BuildContext context) {
     List<MaterialColor> colors = [Colors.green, Colors.orange, Colors.red];
-    List<String> desc = ['Lanjut\nKegiatan', 'Istirahat\nMaskan', 'Rujuk\nRS'];
     return ListView(
       children: [
-        _buildLegend(context),
+        _buildLegend(
+          context,
+          indicatorColors: colors,
+          labels: ['Lanjut\nKegiatan', 'Istirahat\nMaskan', 'Rujuk\nRS'],
+        ),
         const SizedBox(height: 12),
         //TODO : fetch to real data
         ...List.generate(10, (index) {
@@ -101,22 +88,12 @@ class TabViewMonitoring extends StatelessWidget {
 
   Widget _buildRujukanNTransportasiTab(BuildContext context) {
     List<MaterialColor> colors = [Colors.orange, Colors.blue];
-    List<String> desc = ['Perlu\nDiantar', 'Sudah\nDiantar'];
     return ListView(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ...List.generate(2, (index) {
-              return Row(
-                spacing: 8,
-                children: [
-                  Container(height: 18, width: 18, color: colors[index]),
-                  Text(desc[index], style: context.textTheme.labelSmall),
-                ],
-              );
-            }),
-          ],
+        _buildLegend(
+          context,
+          indicatorColors: colors,
+          labels: ['Perlu\nDiantar', 'Sudah\nDiantar'],
         ),
         const SizedBox(height: 12),
         //TODO : fetch to real data

@@ -10,50 +10,52 @@ class InsightCardNDateInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: AppSpacing.m,
-          vertical: AppSpacing.m,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              value.toString(),
-              style: context.textTheme.displaySmall!.copyWith(
-                fontWeight: FontWeight.bold,
+    return SizedBox(
+      height: 90,
+      child: Card(
+        elevation: 6,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpacing.m,
+            vertical: AppSpacing.m,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                value.toString(),
+                style: context.textTheme.displaySmall!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(width: AppSpacing.m),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Santri',
-                  style: context.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
+              SizedBox(width: AppSpacing.m),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Santri',
+                    style: context.textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  'Sakit di Maskan',
-                  style: context.textTheme.labelLarge!.copyWith(
-                    fontWeight: FontWeight.w300,
+                  Text(
+                    'Sakit di Maskan',
+                    style: context.textTheme.labelLarge!.copyWith(
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Spacer(),
-            Align(
-              alignment: Alignment.center,
-              child: DateInfo(
+                ],
+              ),
+              Spacer(),
+              DateInfo(
                 textTheme: context.textTheme,
                 customTextStyle: context.textTheme.labelMedium!.copyWith(
                   fontWeight: FontWeight.w400,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

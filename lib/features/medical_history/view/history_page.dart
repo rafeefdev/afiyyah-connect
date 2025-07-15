@@ -1,5 +1,4 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/medical_history/view/overlayimagecard_component.dart';
 import 'package:flutter/material.dart';
 
