@@ -140,6 +140,12 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                fixedSize: Size.fromHeight(40),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
               onPressed: () =>
                   ref.read(stepcontrollerProviderProvider.notifier).previous(),
               child: const Text('sebelumnya'),

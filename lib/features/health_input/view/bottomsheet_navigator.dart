@@ -1,6 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
-import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/health_input/view/input_bottomsheet/step1_carisantri.dart';
 import 'package:afiyyah_connect/features/health_input/view/input_bottomsheet/step2_pilihsantri.dart';
 import 'package:afiyyah_connect/features/health_input/view/input_bottomsheet/step3_keluhan.dart';
