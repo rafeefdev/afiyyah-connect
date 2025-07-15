@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -67,10 +68,7 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
 
   /// Memproses data untuk memastikan sesuai dengan periode yang dipilih
   void _processData() {
-    _processedScores = _padScoresToPeriod(
-      widget.healthScores,
-      widget.period,
-    );
+    _processedScores = _padScoresToPeriod(widget.healthScores, widget.period);
     _highestScoreIndex = _findHighestScoreIndex(_processedScores);
     _maxValue = _processedScores.isEmpty
         ? 0
@@ -78,16 +76,16 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
     _optimalMaxY = _calculateOptimalMaxY(_maxValue);
   }
 
-  /// Menghitung nilai maksimal Y yang optimal untuk interval 10
+  /// Menghitung nilai maksimal Y yang optimal untuk interval 5
   double _calculateOptimalMaxY(double maxValue) {
     if (maxValue <= 0) return 10;
 
-    // Tambahkan buffer 20% dan bulatkan ke kelipatan 10 terdekat
+    // Tambahkan buffer 20% dan bulatkan ke kelipatan 5 terdekat
     final bufferedMax = maxValue * 1.2;
-    final roundedMax = (bufferedMax / 10).ceil() * 10;
+    final roundedMax = (bufferedMax / 5).ceil() * 5;
 
-    // Pastikan minimal ada 2 interval (minimal maxY = 20)
-    return roundedMax < 20 ? 20 : roundedMax.toDouble();
+    // Pastikan minimal ada 2 interval (minimal maxY = 10)
+    return roundedMax < 10 ? 10 : roundedMax.toDouble();
   }
 
   @override
@@ -98,12 +96,7 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
         if (widget.title != null) ...[
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              widget.title!,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-            ),
+            child: _buildHeader(context),
           ),
         ],
         Expanded(
@@ -114,6 +107,34 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
               duration: widget.animationDuration,
               curve: widget.animationCurve,
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Header with contextual information
+  Widget _buildHeader(BuildContext context) {
+    final totalPatients = widget.healthScores.fold<double>(
+      0,
+      (sum, data) => sum + data,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title!,
+          style: context.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Total: ${totalPatients.toInt()} Santri',
+          style: context.textTheme.bodySmall?.copyWith(
+            color: Colors.grey[600],
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -166,19 +187,18 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
 
   /// Membuat konfigurasi tooltip
   LineTouchTooltipData _buildTooltipConfig() {
-    final primaryColor = widget.primaryColor ?? Theme.of(context).colorScheme.primary;
     return LineTouchTooltipData(
-      getTooltipColor: (color) => primaryColor,
+      getTooltipColor: (color) => Colors.black87,
       tooltipPadding: const EdgeInsets.all(8),
       getTooltipItems: (touchedSpots) {
         return touchedSpots.map((spot) {
-          final period = widget.period == ChartPeriod.weekly
-              ? 'Hari'
-              : 'Tanggal';
-          final label = _getXAxisLabel(spot.x.toInt(), widget.period);
+          // final period = widget.period == ChartPeriod.weekly
+          //     ? 'Hari'
+          //     : 'Tanggal';
+          // final label = _getXAxisLabel(spot.x.toInt(), widget.period);
 
           return LineTooltipItem(
-            '$period $label\n${spot.y.toStringAsFixed(0)} santri',
+            '${spot.y.toStringAsFixed(0)} santri',
             const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -193,13 +213,14 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
   /// Membuat konfigurasi garis vertikal untuk indikator tertinggi
   List<VerticalLine> _buildHighestPointIndicator() {
     if (!widget.showHighestPointIndicator) return [];
-    final primaryColor = widget.primaryColor ?? Theme.of(context).colorScheme.primary;
+    final primaryColor =
+        widget.primaryColor ?? Theme.of(context).colorScheme.primary;
 
     return [
       VerticalLine(
         x: _highestScoreIndex.toDouble(),
-        color: Theme.of(context).colorScheme.secondary,
-        strokeWidth: 1.5,
+        color: Colors.grey.shade900,
+        strokeWidth: 0.2,
         dashArray: [4, 2],
         label: VerticalLineLabel(
           show: true,
@@ -221,11 +242,11 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
         show: true,
         drawHorizontalLine: true,
         drawVerticalLine: false,
-        horizontalInterval: 10, // Interval horizontal setiap 10 unit
+        horizontalInterval: 5, // Interval horizontal setiap 5 unit
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: Colors.grey.withOpacity(0.3),
-            strokeWidth: 0.8,
+            color: Colors.grey.shade400,
+            strokeWidth: 1,
             // dashArray: [5, 5], // Garis putus-putus untuk estetika
           );
         },
@@ -281,11 +302,11 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
       leftTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          interval: 10, // Interval label Y setiap 10 unit
+          interval: 5, // Interval label Y setiap 5 unit
           reservedSize: 40, // Ruang yang cukup untuk angka 2-3 digit
           getTitlesWidget: (value, meta) {
-            // Hanya tampilkan label untuk nilai yang merupakan kelipatan 10
-            if (value % 10 != 0) return const SizedBox.shrink();
+            // Tampilkan semua label untuk nilai yang merupakan kelipatan 5
+            if (value % 5 != 0) return const SizedBox.shrink();
 
             return Text(
               value.toInt().toString(),
@@ -327,28 +348,29 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
   }
 
   LineChartBarData _buildLineChartBarData() {
-    final backgroundColor = widget.backgroundColor ?? Theme.of(context).colorScheme.surface;
+    final backgroundColor =
+        widget.backgroundColor ?? Theme.of(context).colorScheme.surface;
     return LineChartBarData(
       spots: List.generate(
         _processedScores.length,
         (index) => FlSpot(index.toDouble(), _processedScores[index]),
       ),
       isCurved: true,
-      color: Colors.grey,
+      color: Colors.grey.shade600,
       barWidth: widget.lineWidth,
       dotData: FlDotData(
         show: true,
         getDotPainter: (spot, percent, barData, index) {
-          final isHighest = index == _highestScoreIndex;
+          // final isHighest = index == _highestScoreIndex;
           final isTouched = index == _touchedIndex;
 
           return FlDotCirclePainter(
-            radius: isHighest || isTouched
+            radius: isTouched
                 ? widget.dotRadius + 2
                 : widget.dotRadius,
-            color:Colors.black87,
-            strokeWidth: 2,
-            strokeColor: Colors.white,
+            color: Colors.black87,
+            // strokeWidth: 1,
+            // strokeColor: Colors.white,
           );
         },
       ),
@@ -356,7 +378,8 @@ class _TimeSeriesChartState extends State<Timeserieschart> {
         show: true,
         gradient: LinearGradient(
           colors: [
-            Colors.blue,
+            // Colors.redAccent,
+            Colors.deepOrangeAccent,
             // primaryColor.withOpacity(0.3),
             backgroundColor,
           ],

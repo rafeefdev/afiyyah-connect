@@ -97,10 +97,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                widget.title,
-                style: widget.titleStyle ?? context.textTheme.titleMedium,
-              ),
+              _buildHeader(context),
               const SizedBox(height: 32),
               // Chart dan Legend
               Stack(
@@ -178,6 +175,34 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
           ),
         );
       },
+    );
+  }
+
+  /// Header with contextual information
+  Widget _buildHeader(BuildContext context) {
+    final totalPatients = widget.diseaseData.fold<double>(
+      0,
+      (sum, data) => sum + data.count,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: context.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Total: ${totalPatients.toInt()} Pasien',
+          style: context.textTheme.bodySmall?.copyWith(
+            color: Colors.grey[600],
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 

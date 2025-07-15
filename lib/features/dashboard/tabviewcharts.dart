@@ -1,7 +1,7 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/dashboard/diseasedistributionchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/dormbarchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/timeserieschart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/diseasedistributionchart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/dormbarchart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/timeserieschart_component.dart';
 import 'package:flutter/material.dart';
 
 class TabViewCharts extends StatefulWidget {
@@ -70,19 +70,22 @@ class TabViewChartsState extends State<TabViewCharts>
   }
 
   Widget _buildGedungTab() {
-    return Padding(
-      padding: EdgeInsets.only(top: AppSpacing.m),
-      child: Card(
-        child: SizedBox(
-          height: 300,
-          child: DormBarChartComponent(
-            interval: 5,
-            autoScale: true,
-            dataList: [
-              BarData(color: Colors.blue, label: 'Umayyah', value: 20),
-              BarData(color: Colors.teal, label: 'Abbasiyyah', value: 12),
-            ],
-            title: 'Persebaran berdasarkan Asrama',
+    return Card(
+      child: SizedBox(
+        height: 300,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: AppSpacing.m),
+          child: Align(
+            alignment: Alignment.center,
+            child: DormBarChartComponent(
+              interval: 5,
+              autoScale: true,
+              dataList: [
+                BarData(color: Colors.blue, label: 'Umayyah', value: 20),
+                BarData(color: Colors.teal, label: 'Abbasiyyah', value: 12),
+              ],
+              title: 'Persebaran berdasarkan Asrama',
+            ),
           ),
         ),
       ),
@@ -90,23 +93,25 @@ class TabViewChartsState extends State<TabViewCharts>
   }
 
   Widget _buildKelasTab() {
-    return Padding(
-      padding: EdgeInsets.only(top: AppSpacing.m),
-      child: const Card(
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.only(top: AppSpacing.m),
         child: Center(child: Text('Disease Distribution on Clases')),
       ),
     );
   }
 
   Widget _buildIkhtisharTab() {
-    return Padding(
-      padding: EdgeInsets.only(top: AppSpacing.m),
-      child: Card(
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.only(top: 0),
         child: SizedBox(
           height: 300,
           child: Timeserieschart(
-            healthScores: const [12, 23, 3, 21],
+            healthScores: const [2, 4, 8, 20, 17],
             title: 'Tren Mingguan',
+            dotRadius: 3,
+            showHighestPointIndicator: false,
           ),
         ),
       ),

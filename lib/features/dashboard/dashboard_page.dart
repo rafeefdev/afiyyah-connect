@@ -4,7 +4,7 @@ import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/alertcardinfo_component.dart';
-import 'package:afiyyah_connect/features/dashboard/tabview_charts.dart';
+import 'package:afiyyah_connect/features/dashboard/tabviewcharts.dart';
 import 'package:afiyyah_connect/features/dashboard/insight_card.dart';
 import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +32,7 @@ class _DashboardPageState extends State<DashboardPage> {
               children: [
                 _buildProfileBar(context, textTheme),
                 SizedBox(height: AppSpacing.l),
-                alertCard(
-                  context,
-                  title: 'Rujukan Rumah Sakit',
-                  alertMessage: '2 santri butuh penanganan rumah sakit',
-                ),
+                _NotificationSection(),
                 SizedBox(height: AppSpacing.l),
                 _buildInsightsCard(context),
                 SizedBox(height: AppSpacing.l),
@@ -116,6 +112,22 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 }
 
+class _NotificationSection extends StatelessWidget {
+  const _NotificationSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      visible: false,
+      child: alertCard(
+        context,
+        title: 'Rujukan Rumah Sakit',
+        alertMessage: '2 santri butuh penanganan rumah sakit',
+      ),
+    );
+  }
+}
+
 Widget _buildInsightsCard(BuildContext context) {
   return Column(
     children: [
@@ -127,7 +139,7 @@ Widget _buildInsightsCard(BuildContext context) {
             value: '78',
             explanation: '+12% dari pekan lalu',
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
           insightCard(
             context,
             title: 'Kasus Terbanyak',
@@ -136,7 +148,7 @@ Widget _buildInsightsCard(BuildContext context) {
           ),
         ],
       ),
-      const SizedBox(height: 8),
+      const SizedBox(height: 4),
       Row(
         children: [
           insightCard(
@@ -145,7 +157,7 @@ Widget _buildInsightsCard(BuildContext context) {
             value: '23',
             explanation: 'Disetujui : 18\nPending : 5',
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
           insightCard(
             context,
             title: 'Kasus Hari Ini',
