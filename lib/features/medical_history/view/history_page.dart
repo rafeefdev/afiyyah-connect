@@ -16,7 +16,7 @@ class HistoryPage extends StatelessWidget {
             OverlayImageCard(
               title: 'Pendataan & Pemeriksaan',
               imageLink:
-                  'https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWVkaWNhbCUyMGNsaXBib2FyZHxlbnwwfHwwfHx8MA%3D%3D',
+                  'https://images.pexels.com/photos/8770725/pexels-photo-8770725.jpeg',
             ),
             const SizedBox(height: 12),
             OverlayImageCard(
@@ -27,7 +27,7 @@ class HistoryPage extends StatelessWidget {
             const SizedBox(height: 12),
             OverlayImageCard(
               imageLink:
-                  'https://images.pexels.com/photos/8770725/pexels-photo-8770725.jpeg',
+                  'https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWVkaWNhbCUyMGNsaXBib2FyZHxlbnwwfHwwfHx8MA%3D%3D',
               title: 'Identitas & Rekam Medis',
             ),
           ],
