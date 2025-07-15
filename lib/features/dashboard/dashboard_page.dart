@@ -69,7 +69,7 @@ class _DashboardPageState extends State<DashboardPage> {
           children: [
             Text('Fulan Doe', style: context.textTheme.titleSmall),
             Text(
-              'Asatidz Piket Maskan',
+              'Piket Maskan',
               style: context.textTheme.bodySmall!.copyWith(color: Colors.grey),
             ),
           ],
