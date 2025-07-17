@@ -1,7 +1,11 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/diseasedistributionchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/dormbarchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/timeserieschart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/gedung_tab/gedung_tabview.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/ikhtisar_tab/ikhtisar_tabview.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/kelas_tab/kelas_tabview.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/penyakit_tab/diseasedistributionchart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/gedung_tab/dormbarchart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/ikhtisar_tab/timeserieschart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/charts/penyakit_tab/penyakit_tabview.dart';
 import 'package:flutter/material.dart';
 
 class TabViewCharts extends StatefulWidget {
@@ -44,77 +48,15 @@ class TabViewChartsState extends State<TabViewCharts>
           height: 300, // Adjust height as needed
           child: TabBarView(
             controller: _tabController,
-            children: [
-              _buildIkhtisharTab(),
-              _buildKelasTab(),
-              _buildGedungTab(),
-              _buildPenyakitTab(),
+            children: const [
+              IkhtisarTabview(),
+              KelasTabview(),
+              GedungTabview(),
+              PenyakitTabview(),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildPenyakitTab() {
-    return Padding(
-      padding: EdgeInsets.only(top: AppSpacing.m),
-      child: Card(
-        child: DiseaseDistributionChart(
-          title: 'Persebaran Penyakit',
-          diseaseData: DiseaseChartFactory.createSampleData(),
-          height: 300,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGedungTab() {
-    return Card(
-      child: SizedBox(
-        height: 300,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: AppSpacing.m),
-          child: Align(
-            alignment: Alignment.center,
-            child: DormBarChartComponent(
-              interval: 5,
-              autoScale: true,
-              dataList: [
-                BarData(color: Colors.blue, label: 'Umayyah', value: 20),
-                BarData(color: Colors.teal, label: 'Abbasiyyah', value: 12),
-              ],
-              title: 'Persebaran berdasarkan Asrama',
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildKelasTab() {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.only(top: AppSpacing.m),
-        child: Center(child: Text('Disease Distribution on Clases')),
-      ),
-    );
-  }
-
-  Widget _buildIkhtisharTab() {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.only(top: 0),
-        child: SizedBox(
-          height: 300,
-          child: Timeserieschart(
-            healthScores: const [2, 4, 8, 20, 17],
-            title: 'Tren Mingguan',
-            dotRadius: 3,
-            showHighestPointIndicator: false,
-          ),
-        ),
-      ),
     );
   }
 }
