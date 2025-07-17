@@ -50,7 +50,6 @@ class DiseaseDistributionChart extends StatefulWidget {
 
 class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
   int touchedIndex = -1;
-  bool _isHovering = false;
   static const int maxLegendItems = 5;
 
   @override
@@ -108,61 +107,54 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: MouseRegion(
-                          onEnter: (_) => setState(() => _isHovering = true),
-                          onExit: (_) => setState(() {
-                            _isHovering = false;
-                            touchedIndex = -1;
-                          }),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              AspectRatio(
-                                aspectRatio: 2.4,
-                                child: PieChart(
-                                  PieChartData(
-                                    pieTouchData: _pieTouchData(),
-                                    borderData: FlBorderData(show: false),
-                                    sectionsSpace: 1,
-                                    centerSpaceRadius: centerSpaceRadius,
-                                    sections: _buildPieChartSections(
-                                      displayedData,
-                                      totalCount,
-                                      radius,
-                                      titleFontSize,
-                                    ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            AspectRatio(
+                              aspectRatio: 2.4,
+                              child: PieChart(
+                                PieChartData(
+                                  pieTouchData: _pieTouchData(),
+                                  borderData: FlBorderData(show: false),
+                                  sectionsSpace: 1,
+                                  centerSpaceRadius: centerSpaceRadius,
+                                  sections: _buildPieChartSections(
+                                    displayedData,
+                                    totalCount,
+                                    radius,
+                                    titleFontSize,
                                   ),
                                 ),
                               ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    totalCount.toString(),
-                                    style: TextStyle(
-                                      fontSize: titleFontSize,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  totalCount.toString(),
+                                  style: TextStyle(
+                                    fontSize: titleFontSize,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    'Siswa',
-                                    style: TextStyle(fontSize: legendFontSize),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Siswa',
+                                  style: TextStyle(fontSize: legendFontSize),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
 
                   // Floating Legend
-                  if (widget.showLegend && _isHovering && touchedIndex != -1)
+                  if (widget.showLegend && touchedIndex != -1)
                     Positioned(
-                      top: 10,
-                      right: 10,
+                      top: 7.5,
+                      right: 20,
                       child: _buildFloatingLegend(
                         displayedData[touchedIndex],
                         totalCount,
@@ -282,9 +274,7 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
         title: entry.value.name,
         // widget.showPercentage ? '$percentage%' : '',
         radius: sectionRadius,
-        titleStyle: Theme.of(
-          context,
-        ).textTheme.bodySmall?.copyWith(color: Colors.white),
+        titleStyle: context.textTheme.bodySmall?.copyWith(color: Colors.white),
       );
     }).toList();
   }
