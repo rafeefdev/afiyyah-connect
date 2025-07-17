@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class BarData {
   const BarData({
@@ -14,8 +15,8 @@ class BarData {
   final double value;
 }
 
-class DormBarChartComponent extends StatefulWidget {
-  const DormBarChartComponent({
+class AdaptiveHorizontalBarChart extends StatefulWidget {
+  const AdaptiveHorizontalBarChart({
     super.key,
     required this.dataList,
     required this.title,
@@ -24,6 +25,9 @@ class DormBarChartComponent extends StatefulWidget {
     this.autoScale = true,
     this.rodWidth = 28,
     this.showGrid = true,
+    this.showLegend = true,
+    this.customChartAspectRatio = 1.8,
+    this.totalUnitLabel = 'Santri',
   });
 
   final List<BarData> dataList;
@@ -33,14 +37,19 @@ class DormBarChartComponent extends StatefulWidget {
   final double rodWidth;
   final bool autoScale;
   final bool showGrid;
+  final bool showLegend;
+  final double customChartAspectRatio;
+  final String totalUnitLabel;
 
   final Color shadowColor = const Color(0xFFCCCCCC);
 
   @override
-  State<DormBarChartComponent> createState() => _DormBarChartState();
+  State<AdaptiveHorizontalBarChart> createState() =>
+      _AdaptiveHorizontalBarChartState();
 }
 
-class _DormBarChartState extends State<DormBarChartComponent> {
+class _AdaptiveHorizontalBarChartState
+    extends State<AdaptiveHorizontalBarChart> {
   int touchedGroupIndex = -1;
 
   double get currentInterval => widget.interval;
@@ -84,18 +93,17 @@ class _DormBarChartState extends State<DormBarChartComponent> {
     }).toList();
 
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(context),
+          const SizedBox(height: 8),
           AspectRatio(
-            // Optimized for horizontal layout with multiple items
-            aspectRatio: 2.2,
+            aspectRatio: widget.customChartAspectRatio,
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceEvenly,
-                // Key: Rotate for horizontal presentation
                 rotationQuarterTurns: 1,
                 borderData: _borderData(),
                 titlesData: _titlesData(),
@@ -107,8 +115,8 @@ class _DormBarChartState extends State<DormBarChartComponent> {
               ),
             ),
           ),
-          const Spacer(),
-          _buildLegendSummary(),
+          const SizedBox(height: 8),
+          Visibility(visible: widget.showLegend, child: _buildLegendSummary()),
         ],
       ),
     );
@@ -132,7 +140,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
         ),
         const SizedBox(height: 4),
         Text(
-          'Total: ${totalPatients.toInt()} Santri',
+          'Total: ${totalPatients.toInt()} ${widget.totalUnitLabel}',
           style: context.textTheme.bodySmall?.copyWith(
             color: Colors.grey[600],
             fontWeight: FontWeight.w500,
@@ -142,31 +150,51 @@ class _DormBarChartState extends State<DormBarChartComponent> {
     );
   }
 
-  /// Legend summary untuk context tambahan
+  /// Legend summary that adapts to the number of items using Wrap.
   Widget _buildLegendSummary() {
-    return Wrap(
-      spacing: 32,
-      runSpacing: 8,
-      children: widget.dataList.map((data) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: data.color,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(width: 6),
-            Text(
-              '${data.label}: ${data.value.toInt()}',
-              style: context.textTheme.labelMedium,
-            ),
-          ],
+    final itemCount = widget.dataList.length;
+
+    // Adapt font size based on item count to save space.
+    // The more items, the smaller the font, down to a minimum.
+    final double baseFontSize = context.textTheme.labelMedium?.fontSize ?? 12.0;
+    final double adaptiveFontSize =
+        (baseFontSize - (itemCount > 4 ? (itemCount - 4) * 0.5 : 0)).clamp(
+          10.0,
+          baseFontSize,
         );
+
+    // Adapt spacing based on item count.
+    final double adaptiveSpacing =
+        (24.0 - (itemCount > 6 ? (itemCount - 6) * 2.0 : 0.0)).clamp(8.0, 24.0);
+
+    // Always use a Wrap for better space utilization and to avoid scrolling.
+    return Wrap(
+      spacing: adaptiveSpacing, // Horizontal space between items
+      runSpacing: 8, // Vertical space between lines
+      children: widget.dataList.map((data) {
+        return _buildLegendItem(data, adaptiveFontSize);
       }).toList(),
+    );
+  }
+
+  Widget _buildLegendItem(BarData data, double fontSize) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: data.color,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(width: 6),
+        Text(
+          '${data.label}: ${data.value.toInt()}',
+          style: context.textTheme.labelMedium?.copyWith(fontSize: fontSize),
+        ),
+      ],
     );
   }
 
@@ -187,17 +215,16 @@ class _DormBarChartState extends State<DormBarChartComponent> {
             0,
             (sum, d) => sum + d.value,
           );
-          final percentage = ((data.value / total) * 100).toStringAsFixed(1);
+          final percentage = total > 0
+              ? ((data.value / total) * 100).toStringAsFixed(1)
+              : "0.0";
 
           return BarTooltipItem(
             '',
             const TextStyle(),
             children: [
-              // // Status indicator
-              // TextSpan(text: '📊 ', style: const TextStyle(fontSize: 14)),
-              // // Primary metric
               TextSpan(
-                text: '${data.value.toInt()} Santri',
+                text: '${data.value.toInt()} ${widget.totalUnitLabel}',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -205,13 +232,11 @@ class _DormBarChartState extends State<DormBarChartComponent> {
                 ),
               ),
               const TextSpan(text: '\n'),
-              // Secondary context
               TextSpan(
                 text: '$percentage% dari total',
                 style: const TextStyle(color: Colors.white70, fontSize: 11),
               ),
               const TextSpan(text: '\n'),
-              // Location identifier
               TextSpan(
                 text: data.label,
                 style: const TextStyle(color: Colors.white60, fontSize: 10),
@@ -233,12 +258,12 @@ class _DormBarChartState extends State<DormBarChartComponent> {
   }
 
   double _calculateOptimalMaxY() {
-    final maxDataValue = widget.dataList
-        .map((e) => e.value)
-        .reduce((a, b) => a > b ? a : b);
+    if (widget.dataList.isEmpty) {
+      return widget.interval * 5; // Default max Y if no data
+    }
+    final maxDataValue = widget.dataList.map((e) => e.value).reduce(math.max);
 
     if (widget.autoScale) {
-      // Business rule: Always provide some headroom for visualization clarity
       final roundedMax =
           ((maxDataValue / currentInterval).ceil() * currentInterval)
               .toDouble();
@@ -260,7 +285,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
       getDrawingHorizontalLine: (value) => FlLine(
         color: Colors.grey.withOpacity(0.2),
         strokeWidth: 0.8,
-        dashArray: [3, 3], // Subtle dashed lines
+        dashArray: [3, 3],
       ),
     );
   }
@@ -268,7 +293,6 @@ class _DormBarChartState extends State<DormBarChartComponent> {
   FlTitlesData _titlesData() {
     return FlTitlesData(
       show: true,
-      // Y-axis (values) - rotated to be horizontal scale
       leftTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
@@ -277,7 +301,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
           getTitlesWidget: (value, meta) {
             if (value % currentInterval == 0 && value <= effectiveMaxValue) {
               return Transform.rotate(
-                angle: -1.5708, // Counter-rotate for readability
+                angle: -1.5708,
                 child: Text(
                   value.toInt().toString(),
                   style: const TextStyle(
@@ -292,11 +316,10 @@ class _DormBarChartState extends State<DormBarChartComponent> {
           },
         ),
       ),
-      // X-axis (categories) - rotated to be vertical labels
       bottomTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          reservedSize: 100, // Increased for better label accommodation
+          reservedSize: 100,
           getTitlesWidget: (value, meta) {
             int index = value.toInt();
             if (index < 0 || index >= widget.dataList.length) {
@@ -306,6 +329,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
             final label = widget.dataList[index].label;
 
             return SideTitleWidget(
+              space: 8.0,
               meta: meta,
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 80),
@@ -316,7 +340,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
                     fontWeight: FontWeight.w500,
                     color: Colors.black87,
                   ),
-                  textAlign: TextAlign.start,
+                  textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -344,14 +368,17 @@ class _DormBarChartState extends State<DormBarChartComponent> {
 extension BarDataAnalytics on List<BarData> {
   double get totalValue => fold(0.0, (sum, data) => sum + data.value);
 
-  BarData get maxData => reduce((a, b) => a.value > b.value ? a : b);
+  BarData? get maxData =>
+      isEmpty ? null : reduce((a, b) => a.value > b.value ? a : b);
 
-  BarData get minData => reduce((a, b) => a.value < b.value ? a : b);
+  BarData? get minData =>
+      isEmpty ? null : reduce((a, b) => a.value < b.value ? a : b);
 
-  double get averageValue => totalValue / length;
+  double get averageValue => isEmpty ? 0.0 : totalValue / length;
 
   /// Healthcare-specific: Check for capacity distribution balance
   bool get isBalancedDistribution {
+    if (isEmpty) return true;
     final avg = averageValue;
     return every((data) => (data.value - avg).abs() <= (avg * 0.3));
   }
