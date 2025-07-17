@@ -89,7 +89,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
           _buildHeader(context),
           AspectRatio(
             // Optimized for horizontal layout with multiple items
-            aspectRatio: 1.8,
+            aspectRatio: 2.2,
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceEvenly,
@@ -105,7 +105,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          const Spacer(),
           _buildLegendSummary(),
         ],
       ),
@@ -143,7 +143,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
   /// Legend summary untuk context tambahan
   Widget _buildLegendSummary() {
     return Wrap(
-      spacing: 16,
+      spacing: 32,
       runSpacing: 8,
       children: widget.dataList.map((data) {
         return Row(
@@ -160,7 +160,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
             const SizedBox(width: 6),
             Text(
               '${data.label}: ${data.value.toInt()}',
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+              style: context.textTheme.labelMedium,
             ),
           ],
         );
