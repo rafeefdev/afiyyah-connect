@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/monitoring/view/insightcardNDateInfo_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tabviewmonitoring.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _MonitoringPageState extends State<MonitoringPage>
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: (appBarHeight - 120) / 2,
-                      horizontal: 16
+                      horizontal: 16,
                     ),
                     child: InsightCardNDateInfo(value: 16),
                   ),
@@ -56,7 +57,7 @@ class _MonitoringPageState extends State<MonitoringPage>
                 SliverToBoxAdapter(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
+                      color: context.theme.scaffoldBackgroundColor,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30),
@@ -108,7 +109,7 @@ class _MonitoringPageState extends State<MonitoringPage>
       top: 0,
       left: 0,
       right: 0,
-      child: Container(
+      child: SizedBox(
         height: appBarHeight + 100, // Extra height for better coverage
         child: Stack(
           children: [
