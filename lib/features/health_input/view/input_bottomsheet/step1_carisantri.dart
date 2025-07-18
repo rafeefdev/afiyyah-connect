@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/common/widgets/loadingindicator_component.dart';
@@ -21,8 +22,12 @@ class Step1CariSantri extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSearchNameField(isLoading),
+          SizedBox(height: AppSpacing.s),
           // TODO : display search result. Replace index with result lenght
-          ..._buildNameResult(context, resultLength: 5),
+          _buildSearchResult(
+            context,
+            result: List.generate(0, (index) => Santri.generateDummyData()),
+          ),
           SizedBox(height: AppSpacing.l),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -61,23 +66,33 @@ class Step1CariSantri extends ConsumerWidget {
   }
 }
 
-List<Widget> _buildNameResult(
+Widget _buildSearchResult(
   BuildContext context, {
-  required int resultLength,
+  required List<Santri> result,
 }) {
-  return List.generate(resultLength, (index) {
-    return InkWell(
-      onTap: () {
-        // TODO : add selected name to input data
-      },
-      child: ListTile(
-        title: Text(
-          'Fathan bin Fulan',
-          style: context.textTheme.bodyLarge!.copyWith(
-            color: Colors.grey.shade800,
+  return Container(
+    height: context.mq.size.height * 0.3,
+    margin: EdgeInsets.only(top: 8.0),
+    decoration: BoxDecoration(
+      border: Border.all(width: 0.05, color: Colors.grey.shade800),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: result.isEmpty
+        ? Center(
+            child: const Text(
+              'nama santri yang dicari\nakan ditampilkan di sini',
+            ),
+          )
+        : ListView.builder(
+            itemCount: result.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  //TODO : add selected name to form state
+                },
+                child: ListTile(title: Text(result[index].name)),
+              );
+            },
           ),
-        ),
-      ),
-    );
-  });
+  );
 }
