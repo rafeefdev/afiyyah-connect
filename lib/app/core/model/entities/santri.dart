@@ -15,10 +15,10 @@ class Santri {
 
   static Santri generateDummyData() {
     return Santri(
-      id: 'id',
-      kelasId: 'kelasID',
+      id: '18437123786',
+      kelasId: 'X IPA 1',
       name: 'Fulan Doe',
-      hujrohId: 'hujrohID',
+      hujrohId: 'Damaskus',
       tahunMasuk: DateTime(2020)
     );
   }
