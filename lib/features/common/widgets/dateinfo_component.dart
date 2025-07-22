@@ -7,11 +7,13 @@ class DateInfo extends StatelessWidget {
     required this.textTheme,
     this.date,
     this.customTextStyle,
+    this.customTextAlign
   });
 
   final TextTheme textTheme;
   final DateTime? date;
   final TextStyle? customTextStyle;
+  final TextAlign? customTextAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class DateInfo extends StatelessWidget {
 
     return Text(
       formatted,
-      textAlign: TextAlign.right,
+      textAlign: customTextAlign ?? TextAlign.right,
       style:
           customTextStyle ?? textTheme.labelLarge?.copyWith(color: Colors.grey),
     );
