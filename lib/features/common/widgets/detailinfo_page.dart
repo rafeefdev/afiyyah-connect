@@ -3,6 +3,7 @@ import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
+import 'package:afiyyah_connect/features/monitoring/model/detailpageinfos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +15,7 @@ class DetailinfoPage extends StatelessWidget {
   final List<Widget> additionalTiles;
   final PeriksaKlinikStatus periksaKlinikStatus;
   final Role role;
+  final DetailPageInfosStyle detailPageInfosStyle;
 
   const DetailinfoPage({
     required this.santri,
@@ -23,6 +25,7 @@ class DetailinfoPage extends StatelessWidget {
     this.additionalTiles = const [],
     this.periksaKlinikStatus = PeriksaKlinikStatus.none,
     required this.role,
+    this.detailPageInfosStyle = DetailPageInfosStyle.standard,
     super.key,
   });
 
