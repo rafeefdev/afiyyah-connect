@@ -13,6 +13,7 @@ class ListCardItem extends StatelessWidget {
   final String info;
   final Color? customNotchColor;
   final List<String> keluhan;
+  final List<Widget>? additionalTiles;
 
   const ListCardItem({
     required this.santri,
@@ -20,6 +21,7 @@ class ListCardItem extends StatelessWidget {
     this.customNotchColor,
     //TODO : use real keluhan
     this.keluhan = const ['demam', 'batuk', 'pilek'],
+    this.additionalTiles,
     super.key,
   });
 
@@ -44,7 +46,8 @@ class ListCardItem extends StatelessWidget {
             builder: (context) => DetailinfoPage(
               santri: santri,
               keluhan: keluhan,
-              // TODO : insert with real Role data
+              // TODO : insert with real Role data,
+              additionalTiles: additionalTiles ?? [],
               role: Role.resepsionisKlinik,
               sickTime: DateTime(2020),
             ),

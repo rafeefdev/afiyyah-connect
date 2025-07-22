@@ -100,6 +100,12 @@ class TabViewMonitoring extends StatelessWidget {
         ...List.generate(3, (index) {
           return ListCardItem(
             santri: Santri.generateDummyData(),
+            additionalTiles: [
+              ListTile(
+                title: Text('RS / Klinik Rujukan'),
+                leading: Icon(Icons.health_and_safety_rounded),
+              ),
+            ],
             info: 'Batuk, pilek, panas',
             customNotchColor: index < 2 ? colors[0] : colors[1],
           );
