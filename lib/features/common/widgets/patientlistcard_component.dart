@@ -1,8 +1,10 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
+import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/common/utils/get_initials.dart';
 import 'package:afiyyah_connect/features/common/widgets/detailinfo_dialog.dart';
+import 'package:afiyyah_connect/features/common/widgets/detailinfo_page.dart';
 import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +12,14 @@ class ListCardItem extends StatelessWidget {
   final Santri santri;
   final String info;
   final Color? customNotchColor;
+  final List<String> keluhan;
 
   const ListCardItem({
     required this.santri,
     required this.info,
     this.customNotchColor,
+    //TODO : use real keluhan
+    this.keluhan = const ['demam', 'batuk', 'pilek'],
     super.key,
   });
 
@@ -32,7 +37,20 @@ class ListCardItem extends StatelessWidget {
       ),
     );
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailinfoPage(
+              santri: santri,
+              keluhan: keluhan,
+              // TODO : insert with real Role data
+              role: Role.resepsionisKlinik,
+              sickTime: DateTime(2020),
+            ),
+          ),
+        );
+      },
       child: Card(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8, right: 8, top: 8),
