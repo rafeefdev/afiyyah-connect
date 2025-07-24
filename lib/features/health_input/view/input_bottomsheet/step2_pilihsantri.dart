@@ -1,5 +1,5 @@
-import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +12,23 @@ class Step2PilihSantri extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //TODO : save real santri data that fetched from supabase
+    final santri = ref.watch(pendataanKesehatanProvider).santri;
 
-    // Dummy santri data for demonstration
-    final santri = Santri(
-      id: '123',
-      name: 'Muhammad Isa',
-      tahunMasuk: DateTime(2022),
-      hujrohId: 'DMS',
-      kelasId: 'XIPA1',
-    );
+    // Fallback if santri is somehow null
+    if (santri == null) {
+      return Center(
+        child: Column(
+          children: [
+            const Text('Santri belum dipilih.'),
+            TextButton(
+              onPressed: () =>
+                  ref.read(stepcontrollerProviderProvider.notifier).previous(),
+              child: const Text('Kembali ke pencarian'),
+            ),
+          ],
+        ),
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,12 +38,27 @@ class Step2PilihSantri extends ConsumerWidget {
             vertical: AppSpacing.l,
             horizontal: AppSpacing.l,
           ),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Theme.of(
+              context,
+            ).colorScheme.surfaceVariant.withOpacity(0.5),
+          ),
           child: Row(
             children: [
-              const CircleAvatar(radius: 16),
+              const CircleAvatar(radius: 20, child: Icon(Icons.person)),
               const SizedBox(width: 12),
-              Text(santri.name),
+              Expanded(
+                child: Tooltip(
+                  message: santri.name,
+                  child: Text(
+                    santri.name,
+                    style: context.textTheme.titleMedium,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -48,7 +70,7 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  // TODO: display kelas based on the id
+                  labelText: 'Kelas',
                   hintText: santri.kelasId,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -63,7 +85,7 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  // TODO: display hujroh based on the id
+                  labelText: 'Hujroh',
                   hintText: santri.hujrohId,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -80,22 +102,20 @@ class Step2PilihSantri extends ConsumerWidget {
           children: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                ref.read(stepcontrollerProviderProvider.notifier).previous();
               },
-              child: const Text('batal'),
+              child: const Text('Kembali'),
             ),
-            SizedBox(width: AppSpacing.xl),
+            SizedBox(width: AppSpacing.m),
             FilledButton(
               onPressed: () {
-                // Set the santri in the state
-                ref.read(pendataanKesehatanProvider.notifier).setSantri(santri);
-                // Move to the next step
+                // Santri sudah di-set di state, jadi langsung lanjut
                 ref.read(stepcontrollerProviderProvider.notifier).next();
               },
               style: ButtonStyle(
                 fixedSize: WidgetStatePropertyAll(Size.fromWidth(120)),
               ),
-              child: const Text('lanjut'),
+              child: const Text('Lanjut'),
             ),
           ],
         ),

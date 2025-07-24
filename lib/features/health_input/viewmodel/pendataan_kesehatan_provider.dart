@@ -36,7 +36,7 @@ class PendataanKesehatanState {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class PendataanKesehatan extends _$PendataanKesehatan {
   @override
   PendataanKesehatanState build() {
