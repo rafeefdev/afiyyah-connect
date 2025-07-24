@@ -7,15 +7,12 @@ part of 'pendataan_kesehatan_provider.dart';
 // **************************************************************************
 
 String _$pendataanKesehatanHash() =>
-    r'00c8a908dff79871c2c3baff7270a8e44dcc0b17';
+    r'ed02f4437c3ed506ed2c3755d08161500256406b';
 
 /// See also [PendataanKesehatan].
 @ProviderFor(PendataanKesehatan)
 final pendataanKesehatanProvider =
-    AutoDisposeNotifierProvider<
-      PendataanKesehatan,
-      PendataanKesehatanState
-    >.internal(
+    NotifierProvider<PendataanKesehatan, PendataanKesehatanState>.internal(
       PendataanKesehatan.new,
       name: r'pendataanKesehatanProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -25,6 +22,6 @@ final pendataanKesehatanProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$PendataanKesehatan = AutoDisposeNotifier<PendataanKesehatanState>;
+typedef _$PendataanKesehatan = Notifier<PendataanKesehatanState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

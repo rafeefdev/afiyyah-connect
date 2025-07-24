@@ -6,7 +6,7 @@ part of 'santri_search_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$santriSearchHash() => r'36f1b2af5c5861a768b2674ebe7a471a5819fc38';
+String _$santriSearchHash() => r'c156574d3095b11393ff26af60705b9c5f45cf26';
 
 /// See also [SantriSearch].
 @ProviderFor(SantriSearch)
