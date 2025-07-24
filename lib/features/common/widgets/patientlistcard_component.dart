@@ -46,8 +46,8 @@ class ListCardItem extends StatelessWidget {
             builder: (context) => DetailinfoPage(
               santri: santri,
               keluhan: keluhan,
-              // TODO : insert with real Role data,
               additionalTiles: additionalTiles ?? [],
+              // TODO : insert with real Role data,
               role: Role.resepsionisKlinik,
               sickTime: DateTime(2020),
             ),
