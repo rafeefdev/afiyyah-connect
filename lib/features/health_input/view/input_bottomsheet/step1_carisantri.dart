@@ -50,7 +50,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
             data: (result) => _buildSearchResult(context, ref, result: result),
             loading: () => SizedBox(
               height: context.mq.size.height * 0.3,
-              child: const Center(child: CircularProgressIndicator()),
+              child: const Center(child: Text('sedang mencari data')),
             ),
             error: (err, stack) => Center(child: Text('Error: $err')),
           ),
@@ -80,7 +80,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
         prefixIcon: const Icon(Icons.search_rounded),
         suffixIcon: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: LoadingIndicator(isLoading: isLoading, strokeWidth: 2.6),
+          child: LoadingIndicator(isLoading: isLoading, loadingSize: 8),
         ),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -109,9 +109,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
     if (result.isEmpty) {
       return SizedBox(
         height: containerHeight,
-        child: const Center(
-          child: Text('Santri tidak ditemukan.'),
-        ),
+        child: const Center(child: Text('Santri tidak ditemukan.')),
       );
     }
 

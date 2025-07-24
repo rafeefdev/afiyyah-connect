@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/core/services/supabase_service.dart';
@@ -27,12 +28,11 @@ class SantriSearch extends _$SantriSearch {
       return;
     }
 
-    // Atur state ke loading untuk memberikan feedback ke UI
-    state = const AsyncValue.loading();
-
     // Debounce query untuk mencegah panggilan API berlebihan
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () async {
+      // Atur state ke loading HANYA KETIKA pencarian akan dimulai
+      state = const AsyncValue.loading();
       try {
         final supabase = ref.read(supabaseClientProvider);
         // TODO: Ganti 'santri' dengan nama tabel Anda dan 'name' dengan nama kolom yang sesuai
@@ -41,6 +41,8 @@ class SantriSearch extends _$SantriSearch {
             .select()
             .ilike('nama', '%$query%')
             .limit(5); // Batasi hasil untuk performa
+
+        log(response.toString());
 
         final santriList =
             response.map((data) => Santri.fromJson(data)).toList();

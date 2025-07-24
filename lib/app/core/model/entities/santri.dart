@@ -16,12 +16,22 @@ class Santri {
   // TODO: Sesuaikan nama field ('id', 'name', 'tahun_masuk', dll) dengan nama kolom di tabel Supabase Anda.
   factory Santri.fromJson(Map<String, dynamic> json) {
     return Santri(
-      id: json['id'].toString(),
+      // Kunci sudah benar, menggunakan 'santri_id'
+      id: json['santri_id'],
+
+      // Kunci sudah benar, menggunakan 'nama'
       name: json['nama'],
-      tahunMasuk: DateTime.parse(json['tahun_masuk']),
-      // TODO : insert real id
+
+      // FIX: 'tahun_masuk' adalah int (misal: 2023), bukan String. 
+      // Buat objek DateTime langsung dari tahun tersebut.
+      tahunMasuk: DateTime(json['tahun_masuk']),
+
+      // Kunci sudah benar, menggunakan 'hujroh'
       hujrohId: json['hujroh'],
-      kelasId: json['kelas'],
+
+      // FIX: 'jenjang' adalah int (misal: 9), sedangkan kelasId adalah String.
+      // Konversi int menjadi String.
+      kelasId: json['jenjang'].toString(),
     );
   }
 
@@ -30,8 +40,8 @@ class Santri {
       'id': id,
       'name': name,
       'tahun_masuk': tahunMasuk.toIso8601String(),
-      'hujroh_id': hujrohId,
-      'kelas_id': kelasId,
+      'hujroh_id': hujrohId.toString(),
+      'kelas_id': kelasId.toString(),
     };
   }
 
