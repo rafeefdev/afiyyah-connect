@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class Step2PilihSantri extends ConsumerWidget {
               onPressed: () =>
                   ref.read(stepcontrollerProviderProvider.notifier).previous(),
               child: const Text('Kembali ke pencarian'),
-            )
+            ),
           ],
         ),
       );
@@ -39,13 +40,25 @@ class Step2PilihSantri extends ConsumerWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+            color: Theme.of(
+              context,
+            ).colorScheme.surfaceVariant.withOpacity(0.5),
           ),
           child: Row(
             children: [
               const CircleAvatar(radius: 20, child: Icon(Icons.person)),
               const SizedBox(width: 12),
-              Text(santri.name, style: Theme.of(context).textTheme.titleMedium),
+              Expanded(
+                child: Tooltip(
+                  message: santri.name,
+                  child: Text(
+                    santri.name,
+                    style: context.textTheme.titleMedium,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

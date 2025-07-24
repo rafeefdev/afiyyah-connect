@@ -40,7 +40,7 @@ class SantriSearch extends _$SantriSearch {
             .from('data_santri')
             .select()
             .ilike('nama', '%$query%')
-            .limit(5); // Batasi hasil untuk performa
+            .limit(10); // Batasi hasil untuk performa
 
         log(response.toString());
 
