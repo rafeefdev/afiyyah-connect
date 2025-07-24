@@ -5,7 +5,7 @@ ThemeData appTheme = ThemeData(
   cardTheme: _cardThemeData(),
   floatingActionButtonTheme: _floatingActionButtonThemeData(),
   inputDecorationTheme: _inputDecorationTheme(),
-  outlinedButtonTheme: _outlinedButtonThemeData(),
+  // outlinedButtonTheme: _outlinedButtonThemeData(),
   tabBarTheme: TabBarThemeData(dividerHeight: 0),
   // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal, ),
 );
