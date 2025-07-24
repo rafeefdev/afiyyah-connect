@@ -46,24 +46,35 @@ class DetailinfoPage extends StatelessWidget {
             const SizedBox(height: 8),
             _buildBody(dateFormat),
             const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Visibility(
-                  visible: role == Role.resepsionisKlinik,
-                  child: Tooltip(
-                    message: 'Konfirmasi & tandai siap ke dokter',
-                    child: FilledButton(
-                      onPressed: () {},
-                      child: const Text('Konfirmasi'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _buildBottomAction(role: role),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBottomAction({required Role role}) {
+    List<Widget> bottomButtons = [];
+
+    switch (role) {
+      // TODO : add filter to case for santri condition where have go to clinic
+      case Role.asatidzPiketMaskan:
+        bottomButtons = [
+          OutlinedButton(onPressed: () {}, child: const Text('Delegasikan')),
+          FilledButton(onPressed: () {}, child: const Text('Antar')),
+        ];
+      case Role.resepsionisKlinik:
+        bottomButtons = [
+          // FilledButton(onPressed: () {}, child: const Text('')),
+          FilledButton(onPressed: () {}, child: const Text('Konfirmasi')),
+        ];
+      default:
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      spacing: 8,
+      children: bottomButtons,
     );
   }
 
