@@ -50,9 +50,9 @@ class Step2PilihSantri extends ConsumerWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Tooltip(
-                  message: santri.name,
+                  message: santri.name.toTitleCase(),
                   child: Text(
-                    santri.name,
+                    santri.name.toTitleCase(),
                     style: context.textTheme.titleMedium,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
