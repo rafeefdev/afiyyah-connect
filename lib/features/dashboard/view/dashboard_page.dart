@@ -23,20 +23,27 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    var data = widget.data;
 
     return Scaffold(
       body: SafeArea(
         child: ListView(
           padding: AppSpacing.pagePadding,
           children: [
-            _buildProfileBar(context, textTheme),
+            _buildProfileBar(context, context.textTheme),
             SizedBox(height: AppSpacing.l),
             _NotificationSection(),
             SizedBox(height: AppSpacing.l),
             _buildInsightsCard(context, widget.data),
             SizedBox(height: AppSpacing.l),
-            const TabViewCharts(),
+            TabViewCharts(
+              kasusPerHari: data.kasusPerHari,
+              kasusPerJenjang: data.kasusPerJenjang,
+              kasusPerAsrama: data.kasusPerAsrama,
+              pieJenisPenyakit: data.pieJenisPenyakit,
+              rujukanHariIni: data.rujukanHariIni,
+              sakitHariIni: data.sakitHariIni,
+            ),
             SizedBox(height: AppSpacing.l),
             _buildRujukanRumahSakit(context),
             SizedBox(height: AppSpacing.l),
@@ -111,7 +118,7 @@ class _DashboardPageState extends State<DashboardPage> {
 }
 
 class _NotificationSection extends StatelessWidget {
-  const _NotificationSection({super.key});
+  const _NotificationSection();
 
   @override
   Widget build(BuildContext context) {

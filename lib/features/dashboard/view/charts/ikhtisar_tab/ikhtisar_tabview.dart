@@ -2,7 +2,9 @@ import 'package:afiyyah_connect/features/dashboard/view/charts/ikhtisar_tab/time
 import 'package:flutter/material.dart';
 
 class IkhtisarTabview extends StatelessWidget {
-  const IkhtisarTabview({super.key});
+  final List<double> data;
+
+  const IkhtisarTabview({required this.data, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +12,7 @@ class IkhtisarTabview extends StatelessWidget {
       child: SizedBox(
         height: 300,
         child: Timeserieschart(
-          healthScores: const [2, 4, 8, 20, 17],
+          healthScores: data,
           title: 'Tren Mingguan',
           dotRadius: 3,
           showHighestPointIndicator: false,

@@ -3,13 +3,18 @@ import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 class DashboardData {
   final int totalSakitPekanIni;
   final double persentasePerbandinganPekanLalu;
+
   final String kasusTerbanyak;
   final int jumlahKasusTerbanyak;
+
   final int butuhIstirahatMaskan;
+
   final Map<String, int> kasusBaruHariIni;
-  final List<int> kasusPerHari;
-  final Map<String, List<int>> kasusPerJenjang;
-  final Map<String, List<int>> kasusPerAsrama;
+
+  //chart datas
+  final List<double> kasusPerHari;
+  final List<double> kasusPerJenjang;
+  final List<double> kasusPerAsrama;
   final Map<String, int> pieJenisPenyakit;
   final List<Santri> rujukanHariIni;
   final List<Santri> sakitHariIni;
@@ -39,15 +44,8 @@ class DashboardData {
       butuhIstirahatMaskan: 9,
       kasusBaruHariIni: {"Flu": 5, "Batuk": 3, "Demam": 2, "Pusing": 1},
       kasusPerHari: [2, 5, 4, 6, 3, 2, 3], // 7 hari terakhir (Senin - Ahad)
-      kasusPerJenjang: {
-        "Kelas 7": [1, 2, 1, 1, 0, 0, 1],
-        "Kelas 8": [0, 1, 2, 2, 1, 0, 0],
-        "Kelas 9": [1, 2, 1, 3, 2, 1, 2],
-      },
-      kasusPerAsrama: {
-        "Utara": [2, 3, 2, 3, 1, 1, 1],
-        "Selatan": [0, 2, 2, 3, 2, 1, 2],
-      },
+      kasusPerJenjang: [2, 4, 4, 6, 2, 8],
+      kasusPerAsrama: [24, 28],
       pieJenisPenyakit: {"Flu": 12, "Batuk": 6, "Demam": 4, "Pusing": 3},
       rujukanHariIni: [
         Santri(id: '1', nama: 'Ahmad Fauzi', jenjang: 8, tahunMasuk: 2021),
