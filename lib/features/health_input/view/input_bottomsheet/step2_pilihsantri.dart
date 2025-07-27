@@ -70,8 +70,7 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  labelText: 'Hujroh',
-                  hintText: santri.namaHujroh ?? 'N/A',
+                  labelText: santri.namaHujroh ?? 'N/A',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -85,7 +84,7 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  labelText: 'Jenjang',
+                  labelText: 'Kelas ${santri.jenjang?.toString() ?? 'N/A'}',
                   hintText: 'Tahun ke-${santri.jenjang?.toString() ?? 'N/A'}',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
