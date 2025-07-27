@@ -41,7 +41,7 @@ class DetailInfoDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        santri!.name,
+                        santri!.nama,
                         style: context.textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
@@ -49,13 +49,7 @@ class DetailInfoDialog extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        santri!.kelasId,
-                        style: context.textTheme.titleMedium?.copyWith(
-                          color: Colors.black54,
-                        ),
-                      ),
-                      Text(
-                        santri!.hujrohId,
+                        santri!.namaHujroh ?? 'Belum ada data hujroh',
                         style: context.textTheme.titleMedium?.copyWith(
                           color: Colors.black54,
                         ),

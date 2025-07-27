@@ -1,9 +1,9 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
+import 'package:afiyyah_connect/features/common/view_model/santri_search_viewmodel.dart'; // DIUBAH: Import provider baru
 import 'package:afiyyah_connect/features/common/widgets/loadingindicator_component.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
-import 'package:afiyyah_connect/features/health_input/viewmodel/santri_search_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,23 +21,24 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
   @override
   void initState() {
     super.initState();
-    _nameController.addListener(_onSearchChanged);
+    // Panggil search saat ada perubahan teks
+    _nameController.addListener(() {
+      ref
+          .read(santriSearchViewModelProvider.notifier) // DIUBAH: Gunakan notifier baru
+          .search(_nameController.text);
+    });
   }
 
   @override
   void dispose() {
-    _nameController.removeListener(_onSearchChanged);
     _nameController.dispose();
     super.dispose();
   }
 
-  void _onSearchChanged() {
-    ref.read(santriSearchProvider.notifier).search(_nameController.text);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final searchState = ref.watch(santriSearchProvider);
+    // DIUBAH: Pantau state dari provider baru
+    final searchState = ref.watch(santriSearchViewModelProvider);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSpacing.s),
@@ -50,7 +51,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
             data: (result) => _buildSearchResult(context, ref, result: result),
             loading: () => SizedBox(
               height: context.mq.size.height * 0.3,
-              child: const Center(child: Text('sedang mencari data')),
+              child: const Center(child: Text('Sedang mencari data...')),
             ),
             error: (err, stack) => Center(child: Text('Error: $err')),
           ),
@@ -131,7 +132,11 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
               // Pindah ke step selanjutnya
               ref.read(stepcontrollerProviderProvider.notifier).next();
             },
-            child: ListTile(title: Text(santri.name)),
+            // Menampilkan nama dan hujroh pada hasil pencarian
+            child: ListTile(
+              title: Text(santri.nama),
+              subtitle: Text(santri.namaHujroh ?? 'Belum ada data hujroh'),
+            ),
           );
         },
       ),
