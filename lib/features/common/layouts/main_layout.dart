@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/features/dashboard/dashboard_page.dart';
+import 'package:afiyyah_connect/features/dashboard/view/dashboard_page.dart';
 import 'package:afiyyah_connect/features/medical_history/view/history_page.dart';
 import 'package:afiyyah_connect/features/profile/view/profile_page.dart';
 import 'package:afiyyah_connect/features/monitoring/view/monitoring_page.dart';
