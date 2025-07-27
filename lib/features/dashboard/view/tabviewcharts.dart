@@ -1,11 +1,11 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/gedung_tab/gedung_tabview.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/ikhtisar_tab/ikhtisar_tabview.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/kelas_tab/kelas_tabview.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/penyakit_tab/diseasedistributionchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/gedung_tab/dormbarchart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/ikhtisar_tab/timeserieschart_component.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/penyakit_tab/penyakit_tabview.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/gedung_tab/gedung_tabview.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/ikhtisar_tab/ikhtisar_tabview.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/kelas_tab/kelas_tabview.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/penyakit_tab/diseasedistributionchart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/gedung_tab/dormbarchart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/ikhtisar_tab/timeserieschart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/penyakit_tab/penyakit_tabview.dart';
 import 'package:flutter/material.dart';
 
 class TabViewCharts extends StatefulWidget {

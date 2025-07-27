@@ -1,5 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/dashboard/charts/gedung_tab/dormbarchart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/gedung_tab/dormbarchart_component.dart';
 import 'package:flutter/material.dart';
 
 class GedungTabview extends StatelessWidget {

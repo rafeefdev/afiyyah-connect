@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/features/dashboard/charts/ikhtisar_tab/timeserieschart_component.dart';
+import 'package:afiyyah_connect/features/dashboard/view/charts/ikhtisar_tab/timeserieschart_component.dart';
 import 'package:flutter/material.dart';
 
 class IkhtisarTabview extends StatelessWidget {

@@ -3,9 +3,9 @@ import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
-import 'package:afiyyah_connect/features/dashboard/alertcardinfo_component.dart';
-import 'package:afiyyah_connect/features/dashboard/tabviewcharts.dart';
-import 'package:afiyyah_connect/features/dashboard/insight_card.dart';
+import 'package:afiyyah_connect/features/dashboard/view/alertcardinfo_component.dart';
+import 'package:afiyyah_connect/features/dashboard/view/tabviewcharts.dart';
+import 'package:afiyyah_connect/features/dashboard/view/insight_card.dart';
 import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dart';
 import 'package:flutter/material.dart';
 
