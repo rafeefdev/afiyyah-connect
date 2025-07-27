@@ -1,8 +1,10 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
+import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
+import 'package:afiyyah_connect/features/dashboard/model/dashboard_data.dart';
 import 'package:afiyyah_connect/features/dashboard/view/alertcardinfo_component.dart';
 import 'package:afiyyah_connect/features/dashboard/view/tabviewcharts.dart';
 import 'package:afiyyah_connect/features/dashboard/view/insight_card.dart';
@@ -10,8 +12,9 @@ import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dar
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
-  final String role;
-  const DashboardPage({required this.role, super.key});
+  final Role role;
+  final DashboardData data;
+  const DashboardPage({required this.role, required this.data, super.key});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -31,7 +34,7 @@ class _DashboardPageState extends State<DashboardPage> {
             SizedBox(height: AppSpacing.l),
             _NotificationSection(),
             SizedBox(height: AppSpacing.l),
-            _buildInsightsCard(context),
+            _buildInsightsCard(context, widget.data),
             SizedBox(height: AppSpacing.l),
             const TabViewCharts(),
             SizedBox(height: AppSpacing.l),
@@ -123,7 +126,20 @@ class _NotificationSection extends StatelessWidget {
   }
 }
 
-Widget _buildInsightsCard(BuildContext context) {
+Widget _buildInsightsCard(BuildContext context, DashboardData data) {
+  int totalKasusBaruHariIni = data.kasusBaruHariIni.values.fold(
+    0,
+    (a, b) => a + b,
+  );
+
+  Map<String, int> displayTodayCase() {
+    // TODO : inspect alghorithm reliability
+    var initialData = data.kasusBaruHariIni;
+    //get top three disease with biggest count
+    initialData.values.toList().sort((a, b) => a.compareTo(b));
+    return initialData;
+  }
+
   return Column(
     children: [
       Row(
@@ -131,15 +147,16 @@ Widget _buildInsightsCard(BuildContext context) {
           insightCard(
             context,
             title: 'Total Sakit',
-            value: '78',
-            explanation: '+12% dari pekan lalu',
+            value: data.totalSakitPekanIni.toString(),
+            explanation:
+                '${data.persentasePerbandinganPekanLalu} dari pekan lalu',
           ),
           const SizedBox(width: 4),
           insightCard(
             context,
             title: 'Kasus Terbanyak',
-            value: 'Flu',
-            explanation: '35 siswa terdampak',
+            value: data.kasusTerbanyak,
+            explanation: '${data.jumlahKasusTerbanyak} santri terdampak',
           ),
         ],
       ),
@@ -149,14 +166,16 @@ Widget _buildInsightsCard(BuildContext context) {
           insightCard(
             context,
             title: 'Butuh Istirahat Maskan',
-            value: '23',
+            value: "${data.butuhIstirahatMaskan}",
+            //TODO : fetch real value
             explanation: 'Disetujui : 18\nPending : 5',
           ),
           const SizedBox(width: 4),
           insightCard(
             context,
             title: 'Kasus Hari Ini',
-            value: '12',
+            value: totalKasusBaruHariIni.toString(),
+            //TODO : display real cases
             explanation: '6 Kasus flu, 4 demam, 2 lainnya',
           ),
         ],

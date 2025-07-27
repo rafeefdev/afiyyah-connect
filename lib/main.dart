@@ -10,7 +10,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  // TODO: Pastikan Anda telah mengisi SUPABASE_URL dan SUPABASE_ANON_KEY di file .env Anda
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
     anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
         theme: appTheme,
-        home: const MainLayout(),
+        home: MainLayout(),
       ),
     );
   }
