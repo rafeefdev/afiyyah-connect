@@ -50,9 +50,9 @@ class Step2PilihSantri extends ConsumerWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Tooltip(
-                  message: santri.name.toTitleCase(),
+                  message: santri.nama.toTitleCase(),
                   child: Text(
-                    santri.name.toTitleCase(),
+                    santri.nama.toTitleCase(),
                     style: context.textTheme.titleMedium,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -70,8 +70,8 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  labelText: 'Kelas',
-                  hintText: santri.kelasId,
+                  labelText: 'Hujroh',
+                  hintText: santri.namaHujroh ?? 'N/A',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -85,8 +85,8 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  labelText: 'Hujroh',
-                  hintText: santri.hujrohId,
+                  labelText: 'Jenjang',
+                  hintText: 'Tahun ke-${santri.jenjang?.toString() ?? 'N/A'}',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,

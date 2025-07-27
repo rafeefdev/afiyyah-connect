@@ -27,9 +27,9 @@ class ListCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String santriInitial = getInitials(santri.name);
+    String santriInitial = getInitials(santri.nama);
     //TODO : implement real kelas
-    String kelas = santri.kelasId;
+    String kelasDanHujroh = santri.namaHujroh ?? 'Belum ada data';
     var notchIndicator = Container(
       width: 8,
       height: 45,
@@ -69,10 +69,10 @@ class ListCardItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(santri.name, style: context.textTheme.titleSmall),
+                  Text(santri.nama, style: context.textTheme.titleSmall),
                   // TODO : display kelas and hujroh
                   Text(
-                    'Kelas 10A • Kamar A-15',
+                    kelasDanHujroh,
                     style: context.textTheme.bodyMedium!.copyWith(
                       color: Colors.grey.shade700,
                     ),

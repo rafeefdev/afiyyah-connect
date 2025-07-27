@@ -1,57 +1,44 @@
+/// Merepresentasikan data detail seorang santri yang diambil dari view `v_santri_detail`.
 class Santri {
-  String id;
-  String name;
-  DateTime tahunMasuk;
-  String hujrohId;
-  String kelasId;
+  final String id;
+  final String nama;
+  final int? jenjang;
+  final int? tahunMasuk;
+  final String? namaHujroh;
 
   Santri({
     required this.id,
-    required this.name,
-    required this.tahunMasuk,
-    required this.hujrohId,
-    required this.kelasId,
+    required this.nama,
+    this.jenjang,
+    this.tahunMasuk,
+    this.namaHujroh,
   });
 
-  // TODO: Sesuaikan nama field ('id', 'name', 'tahun_masuk', dll) dengan nama kolom di tabel Supabase Anda.
+  /// Membuat instance Santri dari JSON object.
+  /// Didesain untuk menjadi null-safe dan cocok dengan kolom dari `v_santri_detail`.
   factory Santri.fromJson(Map<String, dynamic> json) {
     return Santri(
-      // Kunci sudah benar, menggunakan 'santri_id'
-      id: json['santri_id'],
-
-      // Kunci sudah benar, menggunakan 'nama'
-      name: json['nama'],
-
-      // FIX: 'tahun_masuk' adalah int (misal: 2023), bukan String. 
-      // Buat objek DateTime langsung dari tahun tersebut.
-      tahunMasuk: DateTime(json['tahun_masuk']),
-
-      // Kunci sudah benar, menggunakan 'hujroh'
-      hujrohId: json['hujroh'],
-
-      // FIX: 'jenjang' adalah int (misal: 9), sedangkan kelasId adalah String.
-      // Konversi int menjadi String.
-      kelasId: json['jenjang'].toString(),
+      id: json['santri_id'] as String? ?? '',
+      nama: json['nama'] as String? ?? 'Tanpa Nama',
+      jenjang: json['jenjang'] as int?,
+      tahunMasuk: json['tahun_masuk'] as int?,
+      namaHujroh: json['nama_hujroh'] as String?,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'tahun_masuk': tahunMasuk.toIso8601String(),
-      'hujroh_id': hujrohId.toString(),
-      'kelas_id': kelasId.toString(),
-    };
-  }
-
-  static Santri generateDummyData() {
+  /// Membuat data dummy untuk keperluan UI prototyping.
+  factory Santri.generateDummyData() {
     return Santri(
-      id: '18437123786',
-      kelasId: 'X IPA 1',
-      name: 'Fulan Doe',
-      hujrohId: 'Damaskus',
-      tahunMasuk: DateTime(2020)
+      id: 'dummy-id',
+      nama: 'Fulan bin Fulan',
+      jenjang: 3,
+      tahunMasuk: 2022,
+      namaHujroh: 'Kamar A-15',
     );
+  }
+
+  @override
+  String toString() {
+    return 'Santri(id: $id, nama: $nama, namaHujroh: $namaHujroh)';
   }
 }
