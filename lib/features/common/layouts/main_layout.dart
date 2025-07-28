@@ -11,11 +11,13 @@ import 'package:afiyyah_connect/features/common/view_model/main_layout_view_mode
 class MainLayout extends ConsumerWidget {
   MainLayout({super.key});
 
+  // TODO : fetch real data for dashboard
+
   // Daftar halaman yang akan ditampilkan sesuai dengan tab yang dipilih
   final List<Widget> _pages = <Widget>[
     DashboardPage(role: Role.asatidzPiketMaskan, data: DashboardData.dummy()),
-    MonitoringPage(),
-    HistoryPage(),
+    const MonitoringPage(),
+    const HistoryPage(),
   ];
 
   @override
