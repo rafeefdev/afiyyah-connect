@@ -1,4 +1,6 @@
-import 'package:afiyyah_connect/features/dashboard/dashboard_page.dart';
+import 'package:afiyyah_connect/app/core/model/user.dart';
+import 'package:afiyyah_connect/features/dashboard/model/dashboard_data.dart';
+import 'package:afiyyah_connect/features/dashboard/view/dashboard_page.dart';
 import 'package:afiyyah_connect/features/medical_history/view/history_page.dart';
 import 'package:afiyyah_connect/features/profile/view/profile_page.dart';
 import 'package:afiyyah_connect/features/monitoring/view/monitoring_page.dart';
@@ -7,13 +9,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:afiyyah_connect/features/common/view_model/main_layout_view_model.dart';
 
 class MainLayout extends ConsumerWidget {
-  const MainLayout({super.key});
+  MainLayout({super.key});
+
+  // TODO : fetch real data for dashboard
 
   // Daftar halaman yang akan ditampilkan sesuai dengan tab yang dipilih
-  static const List<Widget> _pages = <Widget>[
-    DashboardPage(role: ''),
-    MonitoringPage(),
-    HistoryPage(),
+  final List<Widget> _pages = <Widget>[
+    DashboardPage(role: Role.asatidzPiketMaskan, data: DashboardData.dummy()),
+    const MonitoringPage(),
+    const HistoryPage(),
   ];
 
   @override
