@@ -18,24 +18,28 @@ class AuthPage extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Visibility(
-                visible: isError,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: alertCard(
-                    context,
-                    // TODO : give more suitable message based on user problem
-                    title: 'Akun belum terdaftar',
-                    alertMessage:
-                        'Mohon hubungi bagian kesehatan Kesantrian Putra untuk mendaftarkan akun Anda',
-                  ),
-                ),
-              ),
+              _buildErrorNotification(isError, context),
               const SizedBox(height: 320),
               _buildBottomLogin(context),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildErrorNotification(bool isError, BuildContext context) {
+    return Visibility(
+      visible: isError,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: alertCard(
+          context,
+          // TODO : give more suitable message based on user problem
+          title: 'Akun belum terdaftar',
+          alertMessage:
+              'Mohon hubungi bagian kesehatan Kesantrian Putra untuk mendaftarkan akun Anda',
+        ),
       ),
     );
   }
@@ -70,7 +74,12 @@ class AuthPage extends StatelessWidget {
           ),
           const SizedBox(height: 48),
           FilledButton(
-            onPressed: () {},
+            onPressed: () {
+              //TODO : google sign-in method
+            },
+            style: FilledButton.styleFrom(
+              fixedSize: Size(context.mq.size.width * 0.85, 52),
+            ),
             child: const Text('Login dengan akun Google'),
           ),
         ],
