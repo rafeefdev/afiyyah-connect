@@ -1,4 +1,4 @@
-package com.example.afiyyah_connect
+package com.ibaska.afiyyah_connect
 
 import io.flutter.embedding.android.FlutterActivity
 
