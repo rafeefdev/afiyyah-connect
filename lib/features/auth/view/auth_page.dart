@@ -13,6 +13,8 @@ class AuthPage extends ConsumerStatefulWidget {
 }
 
 class _AuthPageState extends ConsumerState<AuthPage> {
+  // Kunci global untuk mengidentifikasi dan mengelola state Form.
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
 
   @override
@@ -23,7 +25,6 @@ class _AuthPageState extends ConsumerState<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Listener untuk state changes (menampilkan snackbar, dll)
     ref.listen<AuthState>(authProviderProvider, (previous, next) {
       if (next.status == AuthStatus.error) {
         _showFeedbackSnackBar(context, message: next.message ?? 'Terjadi kesalahan', isError: true);
@@ -105,51 +106,73 @@ class _AuthPageState extends ConsumerState<AuthPage> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          TextField(
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.email_rounded, color: Colors.black45),
-              hintText: 'Email Anda',
-            ),
-            enabled: !isLoading,
-          ),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              _horizontalLineDivider(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: FilledButton(
-                  onPressed: isLoading
-                      ? null
-                      : () {
-                          // Panggil method login dari provider
-                          ref.read(authProviderProvider.notifier).loginWithEmail(_emailController.text.trim());
-                        },
-                  child: isLoading
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                        )
-                      : Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Icon(Icons.login_rounded),
-                            SizedBox(width: 12),
-                            Text('Login'),
-                          ],
-                        ),
-                ),
+      // Membungkus kolom dengan widget Form.
+      child: Form(
+        key: _formKey, // Menetapkan kunci ke Form.
+        child: Column(
+          children: [
+            // Mengubah TextField menjadi TextFormField.
+            TextFormField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.email_rounded, color: Colors.black45),
+                hintText: 'Email Anda',
               ),
-              _horizontalLineDivider(),
-            ],
-          ),
-        ],
+              enabled: !isLoading,
+              // Memberikan validasi otomatis saat pengguna berinteraksi.
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              // Logika validator.
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Email tidak boleh kosong';
+                }
+                // Regex sederhana untuk validasi format email.
+                final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                if (!emailRegex.hasMatch(value)) {
+                  return 'Masukkan format email yang valid';
+                }
+                return null; // Kembalikan null jika valid.
+              },
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                _horizontalLineDivider(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: FilledButton(
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            // Memvalidasi form sebelum melanjutkan.
+                            if (_formKey.currentState!.validate()) {
+                              // Jika form valid, panggil method login.
+                              ref.read(authProviderProvider.notifier).loginWithEmail(_emailController.text.trim());
+                            }
+                          },
+                    child: isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          )
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(Icons.login_rounded),
+                              SizedBox(width: 12),
+                              Text('Login'),
+                            ],
+                          ),
+                  ),
+                ),
+                _horizontalLineDivider(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
