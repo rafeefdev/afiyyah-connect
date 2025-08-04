@@ -1,6 +1,7 @@
+import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_themedata.dart';
-import 'package:afiyyah_connect/features/auth/repository/auth_repository.dart';
 import 'package:afiyyah_connect/features/auth/view/auth_page.dart';
+import 'package:afiyyah_connect/features/auth/view_model/app_user_provider.dart';
 import 'package:afiyyah_connect/features/common/layouts/main_layout.dart';
 import 'package:afiyyah_connect/features/common/widgets/loadingindicator_component.dart';
 import 'package:device_preview/device_preview.dart';
@@ -45,23 +46,26 @@ class AuthWrapper extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Mendengarkan stream perubahan status otentikasi
-    final authState = ref.watch(authStateChangesProvider);
+    // Mendengarkan provider status pengguna aplikasi
+    final appUserState = ref.watch(appUserProvider);
 
-    return authState.when(
-      data: (state) {
-        // Jika ada sesi yang aktif (pengguna sudah login)
-        if (state.session != null) {
-          return MainLayout();
+    return appUserState.when(
+      data: (user) {
+        // Jika data 'user' tidak null, artinya pengguna sudah login
+        // dan profilnya berhasil diambil.
+        if (user != null) {
+          // Teruskan data pengguna ke MainLayout
+          return MainLayout(user: user);
         }
-        // Jika tidak ada sesi (pengguna belum login)
+        // Jika 'user' null, arahkan ke halaman login.
         return const AuthPage();
       },
-      // Tampilkan loading indicator saat stream sedang menunggu data awal
+      // Tampilkan loading indicator saat stream sedang menunggu data,
+      // misalnya saat profil sedang diambil setelah login.
       loading: () => const Scaffold(
         body: Center(child: LoadingIndicator(isLoading: true)),
       ),
-      // Tampilkan pesan error jika terjadi masalah pada stream
+      // Tampilkan pesan error jika terjadi masalah pada stream.
       error: (error, stackTrace) =>
           Scaffold(body: Center(child: Text('Terjadi kesalahan: $error'))),
     );
