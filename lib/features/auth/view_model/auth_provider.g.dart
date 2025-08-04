@@ -1,30 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'santri_search_viewmodel.dart';
+part of 'auth_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$santriSearchViewModelHash() =>
-    r'9746f2282ab4fbafb587ef057420516ddabbf98f';
+String _$authProviderHash() => r'cdb2fe1174487d5fc4d5b022ac29fe6c0d9b7fd2';
 
-/// See also [SantriSearchViewModel].
-@ProviderFor(SantriSearchViewModel)
-final santriSearchViewModelProvider =
-    AutoDisposeAsyncNotifierProvider<
-      SantriSearchViewModel,
-      List<Santri>
-    >.internal(
-      SantriSearchViewModel.new,
-      name: r'santriSearchViewModelProvider',
+/// See also [AuthProvider].
+@ProviderFor(AuthProvider)
+final authProviderProvider =
+    AutoDisposeNotifierProvider<AuthProvider, AuthState>.internal(
+      AuthProvider.new,
+      name: r'authProviderProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$santriSearchViewModelHash,
+          : _$authProviderHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$SantriSearchViewModel = AutoDisposeAsyncNotifier<List<Santri>>;
+typedef _$AuthProvider = AutoDisposeNotifier<AuthState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
