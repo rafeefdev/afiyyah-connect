@@ -1,0 +1,3 @@
+ancestorEntries = ["android/app/src/main/AndroidManifest.xml"]
+ourEntries = ["android/app/src/main/AndroidManifest.xml"]
+theirEntries = ["android/app/src/main/AndroidManifest.xml"]
