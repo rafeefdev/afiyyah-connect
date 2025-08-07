@@ -1,6 +1,7 @@
 // features/auth/viewmodel/auth_provider.dart
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:afiyyah_connect/features/auth/model/authstate_model.dart';
 import 'package:afiyyah_connect/features/auth/repository/auth_repository.dart';
@@ -38,6 +39,7 @@ class AuthProvider extends _$AuthProvider {
     } catch (e) {
       // Menangani error
       state = AuthState(AuthStatus.error, 'Terjadi kesalahan: ${e.toString()}');
+      log('error : $e');
     }
   }
 
