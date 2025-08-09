@@ -1,11 +1,9 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/string_extension.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
-import 'package:afiyyah_connect/features/common/utils/get_initials.dart';
-import 'package:afiyyah_connect/features/common/widgets/detailinfo_dialog.dart';
 import 'package:afiyyah_connect/features/common/widgets/detailinfo_page.dart';
-import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
 import 'package:flutter/material.dart';
 
 class ListCardItem extends StatelessWidget {
@@ -27,7 +25,6 @@ class ListCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String santriInitial = getInitials(santri.nama);
     //TODO : implement real kelas
     String kelasDanHujroh = santri.namaHujroh ?? 'Belum ada data';
     var notchIndicator = Container(
@@ -64,7 +61,7 @@ class ListCardItem extends StatelessWidget {
                 child: notchIndicator,
               ),
               const SizedBox(width: 16),
-              CircleAvatar(child: Text(santriInitial)),
+              CircleAvatar(child: Text(santri.nama.getInitials())),
               SizedBox(width: AppSpacing.m),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

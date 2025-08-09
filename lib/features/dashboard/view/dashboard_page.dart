@@ -1,13 +1,7 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/auth/repository/auth_repository.dart';
-import 'package:afiyyah_connect/features/auth/view_model/app_user_provider.dart';
-import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
-import 'package:afiyyah_connect/features/common/utils/extension/string_extension.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
-import 'package:afiyyah_connect/features/common/utils/get_initials.dart';
-import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/model/dashboard_data.dart';
 import 'package:afiyyah_connect/features/dashboard/view/components/alertcardinfo_component.dart';

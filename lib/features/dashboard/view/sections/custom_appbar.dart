@@ -4,7 +4,6 @@ import 'package:afiyyah_connect/features/auth/repository/auth_repository.dart';
 import 'package:afiyyah_connect/features/auth/view_model/app_user_provider.dart';
 import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
-import 'package:afiyyah_connect/features/common/utils/get_initials.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,7 +42,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
       child: Row(
         spacing: AppSpacing.m,
         children: [
-          CircleAvatar(child: Text(getInitials(user.fullName))),
+          CircleAvatar(child: Text(user.fullName.getInitials())),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -84,7 +83,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
                 child: CircleAvatar(
                   radius: 30,
                   child: Text(
-                    getInitials(user.fullName),
+                    user.fullName.getInitials(),
                     style: context.textTheme.headlineSmall,
                   ),
                 ),
