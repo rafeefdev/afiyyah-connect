@@ -15,8 +15,9 @@ Stream<UserModel?> appUser(AppUserRef ref) {
 
   // Mendengarkan perubahan status otentikasi dari Supabase
   return authRepository.authStateChanges.asyncMap((state) async {
-    // Jika event adalah 'signedIn', artinya pengguna berhasil login.
-    if (state.event == AuthChangeEvent.signedIn && state.session != null) {
+    // Jika ada sesi yang aktif (baik login baru atau sesi yang dipulihkan),
+    // coba ambil profil pengguna.
+    if (state.session != null) {
       try {
         // Ambil profil pengguna dari database
         final userProfile = await authRepository.fetchUserProfile();
@@ -28,7 +29,7 @@ Stream<UserModel?> appUser(AppUserRef ref) {
         return null;
       }
     }
-    // Untuk event lain (signedOut, etc.), kembalikan null.
+    // Jika tidak ada sesi, kembalikan null.
     return null;
   });
 }

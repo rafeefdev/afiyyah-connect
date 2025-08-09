@@ -20,41 +20,15 @@ class MainLayout extends ConsumerWidget {
     final currentIndex = ref.watch(mainLayoutViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Afiyyah Connect'),
-        // Menampilkan nama dan role pengguna
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(20.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                '${user.name} - ${user.role.name}',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white70),
-              ),
-            ),
-          ),
-        ),
-        actions: [
-          // Tombol Logout
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              ref.read(authProviderProvider.notifier).signOut();
-            },
-            tooltip: 'Logout',
-          ),
-        ],
-      ),
       body: IndexedStack(
         index: currentIndex < pages.length ? currentIndex : 0,
         children: pages,
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentIndex < pages.length ? currentIndex : 0,
-        onDestinationSelected: (index) =>
-            ref.read(mainLayoutViewModelProvider.notifier).onDestinationSelected(index),
+        onDestinationSelected: (index) => ref
+            .read(mainLayoutViewModelProvider.notifier)
+            .onDestinationSelected(index),
         destinations: _getDestinationsForRole(user.role),
       ),
     );
@@ -66,19 +40,17 @@ class MainLayout extends ConsumerWidget {
     switch (role) {
       case Role.asatidzPiketMaskan:
         return [
-          DashboardPage(role: role, data: DashboardData.dummy()),
+          DashboardPage(user: user, data: DashboardData.dummy()),
           const MonitoringPage(),
           const HistoryPage(),
         ];
       case Role.resepsionisKlinik:
         return [
-          DashboardPage(role: role, data: DashboardData.dummy()),
+          DashboardPage(user: user, data: DashboardData.dummy()),
           const HistoryPage(),
         ];
       case Role.dokter:
-        return [
-          const HistoryPage(),
-        ];
+        return [const HistoryPage()];
       default:
         return [const Center(child: Text('Role tidak dikenali.'))];
     }
