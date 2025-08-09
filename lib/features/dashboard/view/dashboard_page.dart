@@ -30,7 +30,7 @@ class _DashboardPageState extends State<DashboardPage> {
         child: ListView(
           padding: AppSpacing.pagePadding,
           children: [
-            _buildProfileBar(context, context.textTheme),
+            _buildCustomAppBar(context, context.textTheme),
             SizedBox(height: AppSpacing.l),
             _NotificationSection(),
             SizedBox(height: AppSpacing.l),
@@ -60,22 +60,11 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _buildProfileBar(BuildContext context, TextTheme textTheme) {
+  Widget _buildCustomAppBar(BuildContext context, TextTheme textTheme) {
     return Row(
-      spacing: AppSpacing.m,
       children: [
-        CircleAvatar(child: const Text('FD')),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Fulan Doe', style: context.textTheme.titleSmall),
-            Text(
-              'Piket Maskan',
-              style: context.textTheme.bodySmall!.copyWith(color: Colors.grey),
-            ),
-          ],
-        ),
-        Spacer(),
+        _buildProfileBar(context),
+        const Spacer(),
         DateInfo(
           textTheme: textTheme,
           customTextStyle: context.textTheme.labelSmall!.copyWith(
@@ -83,6 +72,30 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildProfileBar(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Row(
+        spacing: AppSpacing.m,
+        children: [
+          CircleAvatar(child: const Text('FD')),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Fulan Doe', style: context.textTheme.titleSmall),
+              Text(
+                'Piket Maskan',
+                style: context.textTheme.bodySmall!.copyWith(
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
