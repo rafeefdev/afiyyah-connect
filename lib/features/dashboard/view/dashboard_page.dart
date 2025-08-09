@@ -1,7 +1,10 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/string_extension.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
+import 'package:afiyyah_connect/features/common/utils/get_initials.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/model/dashboard_data.dart';
@@ -10,31 +13,25 @@ import 'package:afiyyah_connect/features/dashboard/view/tabviewcharts.dart';
 import 'package:afiyyah_connect/features/dashboard/view/insight_card.dart';
 import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DashboardPage extends StatefulWidget {
-  final Role role;
+class DashboardPage extends ConsumerWidget {
+  final UserModel user;
   final DashboardData data;
-  const DashboardPage({required this.role, required this.data, super.key});
+  const DashboardPage({required this.user, required this.data, super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
-}
-
-class _DashboardPageState extends State<DashboardPage> {
-  @override
-  Widget build(BuildContext context) {
-    var data = widget.data;
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: ListView(
           padding: AppSpacing.pagePadding,
           children: [
-            _buildCustomAppBar(context, context.textTheme),
+            _buildCustomAppBar(context, ref),
             SizedBox(height: AppSpacing.l),
-            _NotificationSection(),
+            const _NotificationSection(),
             SizedBox(height: AppSpacing.l),
-            _buildInsightsCard(context, widget.data),
+            _buildInsightsCard(context, data),
             SizedBox(height: AppSpacing.l),
             TabViewCharts(
               kasusPerHari: data.kasusPerHari,
@@ -60,13 +57,13 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _buildCustomAppBar(BuildContext context, TextTheme textTheme) {
+  Widget _buildCustomAppBar(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        _buildProfileBar(context),
+        _buildProfileBar(context, ref),
         const Spacer(),
         DateInfo(
-          textTheme: textTheme,
+          textTheme: context.textTheme,
           customTextStyle: context.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w300,
           ),
@@ -75,19 +72,19 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _buildProfileBar(BuildContext context) {
+  Widget _buildProfileBar(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: () {},
+      onTap: () => _showUserInfoDialog(context, ref),
       child: Row(
         spacing: AppSpacing.m,
         children: [
-          CircleAvatar(child: const Text('FD')),
+          CircleAvatar(child: Text(getInitials(user.name))),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Fulan Doe', style: context.textTheme.titleSmall),
+              Text(user.name, style: context.textTheme.titleSmall),
               Text(
-                'Piket Maskan',
+                user.role.name,
                 style: context.textTheme.bodySmall!.copyWith(
                   color: Colors.grey,
                 ),
@@ -96,6 +93,87 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showUserInfoDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Informasi Pengguna'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: CircleAvatar(
+                  radius: 30,
+                  child: Text(
+                    getInitials(user.name),
+                    style: context.textTheme.headlineSmall,
+                  ),
+                ),
+              ),
+              SizedBox(height: AppSpacing.l),
+              Text('Nama', style: context.textTheme.labelMedium),
+              Text(user.name, style: context.textTheme.bodyLarge),
+              SizedBox(height: AppSpacing.m),
+              Text('Email', style: context.textTheme.labelMedium),
+              Text('user.email', style: context.textTheme.bodyLarge),
+              SizedBox(height: AppSpacing.m),
+              Text('Role', style: context.textTheme.labelMedium),
+              Text(user.role.name, style: context.textTheme.bodyLarge),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Tutup'),
+            ),
+            FilledButton.tonal(
+              style: FilledButton.styleFrom(
+                backgroundColor: context.colorScheme.errorContainer,
+                foregroundColor: context.colorScheme.onErrorContainer,
+              ),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(); // Close the info dialog
+                _showSignOutConfirmationDialog(context, ref);
+              },
+              child: const Text('Sign Out'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showSignOutConfirmationDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Konfirmasi Sign Out'),
+          content: const Text('Apakah Anda yakin ingin keluar dari akun ini?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Batal'),
+            ),
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: context.colorScheme.error,
+                foregroundColor: context.colorScheme.onError,
+              ),
+              onPressed: () {
+                ref.read(authProviderProvider.notifier).signOut();
+                Navigator.of(dialogContext).pop(); // Close confirmation dialog
+              },
+              child: const Text('Ya, Keluar'),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -151,14 +229,6 @@ Widget _buildInsightsCard(BuildContext context, DashboardData data) {
     0,
     (a, b) => a + b,
   );
-
-  Map<String, int> displayTodayCase() {
-    // TODO : inspect alghorithm reliability
-    var initialData = data.kasusBaruHariIni;
-    //get top three disease with biggest count
-    initialData.values.toList().sort((a, b) => a.compareTo(b));
-    return initialData;
-  }
 
   return Column(
     children: [
