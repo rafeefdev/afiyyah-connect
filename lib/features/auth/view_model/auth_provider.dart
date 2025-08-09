@@ -17,8 +17,8 @@ class AuthProvider extends _$AuthProvider {
     return AuthState(AuthStatus.idle);
   }
 
-  // Fungsi untuk login dengan email
-  Future<void> loginWithEmail(String email) async {
+  // Fungsi untuk mengirim OTP ke email
+  Future<void> sendOtp(String email) async {
     // Mengambil AuthRepository
     final authRepository = ref.read(authRepositoryProvider);
     
@@ -33,13 +33,25 @@ class AuthProvider extends _$AuthProvider {
         return;
       }
 
-      // Mengirim magic link
-      await authRepository.sendMagicLink(email);
-      state = AuthState(AuthStatus.success, 'Magic link berhasil dikirim. Silakan periksa email Anda.');
+      // Mengirim OTP
+      await authRepository.sendOtp(email);
+      state = AuthState(AuthStatus.otpSent, 'Kode OTP berhasil dikirim. Silakan periksa email Anda.');
     } catch (e) {
       // Menangani error
       state = AuthState(AuthStatus.error, 'Terjadi kesalahan: ${e.toString()}');
       log('error : $e');
+    }
+  }
+
+  // Fungsi untuk verifikasi OTP
+  Future<void> verifyOtp(String email, String otp) async {
+    final authRepository = ref.read(authRepositoryProvider);
+    state = AuthState(AuthStatus.loading);
+    try {
+      await authRepository.verifyOtp(email: email, otp: otp);
+      state = AuthState(AuthStatus.success, 'Login berhasil!');
+    } catch (e) {
+      state = AuthState(AuthStatus.error, 'Gagal verifikasi OTP: ${e.toString()}');
     }
   }
 

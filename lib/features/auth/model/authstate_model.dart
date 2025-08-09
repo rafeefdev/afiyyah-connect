@@ -1,4 +1,4 @@
-enum AuthStatus { idle, loading, success, error }
+enum AuthStatus { idle, loading, success, error, otpSent }
 
 class AuthState {
   final AuthStatus status;

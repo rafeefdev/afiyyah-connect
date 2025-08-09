@@ -10,7 +10,8 @@ part 'auth_repository.g.dart';
 
 abstract class AuthRepository {
   Future<bool> isEmailAllowed(String email);
-  Future<void> sendMagicLink(String email);
+  Future<void> sendOtp(String email);
+  Future<void> verifyOtp({required String email, required String otp});
   // Tipe data dikoreksi untuk menggunakan AuthState dari paket Supabase.
   Stream<supabase.AuthState> get authStateChanges;
   // Tipe data dikoreksi untuk menggunakan Session dari paket Supabase.
@@ -35,11 +36,18 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> sendMagicLink(String email) async {
+  Future<void> sendOtp(String email) async {
     await _supabase.auth.signInWithOtp(
       email: email,
-      emailRedirectTo: 'com.example.afiyyah_connect://login-callback',
-      // emailRedirectTo: 'io.supabase.flutterquickstart://login-callback/',
+    );
+  }
+
+  @override
+  Future<void> verifyOtp({required String email, required String otp}) async {
+    await _supabase.auth.verifyOTP(
+      type: supabase.OtpType.email,
+      token: otp,
+      email: email,
     );
   }
 
