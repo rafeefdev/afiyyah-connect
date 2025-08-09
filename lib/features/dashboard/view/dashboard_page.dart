@@ -78,13 +78,13 @@ class DashboardPage extends ConsumerWidget {
       child: Row(
         spacing: AppSpacing.m,
         children: [
-          CircleAvatar(child: Text(getInitials(user.name))),
+          CircleAvatar(child: Text(getInitials(user.fullName))),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(user.name, style: context.textTheme.titleSmall),
+              Text(user.fullName, style: context.textTheme.titleSmall),
               Text(
-                user.role.name,
+                Role.name(user.role),
                 style: context.textTheme.bodySmall!.copyWith(
                   color: Colors.grey,
                 ),
@@ -101,7 +101,13 @@ class DashboardPage extends ConsumerWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Informasi Pengguna'),
+          title: Text(
+            'Informasi Pengguna',
+            style: context.textTheme.titleLarge!.copyWith(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,20 +116,35 @@ class DashboardPage extends ConsumerWidget {
                 child: CircleAvatar(
                   radius: 30,
                   child: Text(
-                    getInitials(user.name),
+                    getInitials(user.fullName),
                     style: context.textTheme.headlineSmall,
                   ),
                 ),
               ),
               SizedBox(height: AppSpacing.l),
-              Text('Nama', style: context.textTheme.labelMedium),
-              Text(user.name, style: context.textTheme.bodyLarge),
+              Text(
+                'Nama',
+                style: context.textTheme.labelMedium!.copyWith(
+                  color: Colors.blueGrey,
+                ),
+              ),
+              Text(user.fullName, style: context.textTheme.bodyLarge),
               SizedBox(height: AppSpacing.m),
-              Text('Email', style: context.textTheme.labelMedium),
-              Text('user.email', style: context.textTheme.bodyLarge),
+              Text(
+                'Email',
+                style: context.textTheme.labelMedium!.copyWith(
+                  color: Colors.blueGrey,
+                ),
+              ),
+              Text(user.email, style: context.textTheme.bodyLarge),
               SizedBox(height: AppSpacing.m),
-              Text('Role', style: context.textTheme.labelMedium),
-              Text(user.role.name, style: context.textTheme.bodyLarge),
+              Text(
+                'Role',
+                style: context.textTheme.labelMedium!.copyWith(
+                  color: Colors.blueGrey,
+                ),
+              ),
+              Text(Role.name(user.role), style: context.textTheme.bodyLarge),
             ],
           ),
           actions: [
