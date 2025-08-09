@@ -1,6 +1,8 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/auth/repository/auth_repository.dart';
+import 'package:afiyyah_connect/features/auth/view_model/app_user_provider.dart';
 import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/string_extension.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
@@ -22,12 +24,15 @@ class DashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Listen to user changes to rebuild the UI with the new name
+    final updatedUser = ref.watch(appUserProvider).asData?.value ?? user;
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
           padding: AppSpacing.pagePadding,
           children: [
-            _buildCustomAppBar(context, ref),
+            _buildCustomAppBar(context, ref, updatedUser),
             SizedBox(height: AppSpacing.l),
             const _NotificationSection(),
             SizedBox(height: AppSpacing.l),
@@ -57,10 +62,14 @@ class DashboardPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildCustomAppBar(BuildContext context, WidgetRef ref) {
+  Widget _buildCustomAppBar(
+    BuildContext context,
+    WidgetRef ref,
+    UserModel currentUser,
+  ) {
     return Row(
       children: [
-        _buildProfileBar(context, ref),
+        _buildProfileBar(context, ref, currentUser),
         const Spacer(),
         DateInfo(
           textTheme: context.textTheme,
@@ -72,9 +81,13 @@ class DashboardPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildProfileBar(BuildContext context, WidgetRef ref) {
+  Widget _buildProfileBar(
+    BuildContext context,
+    WidgetRef ref,
+    UserModel currentUser,
+  ) {
     return InkWell(
-      onTap: () => _showUserInfoDialog(context, ref),
+      onTap: () => _showUserInfoDialog(context, ref, currentUser),
       child: Row(
         spacing: AppSpacing.m,
         children: [
@@ -82,7 +95,7 @@ class DashboardPage extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(user.fullName, style: context.textTheme.titleSmall),
+              Text(currentUser.fullName, style: context.textTheme.titleSmall),
               Text(
                 Role.name(user.role),
                 style: context.textTheme.bodySmall!.copyWith(
@@ -96,7 +109,11 @@ class DashboardPage extends ConsumerWidget {
     );
   }
 
-  void _showUserInfoDialog(BuildContext context, WidgetRef ref) {
+  void _showUserInfoDialog(
+    BuildContext context,
+    WidgetRef ref,
+    UserModel currentUser,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
@@ -104,8 +121,7 @@ class DashboardPage extends ConsumerWidget {
           title: Text(
             'Informasi Pengguna',
             style: context.textTheme.titleLarge!.copyWith(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w400,
             ),
           ),
           content: Column(
@@ -122,13 +138,7 @@ class DashboardPage extends ConsumerWidget {
                 ),
               ),
               SizedBox(height: AppSpacing.l),
-              Text(
-                'Nama',
-                style: context.textTheme.labelMedium!.copyWith(
-                  color: Colors.blueGrey,
-                ),
-              ),
-              Text(user.fullName, style: context.textTheme.bodyLarge),
+              _buildUserName(dialogContext, context, ref, currentUser),
               SizedBox(height: AppSpacing.m),
               Text(
                 'Email',
@@ -136,7 +146,7 @@ class DashboardPage extends ConsumerWidget {
                   color: Colors.blueGrey,
                 ),
               ),
-              Text(user.email, style: context.textTheme.bodyLarge),
+              Text(currentUser.email, style: context.textTheme.bodyLarge),
               SizedBox(height: AppSpacing.m),
               Text(
                 'Role',
@@ -144,7 +154,10 @@ class DashboardPage extends ConsumerWidget {
                   color: Colors.blueGrey,
                 ),
               ),
-              Text(Role.name(user.role), style: context.textTheme.bodyLarge),
+              Text(
+                Role.name(currentUser.role),
+                style: context.textTheme.bodyLarge,
+              ),
             ],
           ),
           actions: [
@@ -162,6 +175,99 @@ class DashboardPage extends ConsumerWidget {
                 _showSignOutConfirmationDialog(context, ref);
               },
               child: const Text('Sign Out'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  InkWell _buildUserName(
+    BuildContext dialogContext,
+    BuildContext context,
+    WidgetRef ref,
+    UserModel currentUser,
+  ) {
+    return InkWell(
+      onDoubleTap: () {
+        Navigator.of(dialogContext).pop(); // Close info dialog
+        _showEditNameDialog(context, ref, currentUser);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Nama',
+            style: context.textTheme.labelMedium!.copyWith(
+              color: Colors.blueGrey,
+            ),
+          ),
+          Text(currentUser.fullName, style: context.textTheme.bodyLarge),
+        ],
+      ),
+    );
+  }
+
+  void _showEditNameDialog(
+    BuildContext context,
+    WidgetRef ref,
+    UserModel currentUser,
+  ) {
+    final formKey = GlobalKey<FormState>();
+    final nameController = TextEditingController(text: currentUser.fullName);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Ubah Nama'),
+          content: Form(
+            key: formKey,
+            child: TextFormField(
+              controller: nameController,
+              autofocus: true,
+              decoration: const InputDecoration(labelText: 'Nama Lengkap'),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Nama tidak boleh kosong';
+                }
+                return null;
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Batal'),
+            ),
+            FilledButton(
+              onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  final newName = nameController.text.trim();
+                  Navigator.of(dialogContext).pop(); // Close edit dialog
+
+                  try {
+                    await ref
+                        .read(authRepositoryProvider)
+                        .updateUserName(newName);
+                    ref.refresh(appUserProvider); // Refresh user data
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Nama berhasil diperbarui.'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Gagal memperbarui nama: $e'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                }
+              },
+              child: const Text('Simpan'),
             ),
           ],
         );
@@ -204,7 +310,6 @@ class DashboardPage extends ConsumerWidget {
       children: [
         Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
-        // TODO : generate rujukan rumah sakit list
         ListCardItem(santri: Santri.generateDummyData(), info: 'Demam tinggi'),
       ],
     );
@@ -216,7 +321,6 @@ class DashboardPage extends ConsumerWidget {
       children: [
         Text('Santri Sakit Hari Ini', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
-        // TODO : generate rujukan rumah sakit list
         ...List.generate(
           3,
           (index) => ListCardItem(
@@ -278,7 +382,6 @@ Widget _buildInsightsCard(BuildContext context, DashboardData data) {
             context,
             title: 'Butuh Istirahat Maskan',
             value: "${data.butuhIstirahatMaskan}",
-            //TODO : fetch real value
             explanation: 'Disetujui : 18\nPending : 5',
           ),
           const SizedBox(width: 4),
@@ -286,7 +389,6 @@ Widget _buildInsightsCard(BuildContext context, DashboardData data) {
             context,
             title: 'Kasus Hari Ini',
             value: totalKasusBaruHariIni.toString(),
-            //TODO : display real cases
             explanation: '6 Kasus flu, 4 demam, 2 lainnya',
           ),
         ],

@@ -19,6 +19,7 @@ abstract class AuthRepository {
   Future<void> signOut();
 
   Future<UserModel> fetchUserProfile();
+  Future<void> updateUserName(String newName);
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -88,6 +89,18 @@ class AuthRepositoryImpl implements AuthRepository {
       );
     } catch (e) {
       throw Exception('Gagal mengambil profil pengguna: $e');
+    }
+  }
+
+  @override
+  Future<void> updateUserName(String newName) async {
+    try {
+      await _supabase.rpc(
+        'update_user_name',
+        params: {'new_name': newName},
+      );
+    } catch (e) {
+      throw Exception('Gagal memperbarui nama pengguna: $e');
     }
   }
 }
