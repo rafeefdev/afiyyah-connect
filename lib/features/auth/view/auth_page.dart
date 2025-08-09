@@ -1,5 +1,6 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/auth/model/authstate_model.dart';
+import 'package:afiyyah_connect/features/auth/view/insertotp_page.dart';
 import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,14 @@ class _AuthPageState extends ConsumerState<AuthPage> {
     ref.listen<AuthState>(authProviderProvider, (previous, next) {
       if (next.status == AuthStatus.error) {
         _showFeedbackSnackBar(context, message: next.message ?? 'Terjadi kesalahan', isError: true);
-      } else if (next.status == AuthStatus.success) {
+      } else if (next.status == AuthStatus.otpSent) {
         _showFeedbackSnackBar(context, message: next.message ?? 'Sukses');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OtpPage(email: _emailController.text.trim()),
+          ),
+        );
       }
     });
 
@@ -90,7 +97,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
         ),
         const SizedBox(height: 12),
         Text(
-          'Masukkan email terdaftar untuk mulai menggunakan aplikasi',
+          'Masukkan email terdaftar untuk mendapatkan kode OTP',
           textAlign: TextAlign.center,
           style: context.textTheme.bodyLarge!.copyWith(
             fontWeight: FontWeight.w300,
@@ -145,11 +152,12 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                   child: FilledButton(
                     onPressed: isLoading
                         ? null
-                        : () {
+                        :
+                          () {
                             // Memvalidasi form sebelum melanjutkan.
                             if (_formKey.currentState!.validate()) {
                               // Jika form valid, panggil method login.
-                              ref.read(authProviderProvider.notifier).loginWithEmail(_emailController.text.trim());
+                              ref.read(authProviderProvider.notifier).sendOtp(_emailController.text.trim());
                             }
                           },
                     child: isLoading
@@ -161,9 +169,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                         : Row(
                             mainAxisSize: MainAxisSize.min,
                             children: const [
-                              Icon(Icons.login_rounded),
+                              Icon(Icons.send_rounded),
                               SizedBox(width: 12),
-                              Text('Login'),
+                              Text('Kirim Kode OTP'),
                             ],
                           ),
                   ),
@@ -178,7 +186,8 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   }
 
   void _showFeedbackSnackBar(
-    BuildContext context, {
+    BuildContext context,
+    {
     required String message,
     bool isError = false,
   }) {
