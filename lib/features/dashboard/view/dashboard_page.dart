@@ -1,16 +1,13 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
-import 'package:afiyyah_connect/features/common/utils/extension/string_extension.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
-import 'package:afiyyah_connect/features/common/utils/get_initials.dart';
-import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/model/dashboard_data.dart';
-import 'package:afiyyah_connect/features/dashboard/view/alertcardinfo_component.dart';
-import 'package:afiyyah_connect/features/dashboard/view/tabviewcharts.dart';
-import 'package:afiyyah_connect/features/dashboard/view/insight_card.dart';
+import 'package:afiyyah_connect/features/dashboard/view/components/alertcardinfo_component.dart';
+import 'package:afiyyah_connect/features/dashboard/view/sections/custom_appbar.dart';
+import 'package:afiyyah_connect/features/dashboard/view/sections/tabviewcharts.dart';
+import 'package:afiyyah_connect/features/dashboard/view/components/insight_card.dart';
 import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +24,7 @@ class DashboardPage extends ConsumerWidget {
         child: ListView(
           padding: AppSpacing.pagePadding,
           children: [
-            _buildCustomAppBar(context, ref),
+            CustomDashboardAppBar(user: user),
             SizedBox(height: AppSpacing.l),
             const _NotificationSection(),
             SizedBox(height: AppSpacing.l),
@@ -57,133 +54,12 @@ class DashboardPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildCustomAppBar(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        _buildProfileBar(context, ref),
-        const Spacer(),
-        DateInfo(
-          textTheme: context.textTheme,
-          customTextStyle: context.textTheme.labelSmall!.copyWith(
-            fontWeight: FontWeight.w300,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProfileBar(BuildContext context, WidgetRef ref) {
-    return InkWell(
-      onTap: () => _showUserInfoDialog(context, ref),
-      child: Row(
-        spacing: AppSpacing.m,
-        children: [
-          CircleAvatar(child: Text(getInitials(user.name))),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(user.name, style: context.textTheme.titleSmall),
-              Text(
-                user.role.name,
-                style: context.textTheme.bodySmall!.copyWith(
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showUserInfoDialog(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: const Text('Informasi Pengguna'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: CircleAvatar(
-                  radius: 30,
-                  child: Text(
-                    getInitials(user.name),
-                    style: context.textTheme.headlineSmall,
-                  ),
-                ),
-              ),
-              SizedBox(height: AppSpacing.l),
-              Text('Nama', style: context.textTheme.labelMedium),
-              Text(user.name, style: context.textTheme.bodyLarge),
-              SizedBox(height: AppSpacing.m),
-              Text('Email', style: context.textTheme.labelMedium),
-              Text('user.email', style: context.textTheme.bodyLarge),
-              SizedBox(height: AppSpacing.m),
-              Text('Role', style: context.textTheme.labelMedium),
-              Text(user.role.name, style: context.textTheme.bodyLarge),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Tutup'),
-            ),
-            FilledButton.tonal(
-              style: FilledButton.styleFrom(
-                backgroundColor: context.colorScheme.errorContainer,
-                foregroundColor: context.colorScheme.onErrorContainer,
-              ),
-              onPressed: () {
-                Navigator.of(dialogContext).pop(); // Close the info dialog
-                _showSignOutConfirmationDialog(context, ref);
-              },
-              child: const Text('Sign Out'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showSignOutConfirmationDialog(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: const Text('Konfirmasi Sign Out'),
-          content: const Text('Apakah Anda yakin ingin keluar dari akun ini?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Batal'),
-            ),
-            FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: context.colorScheme.error,
-                foregroundColor: context.colorScheme.onError,
-              ),
-              onPressed: () {
-                ref.read(authProviderProvider.notifier).signOut();
-                Navigator.of(dialogContext).pop(); // Close confirmation dialog
-              },
-              child: const Text('Ya, Keluar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Widget _buildRujukanRumahSakit(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
-        // TODO : generate rujukan rumah sakit list
         ListCardItem(santri: Santri.generateDummyData(), info: 'Demam tinggi'),
       ],
     );
@@ -195,7 +71,6 @@ class DashboardPage extends ConsumerWidget {
       children: [
         Text('Santri Sakit Hari Ini', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
-        // TODO : generate rujukan rumah sakit list
         ...List.generate(
           3,
           (index) => ListCardItem(
@@ -257,7 +132,6 @@ Widget _buildInsightsCard(BuildContext context, DashboardData data) {
             context,
             title: 'Butuh Istirahat Maskan',
             value: "${data.butuhIstirahatMaskan}",
-            //TODO : fetch real value
             explanation: 'Disetujui : 18\nPending : 5',
           ),
           const SizedBox(width: 4),
@@ -265,7 +139,6 @@ Widget _buildInsightsCard(BuildContext context, DashboardData data) {
             context,
             title: 'Kasus Hari Ini',
             value: totalKasusBaruHariIni.toString(),
-            //TODO : display real cases
             explanation: '6 Kasus flu, 4 demam, 2 lainnya',
           ),
         ],

@@ -4,24 +4,47 @@ enum Role {
   asatidzPiketMaskan,
   resepsionisKlinik,
   dokter,
-  unknown // Role default jika terjadi kesalahan parsing
+  unknown;
+  // Role default jika terjadi kesalahan parsing
+
+  static String name(Role role) {
+    switch (role) {
+      case Role.asatidzPiketMaskan:
+        return 'Asatidz Piket Maskan';
+      case Role.resepsionisKlinik:
+        return 'Resepsionis Klinik';
+      case Role.dokter:
+        return 'Dokter';
+      case Role.unknown:
+        return 'Unknown';
+    }
+  }
 }
 
 // Model untuk merepresentasikan data pengguna yang sudah diautentikasi.
 class UserModel {
   final String id;
-  final String name;
+  final String fullName;
+  final String email;
   final Role role;
 
-  UserModel({required this.id, required this.name, required this.role});
+  UserModel({
+    required this.id,
+    required this.fullName,
+    required this.email,
+    required this.role,
+  });
 
-  // Factory constructor untuk membuat instance UserModel dari JSON (Map).
-  // Ini digunakan untuk mengubah data yang diterima dari Supabase menjadi objek Dart.
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  // Factory constructor untuk membuat instance UserModel dari data profil dan email.
+  factory UserModel.fromProfile({
+    required Map<String, dynamic> profileJson,
+    required String email,
+  }) {
     return UserModel(
-      id: json['id'] as String,
-      name: json['full_name'] as String? ?? 'Tanpa Nama', // Fallback jika nama null
-      role: _parseRole(json['role'] as String?), // Memanggil fungsi parsing role
+      id: profileJson['id'] as String,
+      fullName: profileJson['full_name'] as String? ?? 'Tanpa Nama',
+      email: email,
+      role: _parseRole(profileJson['role'] as String?),
     );
   }
 

@@ -66,4 +66,17 @@ class AuthProvider extends _$AuthProvider {
       state = AuthState(AuthStatus.error, 'Gagal logout: ${e.toString()}');
     }
   }
+
+  // Fungsi untuk update nama pengguna
+  Future<void> updateUserName(String newName) async {
+    final authRepository = ref.read(authRepositoryProvider);
+    state = AuthState(AuthStatus.loading);
+    try {
+      await authRepository.updateUserName(newName);
+      // Tidak perlu mengubah state di sini karena UI akan di-refresh oleh appUserProvider
+      state = AuthState(AuthStatus.success, 'Nama berhasil diperbarui.');
+    } catch (e) {
+      state = AuthState(AuthStatus.error, 'Gagal memperbarui nama: ${e.toString()}');
+    }
+  }
 }

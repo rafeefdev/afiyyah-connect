@@ -1,5 +1,4 @@
 import 'package:afiyyah_connect/app/core/model/user.dart';
-import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
 import 'package:afiyyah_connect/features/dashboard/model/dashboard_data.dart';
 import 'package:afiyyah_connect/features/dashboard/view/dashboard_page.dart';
 import 'package:afiyyah_connect/features/medical_history/view/history_page.dart';
