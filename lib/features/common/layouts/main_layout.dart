@@ -39,13 +39,19 @@ class MainLayout extends ConsumerWidget {
     switch (role) {
       case Role.asatidzPiketMaskan:
         return [
-          DashboardPage(user: user, data: DashboardData.dummy()),
+          DashboardPage(
+            user: user,
+            data: DashboardData.dummy(isEmptyData: true),
+          ),
           const MonitoringPage(),
           const HistoryPage(),
         ];
       case Role.resepsionisKlinik:
         return [
-          DashboardPage(user: user, data: DashboardData.dummy()),
+          DashboardPage(
+            user: user,
+            data: DashboardData.dummy(isEmptyData: true),
+          ),
           const HistoryPage(),
         ];
       case Role.dokter:

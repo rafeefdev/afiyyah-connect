@@ -45,17 +45,9 @@ class DashboardData {
             jumlahKasusTerbanyak: 0,
             butuhIstirahatMaskan: 0,
             kasusBaruHariIni: {},
-            kasusPerHari: [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-            ], // 7 hari terakhir (Senin - Ahad)
-            kasusPerJenjang: [],
-            kasusPerAsrama: [],
+            kasusPerHari: List.filled(7, 0), // 7 hari terakhir (Senin - Ahad)
+            kasusPerJenjang: List.filled(6, 0), // Asumsi 6 jenjang
+            kasusPerAsrama: List.filled(2, 0), // Asumsi 2 asrama
             pieJenisPenyakit: {},
             rujukanHariIni: [],
             sakitHariIni: [],
