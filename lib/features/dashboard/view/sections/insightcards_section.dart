@@ -18,16 +18,14 @@ class InsightCardsSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            insightCard(
-              context,
+            InsightCard(
               title: 'Total Sakit',
               value: data.totalSakitPekanIni.toString(),
               explanation:
                   '${data.persentasePerbandinganPekanLalu} dari pekan lalu',
             ),
             const SizedBox(width: 4),
-            insightCard(
-              context,
+            InsightCard(
               title: 'Kasus Terbanyak',
               value: data.kasusTerbanyak,
               explanation: '${data.jumlahKasusTerbanyak} santri terdampak',
@@ -37,15 +35,13 @@ class InsightCardsSection extends StatelessWidget {
         const SizedBox(height: 4),
         Row(
           children: [
-            insightCard(
-              context,
+            InsightCard(
               title: 'Butuh Istirahat Maskan',
               value: "${data.butuhIstirahatMaskan}",
               explanation: 'Disetujui : 18\nPending : 5',
             ),
             const SizedBox(width: 4),
-            insightCard(
-              context,
+            InsightCard(
               title: 'Kasus Hari Ini',
               value: totalKasusBaruHariIni.toString(),
               explanation: '6 Kasus flu, 4 demam, 2 lainnya',
