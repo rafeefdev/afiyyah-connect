@@ -1,7 +1,6 @@
-import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/monitoring/view/insightcardNDateInfo_component.dart';
-import 'package:afiyyah_connect/features/monitoring/view/tabviewmonitoring.dart';
+import 'package:afiyyah_connect/features/monitoring/view/tabs/monitoring_tabview.dart';
 import 'package:flutter/material.dart';
 
 class MonitoringPage extends StatefulWidget {
@@ -35,8 +34,7 @@ class _MonitoringPageState extends State<MonitoringPage>
       body: Stack(
         children: [
           // Background image that extends beyond the visible area
-          _buildBackgroundImage(appBarHeight),
-
+          BackGroundImage(appBarHeight: appBarHeight),
           // Main content using NestedScrollView
           NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -103,8 +101,15 @@ class _MonitoringPageState extends State<MonitoringPage>
       ),
     );
   }
+}
 
-  Widget _buildBackgroundImage(double appBarHeight) {
+class BackGroundImage extends StatelessWidget {
+  final double appBarHeight;
+
+  const BackGroundImage({required this.appBarHeight, super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Positioned(
       top: 0,
       left: 0,
