@@ -5,7 +5,7 @@ import 'package:afiyyah_connect/features/dashboard/view/charts/kelas_tab/kelas_t
 import 'package:afiyyah_connect/features/dashboard/view/charts/penyakit_tab/penyakit_tabview.dart';
 import 'package:flutter/material.dart';
 
-class TabViewCharts extends StatefulWidget {
+class ChartsSection extends StatefulWidget {
   final List<double> kasusPerHari;
   final List<double> kasusPerJenjang;
   final List<double> kasusPerAsrama;
@@ -13,7 +13,7 @@ class TabViewCharts extends StatefulWidget {
   final List<Santri> rujukanHariIni;
   final List<Santri> sakitHariIni;
 
-  const TabViewCharts({
+  const ChartsSection({
     required this.kasusPerHari,
     required this.kasusPerJenjang,
     required this.kasusPerAsrama,
@@ -24,10 +24,10 @@ class TabViewCharts extends StatefulWidget {
   });
 
   @override
-  State<TabViewCharts> createState() => TabViewChartsState();
+  State<ChartsSection> createState() => ChartsSectionState();
 }
 
-class TabViewChartsState extends State<TabViewCharts>
+class ChartsSectionState extends State<ChartsSection>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
