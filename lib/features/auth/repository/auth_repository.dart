@@ -1,7 +1,7 @@
-// lib/features/auth/repository/auth_repository.dart
-
 import 'package:afiyyah_connect/app/core/model/user.dart';
+import 'package:afiyyah_connect/app/core/services/logger_service.dart';
 import 'package:afiyyah_connect/app/core/services/supabase_service.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 // Mengimpor paket Supabase dengan alias 'supabase' untuk menghindari konflik nama.
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
@@ -23,33 +23,56 @@ abstract class AuthRepository {
 }
 
 class AuthRepositoryImpl implements AuthRepository {
-  // Tipe data dikoreksi untuk menggunakan SupabaseClient dari paket Supabase.
   final supabase.SupabaseClient _supabase;
+  final Logger _log = LoggerService.getLogger('AuthRepository');
+
   AuthRepositoryImpl(this._supabase);
 
   @override
   Future<bool> isEmailAllowed(String email) async {
-    final response = await _supabase.rpc(
-      'is_email_allowed',
-      params: {'input_email': email},
-    );
-    return response as bool? ?? false;
+    _log.info('Checking if email is allowed: $email');
+    try {
+      final response = await _supabase.rpc(
+        'is_email_allowed',
+        params: {'input_email': email},
+      );
+      final isAllowed = response as bool? ?? false;
+      _log.fine('Email $email allowed: $isAllowed');
+      return isAllowed;
+    } catch (e, st) {
+      _log.severe('Failed to check if email is allowed', e, st);
+      rethrow;
+    }
   }
 
   @override
   Future<void> sendOtp(String email) async {
-    await _supabase.auth.signInWithOtp(
-      email: email,
-    );
+    _log.info('Sending OTP to: $email');
+    try {
+      await _supabase.auth.signInWithOtp(
+        email: email,
+      );
+      _log.fine('OTP sent successfully to $email');
+    } catch (e, st) {
+      _log.severe('Failed to send OTP to $email', e, st);
+      rethrow;
+    }
   }
 
   @override
   Future<void> verifyOtp({required String email, required String otp}) async {
-    await _supabase.auth.verifyOTP(
-      type: supabase.OtpType.email,
-      token: otp,
-      email: email,
-    );
+    _log.info('Verifying OTP for: $email');
+    try {
+      await _supabase.auth.verifyOTP(
+        type: supabase.OtpType.email,
+        token: otp,
+        email: email,
+      );
+      _log.fine('OTP verified successfully for $email');
+    } catch (e, st) {
+      _log.severe('Failed to verify OTP for $email', e, st);
+      rethrow;
+    }
   }
 
   @override
@@ -63,11 +86,19 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> signOut() async {
-    await _supabase.auth.signOut();
+    _log.info('Signing out');
+    try {
+      await _supabase.auth.signOut();
+      _log.fine('Signed out successfully');
+    } catch (e, st) {
+      _log.severe('Failed to sign out', e, st);
+      rethrow;
+    }
   }
 
   @override
   Future<UserModel> fetchUserProfile() async {
+    _log.info('Fetching user profile');
     try {
       final currentUser = _supabase.auth.currentUser;
       if (currentUser == null) {
@@ -83,23 +114,29 @@ class AuthRepositoryImpl implements AuthRepository {
           .eq('id', currentUser.id)
           .single();
 
-      return UserModel.fromProfile(
+      final user = UserModel.fromProfile(
         profileJson: response,
         email: currentUser.email!,
       );
-    } catch (e) {
+      _log.fine('User profile fetched successfully for ${user.email}');
+      return user;
+    } catch (e, st) {
+      _log.severe('Failed to fetch user profile', e, st);
       throw Exception('Gagal mengambil profil pengguna: $e');
     }
   }
 
   @override
   Future<void> updateUserName(String newName) async {
+    _log.info('Updating user name to: $newName');
     try {
       await _supabase.rpc(
         'update_user_name',
         params: {'new_name': newName},
       );
-    } catch (e) {
+      _log.fine('User name updated successfully');
+    } catch (e, st) {
+      _log.severe('Failed to update user name', e, st);
       throw Exception('Gagal memperbarui nama pengguna: $e');
     }
   }

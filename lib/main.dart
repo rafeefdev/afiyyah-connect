@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/app/core/model/user.dart';
+import 'package:afiyyah_connect/app/core/services/logger_service.dart';
 import 'package:afiyyah_connect/app/themes/app_themedata.dart';
 import 'package:afiyyah_connect/features/auth/repository/auth_repository.dart';
 import 'package:afiyyah_connect/features/auth/view/auth_page.dart';
@@ -14,6 +14,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LoggerService.setupLogger();
   await dotenv.load(fileName: ".env");
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
