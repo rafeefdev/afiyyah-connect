@@ -112,38 +112,47 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                           children: [
                             AspectRatio(
                               aspectRatio: 2.4,
-                              child: PieChart(
-                                PieChartData(
-                                  pieTouchData: _pieTouchData(),
-                                  borderData: FlBorderData(show: false),
-                                  sectionsSpace: 1,
-                                  centerSpaceRadius: centerSpaceRadius,
-                                  sections: _buildPieChartSections(
-                                    displayedData,
-                                    totalCount,
-                                    radius,
-                                    titleFontSize,
+                              child: widget.diseaseData.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        'Tidak ada data',
+                                        style: context.textTheme.bodySmall
+                                            ?.copyWith(color: Colors.grey),
+                                      ),
+                                    )
+                                  : PieChart(
+                                      PieChartData(
+                                        pieTouchData: _pieTouchData(),
+                                        borderData: FlBorderData(show: false),
+                                        sectionsSpace: 1,
+                                        centerSpaceRadius: centerSpaceRadius,
+                                        sections: _buildPieChartSections(
+                                          displayedData,
+                                          totalCount,
+                                          radius,
+                                          titleFontSize,
+                                        ),
+                                      ),
+                                    ),
+                            ),
+                            if (widget.diseaseData.isNotEmpty)
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    totalCount.toString(),
+                                    style: TextStyle(
+                                      fontSize: titleFontSize,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Siswa',
+                                    style: TextStyle(fontSize: legendFontSize),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  totalCount.toString(),
-                                  style: TextStyle(
-                                    fontSize: titleFontSize,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Siswa',
-                                  style: TextStyle(fontSize: legendFontSize),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                       ),
@@ -151,7 +160,9 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
                   ),
 
                   // Floating Legend
-                  if (widget.showLegend && touchedIndex != -1)
+                  if (widget.showLegend &&
+                      touchedIndex != -1 &&
+                      widget.diseaseData.isNotEmpty)
                     Positioned(
                       top: 7.5,
                       right: 20,

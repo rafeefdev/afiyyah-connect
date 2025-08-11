@@ -187,6 +187,24 @@ class _DormBarChartState extends State<DormBarChartComponent> {
             0,
             (sum, d) => sum + d.value,
           );
+          if (total == 0) {
+            return BarTooltipItem(
+              '${data.label}\n',
+              const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: '0 Santri',
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.8),
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            );
+          }
           final percentage = ((data.value / total) * 100).toStringAsFixed(1);
 
           return BarTooltipItem(
@@ -233,6 +251,10 @@ class _DormBarChartState extends State<DormBarChartComponent> {
   }
 
   double _calculateOptimalMaxY() {
+    if (widget.dataList.isEmpty) {
+      return widget.interval * 2; // Default max Y when no data
+    }
+
     final maxDataValue = widget.dataList
         .map((e) => e.value)
         .reduce((a, b) => a > b ? a : b);
