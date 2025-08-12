@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
+import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:flutter/material.dart';
 
@@ -28,36 +29,9 @@ class PatientsReferralSection extends StatelessWidget {
             }),
           )
         else
-          Container(
-            width: context.mq.size.width,
-            height: 120,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black54,
-                width: 0.2,
-                style: BorderStyle.solid,
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 8,
-              children: [
-                Icon(
-                  Icons.check_circle_outline_rounded,
-                  color: Colors.blueGrey,
-                ),
-                Text(
-                  'Tidak ada santri yang dirujuk\nhari ini',
-                  textAlign: TextAlign.center,
-
-                  style: context.textTheme.bodyLarge!.copyWith(
-                    color: Colors.blueGrey,
-                    height: 1.4,
-                  ),
-                ),
-              ],
-            ),
+          DisplayZeroData(
+            icon: Icons.check_circle_outline_rounded,
+            message: 'Tidak ada santri yang dirujuk hari ini',
           ),
       ],
     );
