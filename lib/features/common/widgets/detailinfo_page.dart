@@ -89,7 +89,7 @@ class DetailinfoPage extends ConsumerWidget {
         ListTile(
           title: const Text('Keluhan'),
           subtitle: Text(
-            keluhan.join(', ').toString(),
+            keluhan.isEmpty ? 'Tidak ada keluhan' : keluhan.join(', ').toString(),
             overflow: TextOverflow.ellipsis,
           ),
           leading: Icon(Icons.sick_rounded, color: Colors.grey.shade700),
