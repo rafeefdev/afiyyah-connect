@@ -11,16 +11,16 @@ class PatientsReferralSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO : real count !
-    int patientCount = 0;
+    List<Santri> santriReferred = List.filled(4, Santri.generateDummyData());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
-        if (patientCount > 0)
+        if (santriReferred.isNotEmpty)
           Column(
-            children: List.generate(patientCount, (index) {
+            children: List.generate(santriReferred.length, (index) {
               //TODO : real data !
               return ListCardItem(
                 santri: Santri.generateDummyData(),

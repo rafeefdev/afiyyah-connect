@@ -12,16 +12,16 @@ class TodaypatientsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO : real count !
-    int patientCount = 0;
+    List<Santri> todayPatients = List.filled(20, Santri.generateDummyData());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Santri Sakit Hari Ini', style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
-        if (patientCount > 0)
+        if (todayPatients.isNotEmpty)
           Column(
-            children: List.generate(patientCount, (index) {
+            children: List.generate(todayPatients.length, (index) {
               //TODO : real data !
               return ListCardItem(
                 santri: Santri.generateDummyData(),
