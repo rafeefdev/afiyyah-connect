@@ -47,3 +47,5 @@ app.*.map.json
 PRD.md
 GEMINI.md
 .env
+**/google-services.json
+**/GoogleService-Info.plist
