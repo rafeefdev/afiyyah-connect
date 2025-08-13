@@ -20,9 +20,9 @@ version: 1.0.0+1
 
 environment:
   sdk: ^3.8.1
-repository: https://github.com/ORG/REPO
-issue_tracker: https://github.com/ORG/REPO/issues
-homepage: https://github.com/ORG/REPO
+repository: https://github.com/rafeefdev/afiyyah-connect
+issue_tracker: https://github.com/rafeefdev/afiyyah-connectissues
+homepage: https://github.com/rafeefdev/afiyyah-connect
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
