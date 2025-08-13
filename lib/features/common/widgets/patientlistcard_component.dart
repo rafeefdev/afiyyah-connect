@@ -1,17 +1,17 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
-import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/string_extension.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
-import 'package:afiyyah_connect/features/common/widgets/detailinfo_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ListCardItem extends StatelessWidget {
+class ListCardItem extends ConsumerWidget {
   final Santri santri;
   final String info;
   final Color? customNotchColor;
   final List<String> keluhan;
   final List<Widget>? additionalTiles;
+  final VoidCallback? onTap;
 
   const ListCardItem({
     required this.santri,
@@ -21,12 +21,14 @@ class ListCardItem extends StatelessWidget {
     this.keluhan = const ['demam', 'batuk', 'pilek'],
     this.additionalTiles,
     super.key,
+    this.onTap,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     //TODO : implement real kelas
     String kelasDanHujroh = santri.namaHujroh ?? 'Belum ada data';
+
     var notchIndicator = Container(
       width: 8,
       height: 45,
@@ -36,21 +38,7 @@ class ListCardItem extends StatelessWidget {
       ),
     );
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailinfoPage(
-              santri: santri,
-              keluhan: keluhan,
-              additionalTiles: additionalTiles ?? [],
-              // TODO : insert with real Role data,
-              role: Role.resepsionisKlinik,
-              sickTime: DateTime(2020),
-            ),
-          ),
-        );
-      },
+      onTap: onTap ?? () {},
       child: Card(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8, right: 8, top: 8),

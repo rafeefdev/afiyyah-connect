@@ -1,20 +1,21 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/auth/view_model/app_user_provider.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
 import 'package:afiyyah_connect/features/monitoring/model/detailpageinfos_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class DetailinfoPage extends StatelessWidget {
+class DetailinfoPage extends ConsumerWidget {
   final Santri santri;
   final List<String> keluhan;
   final DateTime sickTime;
   final bool isMedicated;
   final List<Widget> additionalTiles;
   final PeriksaKlinikStatus periksaKlinikStatus;
-  final Role role;
   final DetailPageInfosStyle detailPageInfosStyle;
 
   const DetailinfoPage({
@@ -24,14 +25,14 @@ class DetailinfoPage extends StatelessWidget {
     this.isMedicated = false,
     this.additionalTiles = const [],
     this.periksaKlinikStatus = PeriksaKlinikStatus.none,
-    required this.role,
     this.detailPageInfosStyle = DetailPageInfosStyle.standard,
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final dateFormat = DateFormat('HH:mm, EEEE\nd MMMM y', 'id_ID');
+    final userRole = ref.watch(appUserProvider).value?.role ?? Role.unknown;
 
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: true),
@@ -46,7 +47,7 @@ class DetailinfoPage extends StatelessWidget {
             const SizedBox(height: 8),
             _buildBody(dateFormat),
             const SizedBox(height: 32),
-            _buildBottomAction(role: role),
+            _buildBottomAction(role: userRole),
           ],
         ),
       ),
@@ -65,7 +66,7 @@ class DetailinfoPage extends StatelessWidget {
         ];
       case Role.resepsionisKlinik:
         bottomButtons = [
-          // FilledButton(onPressed: () {}, child: const Text('')),
+          // FilledButton(onPressed: () {}, child: const Text('')), 
           FilledButton(onPressed: () {}, child: const Text('Konfirmasi')),
         ];
       default:
@@ -81,14 +82,14 @@ class DetailinfoPage extends StatelessWidget {
   Widget _buildBody(DateFormat dateFormat) {
     String kunjunganKlinikStatus =
         periksaKlinikStatus == PeriksaKlinikStatus.none
-        ? 'tanpa keterangan'
-        : periksaKlinikStatus.name;
+            ? 'tanpa keterangan'
+            : periksaKlinikStatus.name;
     return Column(
       children: [
         ListTile(
           title: const Text('Keluhan'),
           subtitle: Text(
-            keluhan.join(', ').toString(),
+            keluhan.isEmpty ? 'Tidak ada keluhan' : keluhan.join(', ').toString(),
             overflow: TextOverflow.ellipsis,
           ),
           leading: Icon(Icons.sick_rounded, color: Colors.grey.shade700),
