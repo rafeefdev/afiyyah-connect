@@ -11,11 +11,9 @@ Afiyyah Connect is an integrated information system between the student affairs 
 ### Setup Instructions
 1. Clone the repository.
 2. Install dependencies: `flutter pub get`
-3. Create a `.env` file in the root directory and add the following:
-   ```
-   SUPABASE_URL=YOUR_SUPABASE_URL
-   SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
-   ```
+3. Copy `env.example` to `.env` and fill values:
+   - `SUPABASE_URL`
+   - `SUPABASE_ANON_KEY` (public anon key only; do not use service-role keys)
 4. Run the app: `flutter run`
 
 ## Features
@@ -41,3 +39,19 @@ Afiyyah Connect is an integrated information system between the student affairs 
 - **Naming conventions:** The project follows the standard Dart naming conventions.
 - **Git workflow:** The project uses the standard Gitflow workflow.
 - **Testing strategy:** The project uses widget testing to test the UI components.
+
+## Self-hosting (Supabase)
+
+- Create a Supabase project
+- Import schema and enable RLS (see `supabase/` folder)
+- Configure `.env` using `env.example`
+
+## Security
+
+- Never ship service-role keys in the client app; only use the public anon key
+- Ensure Row Level Security (RLS) is enabled and policies are configured for all tables
+- See `SECURITY.md` for reporting vulnerabilities and security guidance
+
+## License
+
+MIT – see `LICENSE`
