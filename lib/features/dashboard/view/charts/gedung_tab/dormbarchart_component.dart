@@ -65,7 +65,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
           borderRadius: BorderRadius.circular(4),
           // Subtle gradient for better visual hierarchy
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.8), color],
+            colors: [color.withValues(alpha: 0.8), color],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
@@ -198,7 +198,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
                 TextSpan(
                   text: '0 Santri',
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -280,7 +280,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
       drawVerticalLine: false,
       horizontalInterval: currentInterval,
       getDrawingHorizontalLine: (value) => FlLine(
-        color: Colors.grey.withOpacity(0.2),
+        color: Colors.grey.withValues(alpha: 0.2),
         strokeWidth: 0.8,
         dashArray: [3, 3], // Subtle dashed lines
       ),
@@ -356,7 +356,7 @@ class _DormBarChartState extends State<DormBarChartComponent> {
     return FlBorderData(
       show: true,
       border: Border.symmetric(
-        horizontal: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
+        horizontal: BorderSide(color: Colors.grey.withValues(alpha: 0.3), width: 1),
       ),
     );
   }

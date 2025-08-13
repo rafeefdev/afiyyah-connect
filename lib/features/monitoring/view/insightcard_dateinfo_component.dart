@@ -3,10 +3,10 @@ import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:flutter/material.dart';
 
-class InsightCardNDateInfo extends StatelessWidget {
+class InsightCardDateInfo extends StatelessWidget {
   final int value;
 
-  const InsightCardNDateInfo({super.key, required this.value});
+  const InsightCardDateInfo({super.key, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class InsightCardNDateInfo extends StatelessWidget {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               DateInfo(
                 textTheme: context.textTheme,
                 customTextStyle: context.textTheme.labelMedium!.copyWith(
@@ -59,6 +59,5 @@ class InsightCardNDateInfo extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

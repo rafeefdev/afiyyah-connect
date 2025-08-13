@@ -1,5 +1,3 @@
-import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
-import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/common/widgets/detailinfo_dialog.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';

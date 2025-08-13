@@ -5,12 +5,11 @@ import 'dart:async';
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/features/auth/repository/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'app_user_provider.g.dart';
 
 @riverpod
-Stream<UserModel?> appUser(AppUserRef ref) {
+Stream<UserModel?> appUser(ref) {
   final authRepository = ref.watch(authRepositoryProvider);
 
   // Mendengarkan perubahan status otentikasi dari Supabase

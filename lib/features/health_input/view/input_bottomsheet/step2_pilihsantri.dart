@@ -42,7 +42,7 @@ class Step2PilihSantri extends ConsumerWidget {
             borderRadius: BorderRadius.circular(12),
             color: Theme.of(
               context,
-            ).colorScheme.surfaceVariant.withOpacity(0.5),
+            ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
           ),
           child: Row(
             children: [

@@ -1,4 +1,3 @@
-import 'package:afiyyah_connect/app/themes/app_typography.dart';
 import 'package:flutter/material.dart';
 
 ThemeData appTheme = ThemeData(
@@ -9,20 +8,6 @@ ThemeData appTheme = ThemeData(
   tabBarTheme: TabBarThemeData(dividerHeight: 0),
   // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal, ),
 );
-
-OutlinedButtonThemeData _outlinedButtonThemeData() {
-  return OutlinedButtonThemeData(
-    style: ButtonStyle(
-      fixedSize: WidgetStatePropertyAll(Size.fromHeight(44)),
-      padding: WidgetStateProperty.all<EdgeInsets>(
-        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      ),
-      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-    ),
-  );
-}
 
 InputDecorationTheme _inputDecorationTheme() {
   return InputDecorationTheme(

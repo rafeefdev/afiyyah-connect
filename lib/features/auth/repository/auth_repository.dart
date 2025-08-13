@@ -143,13 +143,13 @@ class AuthRepositoryImpl implements AuthRepository {
 }
 
 @riverpod
-AuthRepository authRepository(AuthRepositoryRef ref) {
+AuthRepository authRepository(ref) {
   final supabase = ref.watch(supabaseClientProvider);
   return AuthRepositoryImpl(supabase);
 }
 
 @riverpod
 // Tipe data kembalian stream pada provider juga dikoreksi.
-Stream<supabase.AuthState> authStateChanges(AuthStateChangesRef ref) {
+Stream<supabase.AuthState> authStateChanges(ref) {
   return ref.watch(authRepositoryProvider).authStateChanges;
 }

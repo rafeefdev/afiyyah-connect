@@ -1,5 +1,5 @@
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
-import 'package:afiyyah_connect/features/monitoring/view/insightcardNDateInfo_component.dart';
+import 'package:afiyyah_connect/features/monitoring/view/insightcard_dateinfo_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tabs/monitoring_tabview.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +45,7 @@ class _MonitoringPageState extends State<MonitoringPage>
                       vertical: (appBarHeight - 120) / 2,
                       horizontal: 16,
                     ),
-                    child: InsightCardNDateInfo(value: 16),
+                    child: InsightCardDateInfo(value: 16),
                   ),
                 ),
                 // Transparent spacer to push content down
