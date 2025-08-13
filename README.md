@@ -40,12 +40,6 @@ Afiyyah Connect is an integrated information system between the student affairs 
 - **Git workflow:** The project uses the standard Gitflow workflow.
 - **Testing strategy:** The project uses widget testing to test the UI components.
 
-## Self-hosting (Supabase)
-
-- Create a Supabase project
-- Import schema and enable RLS (see `supabase/` folder)
-- Configure `.env` using `env.example`
-
 ## Security
 
 - Never ship service-role keys in the client app; only use the public anon key

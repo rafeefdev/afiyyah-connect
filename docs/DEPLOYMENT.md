@@ -56,35 +56,7 @@ Before building, ensure your `.env` file is correctly configured with production
     ```bash
     open ios/Runner.xcworkspace
     ```
-
-## Supabase Deployment Steps
-
-Deploying backend changes involves using the Supabase CLI. Ensure you are logged in (`supabase login`) and have linked the project (`supabase link --project-ref <your-project-ref>`).
-
-### Database Migrations
-
-1.  **Create a new migration file** for any schema changes you've made locally:
-    ```bash
-    supabase migration new <migration_name>
-    ```
-    This will create a new file in `supabase/migrations`. Edit this file to define your SQL changes (e.g., `CREATE TABLE`, `ALTER TABLE`).
-
-2.  **Deploy database changes** to the linked Supabase project:
-    ```bash
-    supabase db push
-    ```
-
-### Edge Functions
-
-1.  **Deploy all Edge Functions** in your `supabase/functions` directory:
-    ```bash
-    supabase functions deploy --project-ref <your-project-ref>
-    ```
-    To deploy a specific function, use its name:
-    ```bash
-    supabase functions deploy <function_name> --project-ref <your-project-ref>
-    ```
-
+    
 ## CI/CD Pipeline
 
 The project does not have a CI/CD pipeline yet. This section will be updated once a pipeline is configured (e.g., using GitHub Actions).
