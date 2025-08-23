@@ -6,7 +6,7 @@ part of 'auth_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authRepositoryHash() => r'164132395733a3d6119ead0c99439d0c8e508720';
+String _$authRepositoryHash() => r'c5ad6584a0053f322cf2af179c7ace26172402d4';
 
 /// See also [authRepository].
 @ProviderFor(authRepository)
@@ -23,7 +23,7 @@ final authRepositoryProvider = AutoDisposeProvider<AuthRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AuthRepositoryRef = AutoDisposeProviderRef<AuthRepository>;
-String _$authStateChangesHash() => r'0df2538b1f1209f90c1a7d983d9f1557f2ab6a3c';
+String _$authStateChangesHash() => r'eac7afb6ffc7e98c172adf7d223b49c890dea30a';
 
 /// See also [authStateChanges].
 @ProviderFor(authStateChanges)

@@ -19,7 +19,9 @@ Future<void> main() async {
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
     anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-    authOptions: const FlutterAuthClientOptions(authFlowType: AuthFlowType.pkce),
+    authOptions: const FlutterAuthClientOptions(
+      authFlowType: AuthFlowType.pkce,
+    ),
   );
 
   runApp(
@@ -36,7 +38,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       theme: appTheme,
@@ -63,8 +64,11 @@ class AuthWrapper extends ConsumerWidget {
           return const AuthPage();
         }
       },
-      loading: () => const Scaffold(body: Center(child: LoadingIndicator(isLoading: true))),
-      error: (err, st) => Scaffold(body: Center(child: Text("Authentication Error: $err"))),
+      loading: () => const Scaffold(
+        body: Center(child: LoadingIndicator(isLoading: true)),
+      ),
+      error: (err, st) =>
+          Scaffold(body: Center(child: Text("Authentication Error: $err"))),
     );
   }
 }
@@ -84,10 +88,15 @@ class MainLayoutWrapper extends ConsumerWidget {
           return MainLayout(user: user);
         }
         // Ini bisa terjadi jika user ada di Supabase auth tapi tidak di tabel 'profiles'.
-        return Scaffold(body: Center(child: Text("Gagal mengambil data pengguna.")));
+        return Scaffold(
+          body: Center(child: Text("Gagal mengambil data pengguna.")),
+        );
       },
-      loading: () => const Scaffold(body: Center(child: LoadingIndicator(isLoading: true))),
-      error: (err, st) => Scaffold(body: Center(child: Text("Error loading profile: $err"))),
+      loading: () => const Scaffold(
+        body: Center(child: LoadingIndicator(isLoading: true)),
+      ),
+      error: (err, st) =>
+          Scaffold(body: Center(child: Text("Error loading profile: $err"))),
     );
   }
 }

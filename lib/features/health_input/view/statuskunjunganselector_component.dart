@@ -1,6 +1,5 @@
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
-import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:flutter/material.dart';
 
 // enum PeriksaKlinikStatus { sudah, belum, luar }
@@ -61,7 +60,7 @@ class KlinikStatusSelector extends StatelessWidget {
             side: BorderSide(
               color: isSelected
                   ? context.theme.colorScheme.primary
-                  : context.theme.colorScheme.primary.withOpacity(0.3),
+                  : context.theme.colorScheme.primary.withValues(alpha: 0.3),
               width: 1.5,
             ),
           ),

@@ -1,0 +1,10 @@
+# CODEOWNERS
+# Secara default, semua perubahan dimiliki oleh @rafeefdev
+
+*                      @rafeefdev
+
+# Area spesifik
+lib/features/auth/     @rafeefdev
+lib/features/dashboard/ @rafeefdev
+lib/core/services/     @rafeefdev
+docs/                  @rafeefdev

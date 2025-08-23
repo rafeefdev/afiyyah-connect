@@ -54,8 +54,6 @@ class _DiseaseDistributionChartState extends State<DiseaseDistributionChart> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     // Total semua penyakit
     final totalCount = widget.diseaseData.fold<int>(
       0,

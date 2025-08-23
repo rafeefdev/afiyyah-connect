@@ -46,6 +46,11 @@ Afiyyah Connect is an integrated information system between the student affairs 
 - Ensure Row Level Security (RLS) is enabled and policies are configured for all tables
 - See `SECURITY.md` for reporting vulnerabilities and security guidance
 
+## Community & Governance
+
+- See `CONTRIBUTING.md` for how to report bugs and request features
+- See `CODE_OF_CONDUCT.md` for expected behavior
+
 ## License
 
 MIT – see `LICENSE`

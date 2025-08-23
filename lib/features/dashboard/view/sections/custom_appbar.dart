@@ -201,20 +201,25 @@ class CustomDashboardAppBar extends ConsumerWidget {
                     await ref
                         .read(authRepositoryProvider)
                         .updateUserName(newName);
-                    ref.refresh(appUserProvider); // Refresh user data
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Nama berhasil diperbarui.'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
+                    ref.invalidate(appUserProvider); // Refresh user data
+                    
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Nama berhasil diperbarui.'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
                   } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Gagal memperbarui nama: $e'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Gagal memperbarui nama: $e'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   }
                 }
               },
