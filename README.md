@@ -1,6 +1,6 @@
 # Afiyyah Connect
 
-Afiyyah Connect is an integrated information system between the student affairs and the clinic at Ibnu Abbas Klaten to streamline data collection, storage, and real-time access to historical data, replacing the manual process.
+Afiyyah Connect is an integrated information system between the student affairs and the clinic at boarding school to streamline data collection, storage, and real-time access to historical data, replacing the manual process.
 
 ## Quick Start Guide
 
