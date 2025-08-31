@@ -5,6 +5,7 @@ import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.
 import 'package:afiyyah_connect/features/common/widgets/detailinfo_page.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
+import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.dart';
 import 'package:flutter/material.dart';
 
 class TodaypatientsSection extends StatelessWidget {
@@ -18,7 +19,7 @@ class TodaypatientsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Santri Sakit Hari Ini', style: context.textTheme.titleMedium),
+        Text(DashboardStrings.todaySickSantriTitle, style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         if (todayPatients.isNotEmpty)
           Column(
@@ -46,7 +47,7 @@ class TodaypatientsSection extends StatelessWidget {
         else
           DisplayZeroData(
             icon: Icons.health_and_safety_rounded,
-            message: 'Tidak ada santri sakit hari ini',
+            message: DashboardStrings.noSickSantriToday,
           ),
       ],
     );

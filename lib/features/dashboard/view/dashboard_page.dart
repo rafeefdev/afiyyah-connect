@@ -8,6 +8,7 @@ import 'package:afiyyah_connect/features/dashboard/view/sections/charts_section.
 import 'package:afiyyah_connect/features/dashboard/view/sections/patientsreferral_section.dart';
 import 'package:afiyyah_connect/features/dashboard/view/sections/todaypatients_section.dart';
 import 'package:afiyyah_connect/features/health_input/view/show_bottom_input.dart';
+import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -46,7 +47,7 @@ class DashboardPage extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text('Input Data'),
+        label: const Text(DashboardStrings.inputData),
         icon: const Icon(Icons.assignment_add),
         onPressed: () => showBottomHealthInput(context),
       ),

@@ -4,6 +4,7 @@ import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart'
 import 'package:afiyyah_connect/features/common/widgets/detailinfo_page.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
+import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.dart';
 import 'package:flutter/material.dart';
 
 class PatientsReferralSection extends StatelessWidget {
@@ -17,7 +18,7 @@ class PatientsReferralSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Rujukan Rumah Sakit', style: context.textTheme.titleMedium),
+        Text(DashboardStrings.hospitalReferralTitle, style: context.textTheme.titleMedium),
         SizedBox(height: AppSpacing.s),
         if (santriReferred.isNotEmpty)
           Column(
@@ -45,7 +46,7 @@ class PatientsReferralSection extends StatelessWidget {
         else
           DisplayZeroData(
             icon: Icons.check_circle_outline_rounded,
-            message: 'Tidak ada santri yang dirujuk hari ini',
+            message: DashboardStrings.noReferralsToday,
           ),
       ],
     );

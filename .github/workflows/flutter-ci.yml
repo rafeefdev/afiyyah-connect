@@ -12,6 +12,11 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+      - name: create .env file
+        run: |
+          touch .env
+          echo "SUPABASE_ANON_KEY=${{secrets.SUPABASE_ANON_KEY}}" >> .env
+          echo "SUPABASE_URL=${{secrets.SUPABASE_URL}}" >> .env
       - run: flutter --version
       - run: flutter pub get
       - run: flutter analyze
