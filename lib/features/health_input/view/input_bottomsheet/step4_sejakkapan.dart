@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class Step4SejakKapan extends ConsumerStatefulWidget {
-  static String stepTitle = 'Sejak Kapan dia Sakit ?';
+  static String stepTitle = HealthInputStrings.step4Title;
 
   const Step4SejakKapan({super.key});
 
@@ -105,7 +106,7 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
                 readOnly: true,
                 onTap: () => _selectDate(context),
                 decoration: InputDecoration(
-                  hintText: 'Pilih Tanggal',
+                  hintText: HealthInputStrings.dateHint,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -122,7 +123,7 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
                 readOnly: true,
                 onTap: () => _selectTime(context),
                 decoration: InputDecoration(
-                  hintText: 'Pilih Jam',
+                  hintText: HealthInputStrings.timeHint,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -148,14 +149,14 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
               ),
               onPressed: () =>
                   ref.read(stepcontrollerProviderProvider.notifier).previous(),
-              child: const Text('sebelumnya'),
+              child: const Text(HealthInputStrings.previous),
             ),
             SizedBox(width: AppSpacing.m),
             FilledButton(
               onPressed: () {
                 ref.read(stepcontrollerProviderProvider.notifier).next();
               },
-              child: const Text('lanjut'),
+              child: const Text(HealthInputStrings.next),
             ),
           ],
         ),

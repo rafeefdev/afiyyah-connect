@@ -1,12 +1,13 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
+import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step2PilihSantri extends ConsumerWidget {
-  static String stepTitle = 'Pilih Santri';
+  static String stepTitle = HealthInputStrings.step2Title;
 
   const Step2PilihSantri({super.key});
 
@@ -19,11 +20,11 @@ class Step2PilihSantri extends ConsumerWidget {
       return Center(
         child: Column(
           children: [
-            const Text('Santri belum dipilih.'),
+            const Text(HealthInputStrings.notSelected),
             TextButton(
               onPressed: () =>
                   ref.read(stepcontrollerProviderProvider.notifier).previous(),
-              child: const Text('Kembali ke pencarian'),
+              child: const Text(HealthInputStrings.backToSearch),
             ),
           ],
         ),
@@ -70,7 +71,7 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  labelText: santri.namaHujroh ?? 'N/A',
+                  labelText: santri.namaHujroh ?? HealthInputStrings.notAvailable,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -84,8 +85,10 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  labelText: 'Kelas ${santri.jenjang?.toString() ?? 'N/A'}',
-                  hintText: 'Tahun ke-${santri.jenjang?.toString() ?? 'N/A'}',
+                  labelText:
+                      '${HealthInputStrings.classLabel}${santri.jenjang?.toString() ?? HealthInputStrings.notAvailable}',
+                  hintText:
+                      '${HealthInputStrings.yearLabel}${santri.jenjang?.toString() ?? HealthInputStrings.notAvailable}',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -103,7 +106,7 @@ class Step2PilihSantri extends ConsumerWidget {
               onPressed: () {
                 ref.read(stepcontrollerProviderProvider.notifier).previous();
               },
-              child: const Text('Kembali'),
+              child: const Text(HealthInputStrings.back),
             ),
             SizedBox(width: AppSpacing.m),
             FilledButton(
@@ -114,7 +117,7 @@ class Step2PilihSantri extends ConsumerWidget {
               style: ButtonStyle(
                 fixedSize: WidgetStatePropertyAll(Size.fromWidth(120)),
               ),
-              child: const Text('Lanjut'),
+              child: const Text(HealthInputStrings.next),
             ),
           ],
         ),

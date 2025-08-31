@@ -3,6 +3,7 @@ import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/common/view_model/santri_search_viewmodel.dart'; // DIUBAH: Import provider baru
 import 'package:afiyyah_connect/features/common/widgets/loadingindicator_component.dart';
+import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
             data: (result) => _buildSearchResult(context, ref, result: result),
             loading: () => SizedBox(
               height: context.mq.size.height * 0.3,
-              child: const Center(child: Text('Sedang mencari data...')),
+              child: const Center(child: Text(HealthInputStrings.searching)),
             ),
             error: (err, stack) => Center(child: Text('Error: $err')),
           ),
@@ -61,7 +62,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
             children: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Batal'),
+                child: const Text(HealthInputStrings.cancel),
               ),
             ],
           ),
@@ -76,8 +77,8 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
       autofocus: true,
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
-        hintText: 'Ketik untuk mencari nama santri',
-        labelText: 'Nama Santri',
+        hintText: HealthInputStrings.searchHint,
+        labelText: HealthInputStrings.searchLabel,
         prefixIcon: const Icon(Icons.search_rounded),
         suffixIcon: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -100,7 +101,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
         height: containerHeight,
         child: const Center(
           child: Text(
-            'Ketik nama santri untuk memulai pencarian',
+            HealthInputStrings.searchPrompt,
             textAlign: TextAlign.center,
           ),
         ),
@@ -110,7 +111,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
     if (result.isEmpty) {
       return SizedBox(
         height: containerHeight,
-        child: const Center(child: Text('Santri tidak ditemukan.')),
+        child: const Center(child: Text(HealthInputStrings.notFound)),
       );
     }
 
@@ -135,7 +136,7 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
             // Menampilkan nama dan hujroh pada hasil pencarian
             child: ListTile(
               title: Text(santri.nama),
-              subtitle: Text(santri.namaHujroh ?? 'Belum ada data hujroh'),
+              subtitle: Text(santri.namaHujroh ?? HealthInputStrings.noHujrohData),
             ),
           );
         },
