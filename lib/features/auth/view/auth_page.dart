@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/features/auth/constants/auth_strings.dart';
 import 'package:afiyyah_connect/features/auth/model/authstate_model.dart';
 import 'package:afiyyah_connect/features/auth/view/insertotp_page.dart';
 import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
@@ -87,7 +88,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
           children: [
             const CircleAvatar(child: Icon(Icons.login_rounded)),
             Text(
-              'Login',
+              AuthStrings.login,
               style: context.textTheme.displaySmall!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -123,7 +124,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.email_rounded, color: Colors.black45),
-                hintText: 'Email Anda',
+                hintText: AuthStrings.emailLabel,
               ),
               enabled: !isLoading,
               // Memberikan validasi otomatis saat pengguna berinteraksi.
