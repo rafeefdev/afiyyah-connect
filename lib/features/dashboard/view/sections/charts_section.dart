@@ -3,6 +3,7 @@ import 'package:afiyyah_connect/features/dashboard/view/charts/gedung_tab/gedung
 import 'package:afiyyah_connect/features/dashboard/view/charts/ikhtisar_tab/ikhtisar_tabview.dart';
 import 'package:afiyyah_connect/features/dashboard/view/charts/kelas_tab/kelas_tabview.dart';
 import 'package:afiyyah_connect/features/dashboard/view/charts/penyakit_tab/penyakit_tabview.dart';
+import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.dart';
 import 'package:flutter/material.dart';
 
 class ChartsSection extends StatefulWidget {
@@ -50,10 +51,10 @@ class ChartsSectionState extends State<ChartsSection>
         TabBar.secondary(
           controller: _tabController,
           tabs: const [
-            Tab(text: 'Ikhtisar'),
-            Tab(text: 'Kelas'),
-            Tab(text: 'Gedung'),
-            Tab(text: 'Penyakit'),
+            Tab(text: DashboardStrings.overviewTab),
+            Tab(text: DashboardStrings.classTab),
+            Tab(text: DashboardStrings.buildingTab),
+            Tab(text: DashboardStrings.diseaseTab),
           ],
         ),
         SizedBox(

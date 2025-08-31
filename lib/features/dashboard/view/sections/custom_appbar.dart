@@ -5,13 +5,14 @@ import 'package:afiyyah_connect/features/auth/view_model/app_user_provider.dart'
 import 'package:afiyyah_connect/features/auth/view_model/auth_provider.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
+import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomDashboardAppBar extends ConsumerWidget {
   final UserModel user;
 
-  const CustomDashboardAppBar({required this.user,  super.key});
+  const CustomDashboardAppBar({required this.user, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,7 +71,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Text(
-            'Informasi Pengguna',
+            DashboardStrings.userInfo,
             style: context.textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w400,
             ),
@@ -92,7 +93,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
               _buildUserName(dialogContext, context, ref, updatedUser),
               SizedBox(height: AppSpacing.m),
               Text(
-                'Email',
+                DashboardStrings.email,
                 style: context.textTheme.labelMedium!.copyWith(
                   color: Colors.blueGrey,
                 ),
@@ -100,7 +101,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
               Text(updatedUser.email, style: context.textTheme.bodyLarge),
               SizedBox(height: AppSpacing.m),
               Text(
-                'Role',
+                DashboardStrings.role,
                 style: context.textTheme.labelMedium!.copyWith(
                   color: Colors.blueGrey,
                 ),
@@ -114,7 +115,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Tutup'),
+              child: const Text(DashboardStrings.close),
             ),
             FilledButton.tonal(
               style: FilledButton.styleFrom(
@@ -125,7 +126,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
                 Navigator.of(dialogContext).pop(); // Close the info dialog
                 _showSignOutConfirmationDialog(context, ref);
               },
-              child: const Text('Sign Out'),
+              child: const Text(DashboardStrings.signOut),
             ),
           ],
         );
@@ -148,7 +149,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Nama',
+            DashboardStrings.name,
             style: context.textTheme.labelMedium!.copyWith(
               color: Colors.blueGrey,
             ),
@@ -171,16 +172,16 @@ class CustomDashboardAppBar extends ConsumerWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Ubah Nama'),
+          title: const Text(DashboardStrings.editName),
           content: Form(
             key: formKey,
             child: TextFormField(
               controller: nameController,
               autofocus: true,
-              decoration: const InputDecoration(labelText: 'Nama Lengkap'),
+              decoration: const InputDecoration(labelText: DashboardStrings.fullName),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Nama tidak boleh kosong';
+                  return DashboardStrings.nameCannotBeEmpty;
                 }
                 return null;
               },
@@ -189,7 +190,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Batal'),
+              child: const Text(DashboardStrings.cancel),
             ),
             FilledButton(
               onPressed: () async {
@@ -206,7 +207,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Nama berhasil diperbarui.'),
+                          content: Text(DashboardStrings.nameUpdatedSuccess),
                           backgroundColor: Colors.green,
                         ),
                       );
@@ -215,7 +216,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Gagal memperbarui nama: $e'),
+                          content: Text('${DashboardStrings.nameUpdatedFailed} $e'),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -223,7 +224,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
                   }
                 }
               },
-              child: const Text('Simpan'),
+              child: const Text(DashboardStrings.save),
             ),
           ],
         );
@@ -236,12 +237,12 @@ class CustomDashboardAppBar extends ConsumerWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Konfirmasi Sign Out'),
-          content: const Text('Apakah Anda yakin ingin keluar dari akun ini?'),
+          title: const Text(DashboardStrings.signOutConfirmation),
+          content: const Text(DashboardStrings.signOutConfirmationMessage),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Batal'),
+              child: const Text(DashboardStrings.cancel),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -252,7 +253,7 @@ class CustomDashboardAppBar extends ConsumerWidget {
                 ref.read(authProviderProvider.notifier).signOut();
                 Navigator.of(dialogContext).pop(); // Close confirmation dialog
               },
-              child: const Text('Ya, Keluar'),
+              child: const Text(DashboardStrings.yesSignOut),
             ),
           ],
         );
