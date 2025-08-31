@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/app/core/constants/app_strings.dart';
 import 'package:afiyyah_connect/features/auth/constants/auth_strings.dart';
 import 'package:afiyyah_connect/features/auth/model/authstate_model.dart';
 import 'package:afiyyah_connect/features/auth/view/insertotp_page.dart';
@@ -28,9 +29,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   Widget build(BuildContext context) {
     ref.listen<AuthState>(authProviderProvider, (previous, next) {
       if (next.status == AuthStatus.error) {
-        _showFeedbackSnackBar(context, message: next.message ?? 'Terjadi kesalahan', isError: true);
+        _showFeedbackSnackBar(context, message: next.message ?? AppStrings.errorOccurred, isError: true);
       } else if (next.status == AuthStatus.otpSent) {
-        _showFeedbackSnackBar(context, message: next.message ?? 'Sukses');
+        _showFeedbackSnackBar(context, message: next.message ?? AppStrings.success);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -68,7 +69,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
           _buildBody(context),
           const SizedBox(height: 24),
           Text(
-            'Email Anda belum terdaftar?\nhubungi dan daftarkan email ke Tim Kesehatan Kesantrian Putra',
+            AuthStrings.unregisteredEmailNotice,
             textAlign: TextAlign.center,
             style: context.textTheme.labelMedium!.copyWith(
               fontWeight: FontWeight.w300,
@@ -97,7 +98,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
         ),
         const SizedBox(height: 12),
         Text(
-          'Masukkan email terdaftar untuk mendapatkan kode OTP',
+          AuthStrings.otpInstruction,
           textAlign: TextAlign.center,
           style: context.textTheme.bodyLarge!.copyWith(
             fontWeight: FontWeight.w300,
@@ -132,12 +133,12 @@ class _AuthPageState extends ConsumerState<AuthPage> {
               // Logika validator.
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Email tidak boleh kosong';
+                  return AuthStrings.emailEmptyValidationError;
                 }
                 // Regex sederhana untuk validasi format email.
                 final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
                 if (!emailRegex.hasMatch(value)) {
-                  return 'Masukkan format email yang valid';
+                  return AuthStrings.emailInvalidFormatValidationError;
                 }
                 return null; // Kembalikan null jika valid.
               },
@@ -152,8 +153,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                   child: FilledButton(
                     onPressed: isLoading
                         ? null
-                        :
-                          () {
+                        : () {
                             // Memvalidasi form sebelum melanjutkan.
                             if (_formKey.currentState!.validate()) {
                               // Jika form valid, panggil method login.
@@ -171,7 +171,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             children: const [
                               Icon(Icons.send_rounded),
                               SizedBox(width: 12),
-                              Text('Kirim Kode OTP'),
+                              Text(AuthStrings.sendOtpButton),
                             ],
                           ),
                   ),
@@ -186,8 +186,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   }
 
   void _showFeedbackSnackBar(
-    BuildContext context,
-    {
+    BuildContext context, {
     required String message,
     bool isError = false,
   }) {

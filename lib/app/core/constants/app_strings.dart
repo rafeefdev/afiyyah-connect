@@ -7,4 +7,8 @@ class AppStrings {
   static const String save = 'Simpan';
   static const String cancel = 'Batal';
   static const String ok = 'OK';
+
+  // Feedback Messages
+  static const String success = 'Sukses';
+  static const String errorOccurred = 'Terjadi kesalahan';
 }
