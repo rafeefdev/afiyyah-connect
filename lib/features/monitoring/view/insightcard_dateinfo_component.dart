@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
+import 'package:afiyyah_connect/features/monitoring/constants/monitoring_strings.dart';
 import 'package:flutter/material.dart';
 
 class InsightCardDateInfo extends StatelessWidget {
@@ -34,13 +35,13 @@ class InsightCardDateInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Santri',
+                    MonitoringStrings.student,
                     style: context.textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'Sakit di Maskan',
+                    MonitoringStrings.sickInDorm,
                     style: context.textTheme.labelLarge!.copyWith(
                       fontWeight: FontWeight.w300,
                     ),
