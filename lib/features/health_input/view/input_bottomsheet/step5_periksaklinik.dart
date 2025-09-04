@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
 import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
 import 'package:afiyyah_connect/features/health_input/view/statuskunjunganselector_component.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Step5PeriksaKlinik extends ConsumerWidget {
-  static String stepTitle = 'Periksa Klinik ?';
+  static String stepTitle = HealthInputStrings.step5Title;
 
   const Step5PeriksaKlinik({super.key});
 
@@ -32,7 +33,7 @@ class Step5PeriksaKlinik extends ConsumerWidget {
             TextButton(
               onPressed: () =>
                   ref.read(stepcontrollerProviderProvider.notifier).previous(),
-              child: const Text('kembali'),
+              child: const Text(HealthInputStrings.back),
             ),
             const Spacer(),
             OutlinedButton(
@@ -49,7 +50,7 @@ class Step5PeriksaKlinik extends ConsumerWidget {
                   builder: (context) => const Confirmationcard(),
                 );
               },
-              child: const Text('cek'),
+              child: const Text(HealthInputStrings.check),
             ),
             SizedBox(width: AppSpacing.s),
             FilledButton(
@@ -60,7 +61,7 @@ class Step5PeriksaKlinik extends ConsumerWidget {
                   ref.read(stepcontrollerProviderProvider.notifier).toStep(0);
                 }
               },
-              child: const Text('Tambahkan'),
+              child: const Text(HealthInputStrings.adding),
             ),
           ],
         ),

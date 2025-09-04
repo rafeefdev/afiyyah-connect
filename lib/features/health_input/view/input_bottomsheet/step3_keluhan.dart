@@ -1,23 +1,17 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //TODO : connect keluhan list with list of real list of disease
-final keluhanList = [
-  'Batuk',
-  'Pusing',
-  'Demam / Panas',
-  'Pilek',
-  'Masuk Angin',
-  'Maag / Asam Lambung',
-];
+final keluhanList = HealthInputStrings.complaintListDefault;
 
-const String lainnya = 'lainnya ...';
+const String lainnya = HealthInputStrings.otherComplaintLabel;
 
 class Step3Keluhan extends ConsumerStatefulWidget {
-  static String stepTitle = 'Apa Saja yang Dikeluhkan ?';
+  static String stepTitle = HealthInputStrings.step3Title;
 
   const Step3Keluhan({super.key, required this.keluhanList});
 
@@ -82,7 +76,7 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
                 child: TextField(
                   controller: _textController,
                   decoration: const InputDecoration(
-                    hintText: 'Masukkan keluhan lain',
+                    hintText: HealthInputStrings.otherComplaintHint,
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -90,7 +84,7 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
               const SizedBox(width: 8),
               OutlinedButton.icon(
                 icon: const Icon(Icons.add),
-                label: const Text('Tambah'),
+                label: const Text(HealthInputStrings.add),
                 onPressed: () {
                   if (_textController.text.isNotEmpty) {
                     healthNotifier.toggleKeluhan(_textController.text);
@@ -108,7 +102,7 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
             TextButton(
               onPressed: () =>
                   ref.read(stepcontrollerProviderProvider.notifier).previous(),
-              child: const Text('kembali'),
+              child: const Text(HealthInputStrings.back),
             ),
             SizedBox(width: AppSpacing.l),
             FilledButton(
@@ -118,7 +112,7 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
               style: ButtonStyle(
                 fixedSize: WidgetStatePropertyAll(Size.fromWidth(120)),
               ),
-              child: const Text('lanjut'),
+              child: const Text(HealthInputStrings.next),
             ),
           ],
         ),
