@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
+import 'package:afiyyah_connect/features/monitoring/constants/monitoring_strings.dart';
 import 'package:afiyyah_connect/features/monitoring/view/insightcard_dateinfo_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tabs/monitoring_tabview.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +72,9 @@ class _MonitoringPageState extends State<MonitoringPage>
                     TabBar(
                       controller: _tabController,
                       tabs: const [
-                        Tab(text: 'Periksa'),
-                        Tab(text: 'Arahan'),
-                        Tab(text: 'Rujukan RS'),
+                        Tab(text: MonitoringStrings.checkTab),
+                        Tab(text: MonitoringStrings.guidanceTab),
+                        Tab(text: MonitoringStrings.referralTab),
                       ],
                     ),
                   ),
