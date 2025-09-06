@@ -49,7 +49,7 @@ class DashboardPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         label: const Text(DashboardStrings.inputData),
         icon: const Icon(Icons.assignment_add),
-        onPressed: () => showBottomHealthInput(context),
+        onPressed: () => showBottomHealthInput(context, ref),
       ),
     );
   }

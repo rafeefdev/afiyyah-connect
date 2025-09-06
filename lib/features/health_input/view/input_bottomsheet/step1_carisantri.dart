@@ -25,7 +25,9 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
     // Panggil search saat ada perubahan teks
     _nameController.addListener(() {
       ref
-          .read(santriSearchViewModelProvider.notifier) // DIUBAH: Gunakan notifier baru
+          .read(
+            santriSearchViewModelProvider.notifier,
+          ) // DIUBAH: Gunakan notifier baru
           .search(_nameController.text);
     });
   }
@@ -61,7 +63,10 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  Navigator.pop(context);
+                  ref.read(pendataanKesehatanProvider.notifier).reset();
+                },
                 child: const Text(HealthInputStrings.cancel),
               ),
             ],
@@ -136,7 +141,9 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
             // Menampilkan nama dan hujroh pada hasil pencarian
             child: ListTile(
               title: Text(santri.nama),
-              subtitle: Text(santri.namaHujroh ?? HealthInputStrings.noHujrohData),
+              subtitle: Text(
+                santri.namaHujroh ?? HealthInputStrings.noHujrohData,
+              ),
             ),
           );
         },

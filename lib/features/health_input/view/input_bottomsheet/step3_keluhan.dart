@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
@@ -44,12 +42,11 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
     // Gabungkan list default dengan keluhan custom dari state, kecuali yang sudah ada
     final allKeluhan = <dynamic>{
       ...widget.keluhanList,
-      ...selectedKeluhan.where(
-        (k) => !widget.keluhanList.contains(k) && k != lainnya,
-      ),
+       ...selectedKeluhan.where(
+         (k) => !widget.keluhanList.contains(k) && k != lainnya,
+       ),
     }.toList();
 
-    log('keluhan List : ${healthState.keluhan.length}');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
