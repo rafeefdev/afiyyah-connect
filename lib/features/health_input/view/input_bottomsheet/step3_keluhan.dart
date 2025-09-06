@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
@@ -36,16 +37,29 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
     final healthState = ref.watch(pendataanKesehatanProvider);
     final healthNotifier = ref.read(pendataanKesehatanProvider.notifier);
     final selectedKeluhan = healthState.keluhan;
+    bool displayEmptyComlplianceMessage = false;
 
     // Gabungkan list default dengan keluhan custom dari state, kecuali yang sudah ada
     final allKeluhan = <dynamic>{
       ...widget.keluhanList,
-      ...selectedKeluhan.where((k) => !widget.keluhanList.contains(k) && k != lainnya)
+      ...selectedKeluhan.where(
+        (k) => !widget.keluhanList.contains(k) && k != lainnya,
+      ),
     }.toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Visibility(
+          visible: displayEmptyComlplianceMessage,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Text(
+              HealthInputStrings.emptyComplianceMessage,
+              style: context.textTheme.labelLarge!.copyWith(color: Colors.red),
+            ),
+          ),
+        ),
         Wrap(
           spacing: 8,
           runSpacing: 8,
@@ -91,7 +105,7 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
                     _textController.clear();
                   }
                 },
-              )
+              ),
             ],
           ),
         ],
@@ -107,7 +121,18 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
             SizedBox(width: AppSpacing.l),
             FilledButton(
               onPressed: () {
-                ref.read(stepcontrollerProviderProvider.notifier).next();
+                if (keluhanList.isEmpty) {
+                  setState(() {
+                    displayEmptyComlplianceMessage = true;
+                  });
+                } else {
+                  ref.read(stepcontrollerProviderProvider.notifier).next();
+                  ref
+                      .read(pendataanKesehatanProvider.notifier)
+                      .toggleKeluhan(
+                        healthState.keluhan.map((e) => '$e ,').toString(),
+                      );
+                }
               },
               style: ButtonStyle(
                 fixedSize: WidgetStatePropertyAll(Size.fromWidth(120)),

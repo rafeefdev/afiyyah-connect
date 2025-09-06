@@ -17,7 +17,8 @@ class HealthInputStrings {
   static const String step1Title = 'Cari Santri';
   static const String searchHint = 'Ketik untuk mencari nama santri';
   static const String searchLabel = 'Nama Santri';
-  static const String searchPrompt = 'Ketik nama santri untuk memulai pencarian';
+  static const String searchPrompt =
+      'Ketik nama santri untuk memulai pencarian';
   static const String searching = 'Sedang mencari data...';
   static const String notFound = 'Santri tidak ditemukan.';
   static const String noHujrohData = 'Belum ada data hujroh';
@@ -43,6 +44,7 @@ class HealthInputStrings {
     'Masuk Angin',
     'Maag / Asam Lambung',
   ];
+  static const emptyComplianceMessage = '* Daftar keluhan tidak boleh kosong';
 
   // --- Step 4: Since When ---
   static const String step4Title = 'Sejak Kapan dia Sakit ?';
@@ -57,7 +59,8 @@ class HealthInputStrings {
 
   // --- Confirmation & Error Dialogs ---
   static const String confirmationUnfilled = 'Belum diisi';
-  static const String confirmationSantriNotFoundTitle = 'Data santri belum ditemukan';
+  static const String confirmationSantriNotFoundTitle =
+      'Data santri belum ditemukan';
   static const String confirmationSantriNotFoundBody =
       'Mungkin terjadi karena koneksi internet buruk. Hubungi tim pengembang untuk melaporkan bug ini';
 }
