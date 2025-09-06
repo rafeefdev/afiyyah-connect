@@ -1,7 +1,7 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
-import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
+import 'package:afiyyah_connect/features/health_input/model/periksaklinikstatus_model.dart';
 import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
 import 'package:afiyyah_connect/features/health_input/view/statuskunjunganselector_component.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/pendataan_kesehatan_provider.dart';

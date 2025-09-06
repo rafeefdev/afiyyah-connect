@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
+import 'package:afiyyah_connect/features/health_input/model/periksaklinikstatus_model.dart';
 import 'package:flutter/material.dart';
 
 class PendataanKesehatanModel {
