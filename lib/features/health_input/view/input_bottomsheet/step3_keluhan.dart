@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
@@ -25,6 +27,7 @@ class Step3Keluhan extends ConsumerStatefulWidget {
 class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
   bool _isLainnyaSelected = false;
   final _textController = TextEditingController();
+  bool _displayEmptyComplianceMessage = false;
 
   @override
   void dispose() {
@@ -37,7 +40,6 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
     final healthState = ref.watch(pendataanKesehatanProvider);
     final healthNotifier = ref.read(pendataanKesehatanProvider.notifier);
     final selectedKeluhan = healthState.keluhan;
-    bool displayEmptyComlplianceMessage = false;
 
     // Gabungkan list default dengan keluhan custom dari state, kecuali yang sudah ada
     final allKeluhan = <dynamic>{
@@ -47,11 +49,14 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
       ),
     }.toList();
 
+    log('keluhan List : ${healthState.keluhan.length}');
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
-          visible: displayEmptyComlplianceMessage,
+          visible:
+              _displayEmptyComplianceMessage || healthState.keluhan.isEmpty,
           child: Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
@@ -121,9 +126,9 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
             SizedBox(width: AppSpacing.l),
             FilledButton(
               onPressed: () {
-                if (keluhanList.isEmpty) {
+                if (healthState.keluhan.isEmpty) {
                   setState(() {
-                    displayEmptyComlplianceMessage = true;
+                    _displayEmptyComplianceMessage = true;
                   });
                 } else {
                   ref.read(stepcontrollerProviderProvider.notifier).next();
