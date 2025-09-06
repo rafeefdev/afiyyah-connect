@@ -50,6 +50,7 @@ class HealthInputStrings {
   static const String step4Title = 'Sejak Kapan dia Sakit ?';
   static const String dateHint = 'Pilih Tanggal';
   static const String timeHint = 'Pilih Jam';
+  static const String emptyTimeInfoMessage = '* Ket. waktu tidak boleh kosong';
 
   // --- Step 5: Clinic Check ---
   static const String step5Title = 'Periksa Klinik ?';

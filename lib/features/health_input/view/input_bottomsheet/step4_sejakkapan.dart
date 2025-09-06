@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/stepcontroller_provider.dart';
@@ -98,6 +99,16 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Visibility(
+          visible: _dateController.text.isEmpty || _timeController.text.isEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 18),
+            child: Text(
+              HealthInputStrings.emptyTimeInfoMessage,
+              style: context.textTheme.labelLarge!.copyWith(color: Colors.red),
+            ),
+          ),
+        ),
         Row(
           children: [
             Flexible(
@@ -106,7 +117,8 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
                 readOnly: true,
                 onTap: () => _selectDate(context),
                 decoration: InputDecoration(
-                  hintText: HealthInputStrings.dateHint,
+                  label: Text(HealthInputStrings.dateHint),
+                  // hintText: HealthInputStrings.dateHint,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -123,7 +135,8 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
                 readOnly: true,
                 onTap: () => _selectTime(context),
                 decoration: InputDecoration(
-                  hintText: HealthInputStrings.timeHint,
+                  // hintText: HealthInputStrings.timeHint,
+                  label: Text(HealthInputStrings.timeHint),
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -154,7 +167,11 @@ class _Step4SejakKapanState extends ConsumerState<Step4SejakKapan> {
             SizedBox(width: AppSpacing.m),
             FilledButton(
               onPressed: () {
-                ref.read(stepcontrollerProviderProvider.notifier).next();
+                // when datetime didn't changed
+                if (_dateController.text.isNotEmpty &&
+                    _timeController.text.isNotEmpty) {
+                  ref.read(stepcontrollerProviderProvider.notifier).next();
+                }
               },
               child: const Text(HealthInputStrings.next),
             ),
