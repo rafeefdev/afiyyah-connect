@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/features/health_input/constants/health_enum.dart';
+import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
 import 'package:flutter/material.dart';
 
 class PendataanKesehatanModel {
@@ -37,7 +37,7 @@ class PendataanKesehatanModel {
       'keluhan': keluhan,
       'mulai_sakit': mulaiSakit.toIso8601String(),
       'santri_id': santriId,
-      'status_periksa': statusPeriksa?.value,
+      'status_periksa': statusPeriksa?.name,
       'waktu_mulai_sakit': formatTimeOfDay(waktuMulaiSakit),
       'user_id': userId,
     };

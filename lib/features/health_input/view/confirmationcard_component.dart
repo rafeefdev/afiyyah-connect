@@ -45,6 +45,7 @@ class Confirmationcard extends ConsumerWidget {
       santri: santri,
       keluhan: keluhan,
       sickTime: sickTime,
+      periksaKlinikStatus: state.periksaKlinikStatus,
     );
   }
 }

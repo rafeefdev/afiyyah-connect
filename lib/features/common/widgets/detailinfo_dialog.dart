@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
+import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
 import 'package:flutter/material.dart';
 
 class DetailInfoDialog extends StatelessWidget {
@@ -9,11 +10,13 @@ class DetailInfoDialog extends StatelessWidget {
     required this.santri,
     required this.keluhan,
     required this.sickTime,
+    required this.periksaKlinikStatus,
   });
 
   final Santri? santri;
   final String keluhan;
   final String sickTime;
+  final PeriksaKlinikStatus periksaKlinikStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +90,21 @@ class DetailInfoDialog extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               sickTime,
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: Colors.black54,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Kunjungan Klinik',
+              style: context.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              periksaKlinikStatus.name,
               style: context.textTheme.bodyMedium?.copyWith(
                 color: Colors.black54,
               ),

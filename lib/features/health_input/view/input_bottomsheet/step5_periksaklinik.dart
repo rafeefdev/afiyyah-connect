@@ -1,5 +1,7 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
+import 'package:afiyyah_connect/features/health_input/data/model/periksaklinikstatus_model.dart';
 import 'package:afiyyah_connect/features/health_input/view/confirmationcard_component.dart';
 import 'package:afiyyah_connect/features/health_input/view/statuskunjunganselector_component.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/pendataan_kesehatan_provider.dart';
@@ -22,9 +24,19 @@ class Step5PeriksaKlinik extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Visibility(
+          visible: klinikStatus == PeriksaKlinikStatus.none,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: Text(
+              HealthInputStrings.emptyClinicCheckInfoMessage,
+              style: context.textTheme.labelLarge!.copyWith(color: Colors.red),
+            ),
+          ),
+        ),
         KlinikStatusSelector(
           selectedStatus: klinikStatus,
-          onChanged: (value)=>notifier.setKlinikStatus(value),
+          onChanged: (value) => notifier.setKlinikStatus(value),
         ),
         const SizedBox(height: 20),
         Row(
@@ -55,10 +67,12 @@ class Step5PeriksaKlinik extends ConsumerWidget {
             SizedBox(width: AppSpacing.s),
             FilledButton(
               onPressed: () async {
-                await notifier.submitData();
-                if (context.mounted) {
-                  Navigator.pop(context);
-                  ref.read(stepcontrollerProviderProvider.notifier).toStep(0);
+                if (klinikStatus != PeriksaKlinikStatus.none) {
+                  await notifier.submitData();
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    ref.read(stepcontrollerProviderProvider.notifier).toStep(0);
+                  }
                 }
               },
               child: const Text(HealthInputStrings.adding),

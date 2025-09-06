@@ -57,6 +57,7 @@ class HealthInputStrings {
   static const String clinicStatusSudah = 'Sudah';
   static const String clinicStatusBelum = 'Belum';
   static const String clinicStatusLuar = 'Di Luar';
+  static const String emptyClinicCheckInfoMessage = '* Ket. kunjungan klinik tidak boleh kosong';
 
   // --- Confirmation & Error Dialogs ---
   static const String confirmationUnfilled = 'Belum diisi';
