@@ -7,7 +7,7 @@ part of 'pendataan_kesehatan_provider.dart';
 // **************************************************************************
 
 String _$pendataanKesehatanHash() =>
-    r'ed02f4437c3ed506ed2c3755d08161500256406b';
+    r'cedc9535df31eef166c1f8714e92ba4d892c2423';
 
 /// See also [PendataanKesehatan].
 @ProviderFor(PendataanKesehatan)

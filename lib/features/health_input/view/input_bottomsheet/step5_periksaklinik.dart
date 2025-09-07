@@ -16,14 +16,24 @@ class Step5PeriksaKlinik extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final klinikStatus = ref
-        .watch(pendataanKesehatanProvider)
-        .periksaKlinikStatus;
+    final pendataanState = ref.watch(pendataanKesehatanProvider);
+    final klinikStatus = pendataanState.periksaKlinikStatus;
+    final isSubmitting = pendataanState.isSubmitting;
+    final errorMessage = pendataanState.errorMessage;
     final notifier = ref.read(pendataanKesehatanProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Tampilkan error message jika ada
+        if (errorMessage != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: Text(
+              errorMessage,
+              style: context.textTheme.labelLarge!.copyWith(color: Colors.red),
+            ),
+          ),
         Visibility(
           visible: klinikStatus == PeriksaKlinikStatus.none,
           child: Padding(
@@ -43,8 +53,10 @@ class Step5PeriksaKlinik extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
-              onPressed: () =>
-                  ref.read(stepcontrollerProviderProvider.notifier).previous(),
+              onPressed: isSubmitting
+                  ? null
+                  : () =>
+                      ref.read(stepcontrollerProviderProvider.notifier).previous(),
               child: const Text(HealthInputStrings.back),
             ),
             const Spacer(),
@@ -55,27 +67,48 @@ class Step5PeriksaKlinik extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              onPressed: () {
-                showDialog(
-                  useSafeArea: true,
-                  context: context,
-                  builder: (context) => const Confirmationcard(),
-                );
-              },
+              onPressed: isSubmitting
+                  ? null
+                  : () {
+                      showDialog(
+                        useSafeArea: true,
+                        context: context,
+                        builder: (context) => const Confirmationcard(),
+                      );
+                    },
               child: const Text(HealthInputStrings.check),
             ),
             SizedBox(width: AppSpacing.s),
             FilledButton(
-              onPressed: () async {
-                if (klinikStatus != PeriksaKlinikStatus.none) {
-                  await notifier.submitData();
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                    ref.read(stepcontrollerProviderProvider.notifier).toStep(0);
-                  }
-                }
-              },
-              child: const Text(HealthInputStrings.adding),
+              onPressed: isSubmitting
+                  ? null // Disable tombol saat submitting
+                  : () async {
+                      if (klinikStatus != PeriksaKlinikStatus.none) {
+                        try {
+                          await notifier.submitData();
+                          // Navigator.pop dan reset stepcontroller dipindah ke dalam try/catch
+                          // untuk memastikan hanya dijalankan jika submit berhasil
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                            ref.read(stepcontrollerProviderProvider.notifier).toStep(0);
+                          }
+                        } catch (e) {
+                          // Handle error UI di sini jika perlu
+                          // Misalnya, tampilkan SnackBar
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Failed to submit data: $e')),
+                            );
+                          }
+                        }
+                      }
+                    },
+              child: isSubmitting
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2))
+                  : const Text(HealthInputStrings.adding),
             ),
           ],
         ),
