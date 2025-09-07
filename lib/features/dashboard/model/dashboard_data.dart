@@ -1,4 +1,5 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
+import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.dart';
 
 class DashboardData {
   final int totalSakitPekanIni;
@@ -20,18 +21,18 @@ class DashboardData {
   final List<Santri> sakitHariIni;
 
   DashboardData({
-    required this.totalSakitPekanIni,
-    required this.persentasePerbandinganPekanLalu,
-    required this.kasusTerbanyak,
-    required this.jumlahKasusTerbanyak,
-    required this.butuhIstirahatMaskan,
-    required this.kasusBaruHariIni,
-    required this.kasusPerHari,
-    required this.kasusPerJenjang,
-    required this.kasusPerAsrama,
-    required this.pieJenisPenyakit,
-    required this.rujukanHariIni,
-    required this.sakitHariIni,
+    this.totalSakitPekanIni = 0,
+    this.persentasePerbandinganPekanLalu = 0.0,
+    this.kasusTerbanyak = DashboardStrings.mostCasesTitle,
+    this.jumlahKasusTerbanyak = 0,
+    this.butuhIstirahatMaskan = 0,
+    this.kasusBaruHariIni = const {},
+    this.kasusPerHari = const [],
+    this.kasusPerJenjang = const [],
+    this.kasusPerAsrama = const [],
+    this.pieJenisPenyakit = const {},
+    this.rujukanHariIni = const [],
+    this.sakitHariIni = const [],
   });
 
   /// Factory method untuk generate dummy data dashboard
@@ -41,7 +42,7 @@ class DashboardData {
             totalSakitPekanIni: 0,
             persentasePerbandinganPekanLalu:
                 0, // misal naik 19.2% dari pekan lalu
-            kasusTerbanyak: "Tidak ada",
+            kasusTerbanyak: DashboardStrings.none,
             jumlahKasusTerbanyak: 0,
             butuhIstirahatMaskan: 0,
             kasusBaruHariIni: {},
