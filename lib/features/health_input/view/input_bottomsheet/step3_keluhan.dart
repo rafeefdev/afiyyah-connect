@@ -1,7 +1,8 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
+import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
-import 'package:afiyyah_connect/features/health_input/viewmodel/pendataan_kesehatan_provider.dart';
-import 'package:afiyyah_connect/features/health_input/viewmodel/stepcontroller_provider.dart';
+import 'package:afiyyah_connect/features/health_input/view_model/pendataan_kesehatan_provider.dart';
+import 'package:afiyyah_connect/features/health_input/view_model/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,6 +25,7 @@ class Step3Keluhan extends ConsumerStatefulWidget {
 class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
   bool _isLainnyaSelected = false;
   final _textController = TextEditingController();
+  bool _displayEmptyComplianceMessage = false;
 
   @override
   void dispose() {
@@ -40,12 +42,25 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
     // Gabungkan list default dengan keluhan custom dari state, kecuali yang sudah ada
     final allKeluhan = <dynamic>{
       ...widget.keluhanList,
-      ...selectedKeluhan.where((k) => !widget.keluhanList.contains(k) && k != lainnya)
+      ...selectedKeluhan.where(
+        (k) => !widget.keluhanList.contains(k) && k != lainnya,
+      ),
     }.toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Visibility(
+          visible:
+              _displayEmptyComplianceMessage || healthState.keluhan.isEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Text(
+              HealthInputStrings.emptyComplianceMessage,
+              style: context.textTheme.labelLarge!.copyWith(color: Colors.red),
+            ),
+          ),
+        ),
         Wrap(
           spacing: 8,
           runSpacing: 8,
@@ -91,7 +106,7 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
                     _textController.clear();
                   }
                 },
-              )
+              ),
             ],
           ),
         ],
@@ -107,7 +122,13 @@ class _Step3KeluhanState extends ConsumerState<Step3Keluhan> {
             SizedBox(width: AppSpacing.l),
             FilledButton(
               onPressed: () {
-                ref.read(stepcontrollerProviderProvider.notifier).next();
+                if (healthState.keluhan.isEmpty) {
+                  setState(() {
+                    _displayEmptyComplianceMessage = true;
+                  });
+                } else {
+                  ref.read(stepcontrollerProviderProvider.notifier).next();
+                }
               },
               style: ButtonStyle(
                 fixedSize: WidgetStatePropertyAll(Size.fromWidth(120)),
