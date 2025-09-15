@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/features/dashboard/model/dashboard_data.dart';
 import 'package:afiyyah_connect/features/dashboard/view/dashboard_page.dart';
+import 'package:afiyyah_connect/features/dashboard/view_model/dashboard_provider.dart';
 import 'package:afiyyah_connect/features/medical_history/view/history_page.dart';
 import 'package:afiyyah_connect/features/monitoring/view/monitoring_page.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,17 @@ class MainLayout extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<DashboardData> dashboardData = ref.watch(
+      dashboardNotifierProvider,
+    );
+
+    final DashboardData? data = dashboardData.value;
+
     // Daftar halaman yang akan ditampilkan sesuai dengan role dan tab
-    final List<Widget> pages = _getPagesForRole(user.role);
+    final List<Widget> pages = _getPagesForRole(
+      role: user.role,
+      dashboardData: data ?? DashboardData(),
+    );
 
     final currentIndex = ref.watch(mainLayoutViewModelProvider);
 
@@ -34,24 +44,21 @@ class MainLayout extends ConsumerWidget {
   }
 
   // Helper untuk menentukan halaman berdasarkan role
-  List<Widget> _getPagesForRole(Role role) {
+  List<Widget> _getPagesForRole({
+    required Role role,
+    required DashboardData dashboardData,
+  }) {
     // TODO: Sesuaikan halaman yang bisa diakses untuk setiap role
     switch (role) {
       case Role.asatidzPiketMaskan:
         return [
-          DashboardPage(
-            user: user,
-            data: DashboardData.dummy(isEmptyData: true),
-          ),
+          DashboardPage(user: user, data: dashboardData),
           const MonitoringPage(),
           const HistoryPage(),
         ];
       case Role.resepsionisKlinik:
         return [
-          DashboardPage(
-            user: user,
-            data: DashboardData.dummy(isEmptyData: true),
-          ),
+          DashboardPage(user: user, data: dashboardData),
           const HistoryPage(),
         ];
       case Role.dokter:

@@ -17,6 +17,7 @@ class DashboardStrings {
   static const String todayCasesTitle = 'Kasus Hari Ini';
   static const String comparisonLastWeek = 'dari pekan lalu';
   static const String studentsAffected = 'santri terdampak';
+  static const String none = 'Tidak ada';
   static const String approved = 'Disetujui';
   static const String pending = 'Pending';
 

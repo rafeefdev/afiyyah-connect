@@ -9,17 +9,18 @@ import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.d
 import 'package:flutter/material.dart';
 
 class TodaypatientsSection extends StatelessWidget {
-  const TodaypatientsSection({super.key});
+  final List<Santri> todayPatients;
+  const TodaypatientsSection({super.key, required this.todayPatients});
 
   @override
   Widget build(BuildContext context) {
-    //TODO : real count !
-    List<Santri> todayPatients = List.filled(20, Santri.generateDummyData());
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(DashboardStrings.todaySickSantriTitle, style: context.textTheme.titleMedium),
+        Text(
+          DashboardStrings.todaySickSantriTitle,
+          style: context.textTheme.titleMedium,
+        ),
         SizedBox(height: AppSpacing.s),
         if (todayPatients.isNotEmpty)
           Column(
