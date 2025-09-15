@@ -8,17 +8,18 @@ import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.d
 import 'package:flutter/material.dart';
 
 class PatientsReferralSection extends StatelessWidget {
-  const PatientsReferralSection({super.key});
+  final List<Santri> santriReferred;
+  const PatientsReferralSection({super.key, required this.santriReferred});
 
   @override
   Widget build(BuildContext context) {
-    //TODO : real count !
-    List<Santri> santriReferred = List.filled(4, Santri.generateDummyData());
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(DashboardStrings.hospitalReferralTitle, style: context.textTheme.titleMedium),
+        Text(
+          DashboardStrings.hospitalReferralTitle,
+          style: context.textTheme.titleMedium,
+        ),
         SizedBox(height: AppSpacing.s),
         if (santriReferred.isNotEmpty)
           Column(
