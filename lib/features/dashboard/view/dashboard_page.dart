@@ -1,6 +1,5 @@
 import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
-import 'package:afiyyah_connect/features/dashboard/model/dashboard_data.dart';
 import 'package:afiyyah_connect/features/dashboard/view/sections/custom_appbar.dart';
 import 'package:afiyyah_connect/features/dashboard/view/sections/insightcards_section.dart';
 import 'package:afiyyah_connect/features/dashboard/view/sections/notification_section.dart';
@@ -14,8 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DashboardPage extends ConsumerWidget {
   final UserModel user;
-  final DashboardData data;
-  const DashboardPage({required this.user, required this.data, super.key});
+  const DashboardPage({required this.user, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,20 +26,13 @@ class DashboardPage extends ConsumerWidget {
             SizedBox(height: AppSpacing.l),
             const NotificationSection(),
             SizedBox(height: AppSpacing.l),
-            InsightCardsSection(data: data),
+            InsightCardsSection(),
             SizedBox(height: AppSpacing.l),
-            ChartsSection(
-              kasusPerHari: data.kasusPerHari,
-              kasusPerJenjang: data.kasusPerJenjang,
-              kasusPerAsrama: data.kasusPerAsrama,
-              pieJenisPenyakit: data.pieJenisPenyakit,
-              rujukanHariIni: data.rujukanHariIni,
-              sakitHariIni: data.sakitHariIni,
-            ),
+            ChartsSection(), // TODO : most affected by deleted DashboardData
             SizedBox(height: AppSpacing.l),
-            PatientsReferralSection(santriReferred: data.rujukanHariIni),
+            PatientsReferralSection(),
             SizedBox(height: AppSpacing.l),
-            TodaypatientsSection(todayPatients: data.sakitHariIni),
+            TodaypatientsSection(),
             const SizedBox(height: 240),
           ],
         ),

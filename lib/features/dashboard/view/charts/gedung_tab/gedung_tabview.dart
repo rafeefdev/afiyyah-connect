@@ -1,14 +1,15 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/dashboard/view/charts/gedung_tab/dormbarchart_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GedungTabview extends StatelessWidget {
-  final List<double> data;
-
-  const GedungTabview({required this.data, super.key});
+class GedungTabview extends ConsumerWidget {
+  const GedungTabview({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // TODO : fetch real data with ref keyword
+    final List<double> data = [];
     return Card(
       child: SizedBox(
         height: 300,

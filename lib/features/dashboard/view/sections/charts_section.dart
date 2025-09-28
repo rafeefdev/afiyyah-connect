@@ -1,4 +1,3 @@
-import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/dashboard/view/charts/gedung_tab/gedung_tabview.dart';
 import 'package:afiyyah_connect/features/dashboard/view/charts/ikhtisar_tab/ikhtisar_tabview.dart';
 import 'package:afiyyah_connect/features/dashboard/view/charts/kelas_tab/kelas_tabview.dart';
@@ -7,22 +6,7 @@ import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.d
 import 'package:flutter/material.dart';
 
 class ChartsSection extends StatefulWidget {
-  final List<double> kasusPerHari;
-  final List<double> kasusPerJenjang;
-  final List<double> kasusPerAsrama;
-  final Map<String, int> pieJenisPenyakit;
-  final List<Santri> rujukanHariIni;
-  final List<Santri> sakitHariIni;
-
-  const ChartsSection({
-    required this.kasusPerHari,
-    required this.kasusPerJenjang,
-    required this.kasusPerAsrama,
-    required this.pieJenisPenyakit,
-    required this.rujukanHariIni,
-    required this.sakitHariIni,
-    super.key,
-  });
+  const ChartsSection({super.key});
 
   @override
   State<ChartsSection> createState() => ChartsSectionState();
@@ -58,14 +42,14 @@ class ChartsSectionState extends State<ChartsSection>
           ],
         ),
         SizedBox(
-          height: 300, // Adjust height as needed
+          height: 300,
           child: TabBarView(
             controller: _tabController,
-            children: [
-              IkhtisarTabview(data: widget.kasusPerHari),
-              KelasTabview(data: widget.kasusPerJenjang),
-              GedungTabview(data: widget.kasusPerAsrama),
-              PenyakitTabview(data: widget.pieJenisPenyakit),
+            children: const [
+              IkhtisarTabview(),
+              KelasTabview(),
+              GedungTabview(),
+              PenyakitTabview(),
             ],
           ),
         ),

@@ -1,14 +1,17 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/dashboard/view/charts/penyakit_tab/diseasedistributionchart_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PenyakitTabview extends StatelessWidget {
-  final Map<String, int> data;
-
-  const PenyakitTabview({required this.data, super.key});
+class PenyakitTabview extends ConsumerWidget {
+  const PenyakitTabview({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // TODO : fetch real data with ref keyword
+    final Map<String, int> data = {};
+
+    // TODO : is this neccessary ?
     List<DiseaseData> diseaseDatas(Map<String, int> dataSource) {
       List<String> keys = dataSource.keys.toList();
       List<int> values = dataSource.values.toList();
