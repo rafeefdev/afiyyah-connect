@@ -13,15 +13,14 @@ class InsightCardsSection extends StatelessWidget {
           children: [
             InsightCard(
               title: DashboardStrings.totalSickTitle,
-              value: 'data.totalSakitPekanIni.toString()',
+              value: '0',
               explanation: '',
             ),
             const SizedBox(width: 4),
             InsightCard(
               title: DashboardStrings.mostCasesTitle,
-              value: '',
-              explanation:
-                  '{data.jumlahKasusTerbanyak} {DashboardStrings.studentsAffected}',
+              value: '0',
+              explanation: '',
             ),
           ],
         ),
@@ -30,15 +29,15 @@ class InsightCardsSection extends StatelessWidget {
           children: [
             InsightCard(
               title: DashboardStrings.needsRestTitle,
-              value: "{data.butuhIstirahatMaskan}",
+              value: "0",
               explanation:
-                  '${DashboardStrings.approved} : 18\n${DashboardStrings.pending} : 5',
+                  '${DashboardStrings.approved} : X\n${DashboardStrings.pending} : Y',
             ),
             const SizedBox(width: 4),
             InsightCard(
               title: DashboardStrings.todayCasesTitle,
-              value: 'totalKasusBaruHariIni.toString()',
-              explanation: '6 Kasus flu, 4 demam, 2 lainnya',
+              value: '0',
+              explanation: 'X Kasus flu, Y demam, Z lainnya',
             ),
           ],
         ),

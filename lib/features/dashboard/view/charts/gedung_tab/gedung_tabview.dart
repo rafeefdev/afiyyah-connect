@@ -9,7 +9,11 @@ class GedungTabview extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // TODO : fetch real data with ref keyword
-    final List<double> data = [];
+    List<double>? data;
+
+    // TODO : is this match with best practice ?
+    final safeData = data ?? List.filled(2, 0);
+
     return Card(
       child: SizedBox(
         height: 300,
@@ -19,8 +23,12 @@ class GedungTabview extends ConsumerWidget {
             interval: 5,
             autoScale: true,
             dataList: [
-              BarData(color: Colors.blue, label: 'Umayyah', value: data[0]),
-              BarData(color: Colors.teal, label: 'Abbasiyyah', value: data[1]),
+              BarData(color: Colors.blue, label: 'Umayyah', value: safeData[0]),
+              BarData(
+                color: Colors.teal,
+                label: 'Abbasiyyah',
+                value: safeData[1],
+              ),
             ],
             title: 'Persebaran berdasarkan Asrama',
           ),

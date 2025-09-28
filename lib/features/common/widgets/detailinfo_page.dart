@@ -3,7 +3,7 @@ import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/auth/view_model/app_user_provider.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
-import 'package:afiyyah_connect/features/health_input/model/periksaklinikstatus_model.dart';
+import 'package:afiyyah_connect/app/core/model/activities/periksaklinikstatus_model.dart';
 import 'package:afiyyah_connect/features/monitoring/model/detailpageinfos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

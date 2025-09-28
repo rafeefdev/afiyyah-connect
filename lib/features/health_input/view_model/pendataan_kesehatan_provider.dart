@@ -1,6 +1,6 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
-import 'package:afiyyah_connect/features/health_input/model/pendataan_kesehatan_model.dart';
-import 'package:afiyyah_connect/features/health_input/model/periksaklinikstatus_model.dart';
+import 'package:afiyyah_connect/app/core/model/activities/pendataan_kesehatan_model.dart';
+import 'package:afiyyah_connect/app/core/model/activities/periksaklinikstatus_model.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/health_input_view_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
