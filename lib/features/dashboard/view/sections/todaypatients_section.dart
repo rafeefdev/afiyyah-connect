@@ -7,13 +7,15 @@ import 'package:afiyyah_connect/features/common/widgets/displayzerodata_componen
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/dashboard/constants/dashboard_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TodaypatientsSection extends StatelessWidget {
-  final List<Santri> todayPatients;
-  const TodaypatientsSection({super.key, required this.todayPatients});
+class TodaypatientsSection extends ConsumerWidget {
+  const TodaypatientsSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // TODO : fetch real data with ref
+    final List<Santri> todayPatients = <Santri>[];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

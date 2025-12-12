@@ -1,6 +1,6 @@
 import 'package:afiyyah_connect/app/core/services/logger_service.dart';
 import 'package:afiyyah_connect/app/core/services/supabase_service.dart';
-import 'package:afiyyah_connect/features/health_input/model/pendataan_kesehatan_model.dart';
+import 'package:afiyyah_connect/app/core/model/activities/pendataan_kesehatan_model.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/features/health_input/model/pendataan_kesehatan_model.dart';
+import 'package:afiyyah_connect/app/core/model/activities/pendataan_kesehatan_model.dart';
 import 'package:afiyyah_connect/features/health_input/repository/health_input_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

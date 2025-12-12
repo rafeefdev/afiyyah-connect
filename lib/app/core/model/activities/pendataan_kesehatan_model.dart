@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/features/health_input/model/periksaklinikstatus_model.dart';
+import 'package:afiyyah_connect/app/core/model/activities/periksaklinikstatus_model.dart';
 
 class PendataanKesehatanModel {
   final String? pendataanId;
