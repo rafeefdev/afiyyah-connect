@@ -37,7 +37,8 @@ class PendataanKesehatanState {
       sickStartTime: sickStartTime ?? this.sickStartTime,
       periksaKlinikStatus: periksaKlinikStatus ?? this.periksaKlinikStatus,
       isSubmitting: isSubmitting ?? this.isSubmitting,
-      errorMessage: errorMessage ?? this.errorMessage, // Salin field error message
+      errorMessage:
+          errorMessage ?? this.errorMessage, // Salin field error message
     );
   }
 }
@@ -80,33 +81,29 @@ class PendataanKesehatan extends _$PendataanKesehatan {
     state = state.copyWith(isSubmitting: true);
 
     try {
-      await ref.read(healthInputViewModelProvider.notifier).submitData(
+      await ref
+          .read(healthInputViewModelProvider.notifier)
+          .submitData(
             PendataanKesehatanModel(
               keluhan: state.keluhan,
               mulaiSakit: state.sickStartTime!,
-              santriId: state.santri!.id,
+              santuarioId: state.santri!.id,
               statusPeriksa: state.periksaKlinikStatus,
-              // Tambahkan field lain jika diperlukan, misalnya waktuMulaiSakit
             ),
           );
       // Jika berhasil, reset form
       reset();
     } on Exception catch (e) {
       // Tangani error secara spesifik
-      final errorMessage = e.toString(); // Atau buat pesan yang lebih user-friendly
-      state = state.copyWith(
-        isSubmitting: false,
-        errorMessage: errorMessage,
-      );
+      final errorMessage = e
+          .toString(); // Atau buat pesan yang lebih user-friendly
+      state = state.copyWith(isSubmitting: false, errorMessage: errorMessage);
       // Anda bisa melempar ulang error jika perlu ditangani di layer UI
       // rethrow;
     } catch (e) {
       // Tangani error non-Exception
       final errorMessage = 'An unexpected error occurred.';
-      state = state.copyWith(
-        isSubmitting: false,
-        errorMessage: errorMessage,
-      );
+      state = state.copyWith(isSubmitting: false, errorMessage: errorMessage);
       // Log error jika diperlukan
       // Logger.severe('Unexpected error in submitData', e);
     }
@@ -115,6 +112,7 @@ class PendataanKesehatan extends _$PendataanKesehatan {
   }
 
   void reset() {
-    state = PendataanKesehatanState(); // Ini akan mereset semua field ke default
+    state =
+        PendataanKesehatanState(); // Ini akan mereset semua field ke default
   }
 }

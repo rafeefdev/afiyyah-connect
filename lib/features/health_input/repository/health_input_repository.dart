@@ -26,7 +26,7 @@ class HealthInputRepositoryImpl implements HealthInputRepository {
 
     final dataToInsert = data.toJson()..['user_id'] = currentUser.id;
 
-    _log.info('Adding health entry for santri: ${data.santriId}');
+    _log.info('Adding health entry for santri: ${data.santuarioId}');
     try {
       await _supabase.from('pendataan_kesehatan').insert(dataToInsert);
       _log.fine('Health entry added successfully.');

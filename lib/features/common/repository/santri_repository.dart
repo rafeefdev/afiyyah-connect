@@ -30,10 +30,8 @@ class SantriRepository {
           .ilike('nama', '%$query%')
           .limit(10);
 
-      final santriList =
-          response.map((data) => Santri.fromJson(data)).toList();
-      _log.fine(
-          "Found ${santriList.length} santri for query: '$query'");
+      final santriList = response.map((data) => Santri.fromJson(data)).toList();
+      _log.fine("Found ${santriList.length} santri for query: '$query'");
       return santriList;
     } on PostgrestException catch (e, st) {
       _log.severe('Supabase error in searchSantri: ${e.message}', e, st);
@@ -44,14 +42,40 @@ class SantriRepository {
     }
   }
 
-  /// Di masa depan, Anda bisa menambahkan method lain di sini.
-  /// Contoh:
-  /// Future<Santri?> getSantriById(String id) async {
-  ///   final response = await _supabase
-  ///       .from('v_santri_detail')
-  ///       .select()
-  ///       .eq('santri_id', id)
-  ///       .single();
-  ///   return Santri.fromJson(response);
-  /// }
+  /// Mendapatkan Santi by ID dari view `v_santri_detail`.
+  Future<Santri?> getSantriById(String id) async {
+    _log.info("Getting santii by id: '$id'");
+    try {
+      final response = await _supabase
+          .from('v_santri_detail')
+          .select()
+          .eq('santri_id', id)
+          .single();
+      return Santri.fromJson(response);
+    } on PostgrestException catch (e, st) {
+      _log.severe('Supabase error in getSantriById: ${e.message}', e, st);
+      rethrow;
+    } catch (e, st) {
+      _log.severe('Generic error in getSantriById: $e', e, st);
+      rethrow;
+    }
+  }
+
+  /// Mendapatkan semua Santri aktif.
+  Future<List<Santri>> getAllActiveSantri() async {
+    _log.info("Getting all active santii");
+    try {
+      final response = await _supabase
+          .from('v_santri_detail')
+          .select()
+          .eq('status_aktif', true);
+      return response.map((data) => Santri.fromJson(data)).toList();
+    } on PostgrestException catch (e, st) {
+      _log.severe('Supabase error in getAllActiveSantri: ${e.message}', e, st);
+      rethrow;
+    } catch (e, st) {
+      _log.severe('Generic error in getAllActiveSantri: $e', e, st);
+      rethrow;
+    }
+  }
 }
