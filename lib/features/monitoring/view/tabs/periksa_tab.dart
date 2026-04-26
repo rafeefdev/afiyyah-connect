@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tablegend_component.dart';
@@ -10,7 +11,7 @@ class PeriksaTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final periksaAsync = ref.watch(periksaListProvider);
+    final periksaAsync = ref.watch(periksaListTodayProvider);
 
     List<MaterialColor> colors = [Colors.orange, Colors.blue];
 
@@ -31,7 +32,14 @@ class PeriksaTab extends ConsumerWidget {
                 )
               : Column(
                   children: periksaList.map((pendataan) {
+                    final student = Santri(
+                      id: pendataan.santuarioId,
+                      nama: pendataan.namaSantri ?? 'Tanpa Nama',
+                      namaHujroh: pendataan.namaHujroh,
+                      jenjang: pendataan.jenjang,
+                    );
                     return ListCardItem(
+                      siswa: student,
                       customNotchColor: colors[0],
                       info: pendataan.keluhan.isNotEmpty
                           ? pendataan.keluhan.join(', ')

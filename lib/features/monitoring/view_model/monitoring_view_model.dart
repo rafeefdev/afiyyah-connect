@@ -4,6 +4,8 @@ import 'package:afiyyah_connect/app/core/model/activities/pendataan_kesehatan_mo
 import 'package:afiyyah_connect/app/core/model/activities/periksaklinikstatus_model.dart';
 import 'package:afiyyah_connect/app/core/model/activities/rujukan_model.dart';
 import 'package:afiyyah_connect/app/core/model/activities/rujukan_enums.dart';
+import 'package:afiyyah_connect/app/core/model/activities/monitoring_models.dart';
+import 'package:afiyyah_connect/app/core/services/supabase_service.dart';
 import 'package:afiyyah_connect/features/clinic_visit/repository/klinik_repository.dart';
 import 'package:afiyyah_connect/features/health_input/repository/pendataan_kesehatan_repository.dart';
 import 'package:afiyyah_connect/features/rujukan/repository/rujukan_repository.dart';
@@ -68,41 +70,31 @@ class MonitoringViewModel extends _$MonitoringViewModel {
 }
 
 @riverpod
-class PeriksaList extends _$PeriksaList {
-  @override
-  Future<List<PendataanKesehatanModel>> build() async {
-    final repo = ref.read(pendataanKesehatanRepositoryProvider);
-    final allData = await repo.getAll();
-    return allData
-        .where((e) => e.statusPeriksa == PeriksaKlinikStatus.belum)
-        .toList();
-  }
+Future<List<PendataanWithSantri>> periksaListToday(ref) async {
+  final supabase = ref.watch(supabaseClientProvider);
+  final response = await supabase
+      .from('v_pendataan_santri_today')
+      .select()
+      .eq('status_periksa', 'belum');
+  return response.map((e) => PendataanWithSantri.fromJson(e)).toList();
 }
 
 @riverpod
-class ArahanList extends _$ArahanList {
-  @override
-  Future<List<KunjunganKlinikModel>> build() async {
-    final repo = ref.read(kunjunganKlinikRepositoryProvider);
-    final allData = await repo.getAll();
-    return allData
-        .where((e) => e.statusPengarahan == StatusPengarahan.istirahatAsrama)
-        .toList();
-  }
+Future<List<KunjunganWithSantri>> arahanListToday(ref) async {
+  final supabase = ref.watch(supabaseClientProvider);
+  final response = await supabase
+      .from('v_kunjungan_butuh_tindakan')
+      .select()
+      .eq('status_pengarahan', 'istirahat_asrama');
+  return response.map((e) => KunjunganWithSantri.fromJson(e)).toList();
 }
 
 @riverpod
-class RujukanList extends _$RujukanList {
-  @override
-  Future<List<RujukanModel>> build() async {
-    final repo = ref.read(rujukanRepositoryProvider);
-    final allData = await repo.getAll();
-    return allData
-        .where(
-          (e) =>
-              e.statusRujukan?.value == 'menunggu' ||
-              e.statusRujukan?.value == 'terjadwal',
-        )
-        .toList();
-  }
+Future<List<RujukanBelumDitindaklanjuti>> rujukanListToday(ref) async {
+  final supabase = ref.watch(supabaseClientProvider);
+  final response = await supabase
+      .from('v_rujukan_belum_ditindaklanjuti')
+      .select()
+      .eq('belum_diantar', true);
+  return response.map((e) => RujukanBelumDitindaklanjuti.fromJson(e)).toList();
 }

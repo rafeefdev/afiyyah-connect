@@ -1,4 +1,4 @@
-import 'package:afiyyah_connect/app/core/model/activities/rujukan_enums.dart';
+import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tablegend_component.dart';
@@ -11,7 +11,7 @@ class RujukanNTransportasiTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rujukanAsync = ref.watch(rujukanListProvider);
+    final rujukanAsync = ref.watch(rujukanListTodayProvider);
     List<MaterialColor> colors = [Colors.orange, Colors.blue];
 
     return rujukanAsync.when(
@@ -27,14 +27,20 @@ class RujukanNTransportasiTab extends ConsumerWidget {
               ? DisplayZeroData(
                   height: 480,
                   icon: Icons.check_circle_outline_rounded,
-                  message: 'Tidak ada rujukan aktif',
+                  message: 'Tidak ada rujukan yang perlu ditindaklanjuti',
                 )
               : Column(
                   children: rujukanList.map((rujukan) {
+                    final student = Santri(
+                      id: rujukan.santuarioId ?? '',
+                      nama: rujukan.namaSantri ?? 'Tanpa Nama',
+                      namaHujroh: rujukan.namaHujroh,
+                      jenjang: rujukan.jenjang,
+                    );
                     return ListCardItem(
+                      siswa: student,
                       customNotchColor: colors[0],
-                      info:
-                          'Rujukan ${rujukan.statusRujukan?.value ?? 'menunggu'}',
+                      info: 'Dirujuk ke ${rujukan.rumahSakit ?? 'RS'}',
                     );
                   }).toList(),
                 ),

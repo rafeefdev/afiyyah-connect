@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tablegend_component.dart';
@@ -10,7 +11,7 @@ class ArahanTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final arahanAsync = ref.watch(arahanListProvider);
+    final arahanAsync = ref.watch(arahanListTodayProvider);
 
     List<MaterialColor> colors = [Colors.green, Colors.orange, Colors.red];
 
@@ -27,13 +28,20 @@ class ArahanTab extends ConsumerWidget {
               ? DisplayZeroData(
                   height: 480,
                   icon: Icons.health_and_safety_rounded,
-                  message: 'Tidak ada arahan',
+                  message: 'Tidak ada arahan istirahat',
                 )
               : Column(
                   children: arahanList.map((kunjungan) {
+                    final student = Santri(
+                      id: kunjungan.santuarioId ?? '',
+                      nama: kunjungan.namaSantri ?? 'Tanpa Nama',
+                      namaHujroh: kunjungan.namaHujroh,
+                      jenjang: kunjungan.jenjang,
+                    );
                     return ListCardItem(
+                      siswa: student,
                       customNotchColor: colors[1],
-                      info: 'Istirahat di asrama',
+                      info: kunjungan.keluhan?.join(', ') ?? 'Tanpa keluhan',
                     );
                   }).toList(),
                 ),
