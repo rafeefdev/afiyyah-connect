@@ -1,11 +1,11 @@
-enum SumberDana { sekolah, Pengantar, hybrid }
+enum SumberDana { sekolah, pengantar, hybrid }
 
 extension SumberDanaExtension on SumberDana {
   String get value {
     switch (this) {
       case SumberDana.sekolah:
         return 'sekolah';
-      case SumberDana.Pengantar:
+      case SumberDana.pengantar:
         return 'pengantar';
       case SumberDana.hybrid:
         return 'hybrid';
@@ -17,7 +17,7 @@ extension SumberDanaExtension on SumberDana {
       case 'sekolah':
         return SumberDana.sekolah;
       case 'pengantar':
-        return SumberDana.Pengantar;
+        return SumberDana.pengantar;
       case 'hybrid':
         return SumberDana.hybrid;
       default:

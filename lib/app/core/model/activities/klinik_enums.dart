@@ -1,11 +1,11 @@
-enum SumberKunjungan { dariAsrama, Mandiri }
+enum SumberKunjungan { dariAsrama, mandiri }
 
 extension SumberKunjunganExtension on SumberKunjungan {
   String get value {
     switch (this) {
       case SumberKunjungan.dariAsrama:
         return 'dari_asrama';
-      case SumberKunjungan.Mandiri:
+      case SumberKunjungan.mandiri:
         return 'mandiri';
     }
   }
@@ -15,9 +15,9 @@ extension SumberKunjunganExtension on SumberKunjungan {
       case 'dari_asrama':
         return SumberKunjungan.dariAsrama;
       case 'mandiri':
-        return SumberKunjungan.Mandiri;
+        return SumberKunjungan.mandiri;
       default:
-        return SumberKunjungan.Mandiri;
+        return SumberKunjungan.mandiri;
     }
   }
 }

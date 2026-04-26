@@ -1,13 +1,13 @@
-enum JenisKwitansi { rs, Laboratorium, Transportasi }
+enum JenisKwitansi { rs, labor, transportasi }
 
 extension JenisKwitansiExtension on JenisKwitansi {
   String get value {
     switch (this) {
       case JenisKwitansi.rs:
         return 'RS';
-      case JenisKwitansi.Laboratorium:
+      case JenisKwitansi.labor:
         return 'Laboratorium';
-      case JenisKwitansi.Transportasi:
+      case JenisKwitansi.transportasi:
         return 'Transportasi';
     }
   }
@@ -17,9 +17,9 @@ extension JenisKwitansiExtension on JenisKwitansi {
       case 'RS':
         return JenisKwitansi.rs;
       case 'Laboratorium':
-        return JenisKwitansi.Laboratorium;
+        return JenisKwitansi.labor;
       case 'Transportasi':
-        return JenisKwitansi.Transportasi;
+        return JenisKwitansi.transportasi;
       default:
         return JenisKwitansi.rs;
     }

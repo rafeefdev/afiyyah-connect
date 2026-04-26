@@ -1,5 +1,3 @@
-import 'package:afiyyah_connect/app/core/model/activities/pengantaran_enums.dart';
-
 class PengantaranRujukanModel {
   final String? id;
   final String? rujukanId;
