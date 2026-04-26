@@ -5,6 +5,8 @@ import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+part 'pendataan_kesehatan_repository.g.dart';
+
 abstract class PendataanKesehatanRepository {
   Future<List<PendataanKesehatanModel>> getAll();
   Future<List<PendataanKesehatanModel>> getByDate(DateTime date);
