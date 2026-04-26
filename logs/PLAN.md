@@ -78,48 +78,48 @@
 
 ### Fase 3: ViewModels/Providers (State Management - Riverpod)
 
-- [ ] 3.1 Review & update `auth_provider.dart`
-- [ ] 3.2 Review `app_user_provider.dart`
-- [ ] 3.3 Review `santri_search_viewmodel.dart`
-- [ ] 3.4 Review `pendataan_kesehatan_provider.dart`
-- [ ] 3.5 Review `health_input_view_model.dart`
-- [ ] 3.6 Review `main_layout_view_model.dart`
-- [ ] 3.7 Buat `dashboard_view_model.dart` - untuk statistics
-- [ ] 3.8 Buat `monitoring_view_model.dart` - untuk monitoring page
-- [ ] 3.9 Buat `medical_history_view_model.dart` - untuk history page
+- [x] 3.1 Review & update `auth_provider.dart`
+- [x] 3.2 Review `app_user_provider.dart`
+- [x] 3.3 Review `santri_search_viewmodel.dart`
+- [x] 3.4 Review `pendataan_kesehatan_provider.dart`
+- [x] 3.5 Review `health_input_view_model.dart`
+- [x] 3.6 Review `main_layout_view_model.dart`
+- [x] 3.7 Buat `dashboard_view_model.dart` - untuk statistics
+- [x] 3.8 Buat `monitoring_view_model.dart` - untuk monitoring page
+- [x] 3.9 Buat `medical_history_view_model.dart` - untuk history page
 
 ### Fase 4: Business Process (Workflows)
 
 - [x] 4.1 **Alur Pendataan Kesehatan** (asatidzPiketMaskan)
   - Input keluhan → simpan ke `pendataan_kesehatan`
   
-- [ ] 4.2 **Alur Pemeriksaan** (resepsionisKlinik/dokter)
+- [x] 4.2 **Alur Pemeriksaan** (resepsionisKlinik/dokter)
   - Lire pendataan → buat `kunjungan_klinik`
   - Pemeriksaan oleh dokter → simpan ke `pemeriksaan_dokter`
   
-- [ ] 4.3 **Alur Rujukan** (resepsionisKlinik)
+- [x] 4.3 **Alur Rujukan** (resepsionisKlinik)
   - Buat rujukan → ke rumah sakit → simpan ke `rujukan`
   
-- [ ] 4.4 **Alur Pengantaran** (asatidz/resepsionis)
+- [x] 4.4 **Alur Pengantaran** (asatidz/resepsionis)
   - Jadwalkan pengantaran → simpan ke `pengantaran_rujukan`
   - Upload kwitansi → ke storage → simpan ke `kwitansi_pengantaran`
   
-- [ ] 4.5 **Alur Hasil Rujukan** (resepsionis)
+- [x] 4.5 **Alur Hasil Rujukan** (resepsionis)
   - Simpan hasil → upload dokumen → ke `hasil_rujukan`, `dokumen_hasil_rujukan`
   
-- [ ] 4.6 **Dashboard Statistics**
+- [x] 4.6 **Dashboard Statistics**
   - Get total penyakit minggu ini
   - Get comparison dengan minggu lalu
   - Get most common cases
   - Get cases per day/level/dorm
   - Get referrals today
 
-- [ ] 4.7 **Monitoring**
+- [x] 4.7 **Monitoring**
   - Get list periksa (belum)
   - Get list arahan
   - Get list rujukan RS
 
-- [ ] 4.8 **Medical History**
+- [x] 4.8 **Medical History**
   - Get riwayat kesehatanasantrian
 
 ---
