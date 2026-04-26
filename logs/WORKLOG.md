@@ -34,12 +34,21 @@
 - Created `riwayat_kesehatan_santri_model.dart` ✓
 - Created `histori_hujroh_siswa_model.dart` ✓
 
-### Fase 2: Repositories
+### Fase 2: Repositories (14 repositories - complete)
 
 - `auth_repository.dart` - sudah sesuai API docs ✓
 - `santri_repository.dart` - ditambahkan getById, getAllActiveSantri ✓
 - `pendataan_kesehatan_repository.dart` - CRUD lengkap ✓
 - `klinik_repository.dart` - kunjungan klinik CRUD ✓
+- `rujukan_repository.dart` - CRUD lengkap ✓
+- `pengantaran_repository.dart` - CRUD lengkap ✓
+- `storage_repository.dart` - upload/download file ✓
+- `dokter_repository.dart` - data dokter ✓
+- `rumah_sakit_repository.dart` - data RS ✓
+- `petugas_repository.dart` - data petugas ✓
+- `asrama_repository.dart` - data asrama ✓
+- `kendaraan_repository.dart` - data kendaraan ✓
+- `riwayat_kesehatan_repository.dart` - riwayat kesehatan CRUD ✓
 
 ### Fix Code Quality
 
@@ -49,7 +58,6 @@
 
 ## Rencana Berikutnya
 
-- Fase 2 (lanjutan): Buat repository剩余 (rujukan, pengantaran, storage, dokter, RS, petugas, asrama, kendaraan, riwayat kesehatan)
 - Fase 3: ViewModels/Providers (dashboard, monitoring, medical history)
 - Fase 4: Business Process Workflows
 - Update PLAN.md dengan centang task selesai

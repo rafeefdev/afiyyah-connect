@@ -66,15 +66,15 @@
 - [x] 2.3 Review & update `health_input_repository.dart`
 - [x] 2.4 Buat `pendataan_kesehatan_repository.dart` - CRUD lengkap
 - [x] 2.5 Buat `klinik_repository.dart` - untuk kunjungan, pemeriksaan
-- [ ] 2.6 Buat `rujukan_repository.dart` - CRUD rujukan
-- [ ] 2.7 Buat `pengantaran_repository.dart` - CRUD pengantaran
-- [ ] 2.8 Buat `storage_repository.dart` - upload/download file
-- [ ] 2.9 Buat `dokter_repository.dart` - data dokter
-- [ ] 2.10 Buat `rumah_sakit_repository.dart` - data rumah sakit
-- [ ] 2.11 Buat `petugas_repository.dart` - data petugas
-- [ ] 2.12 Buat `asrama_repository.dart` - data asrama
-- [ ] 2.13 Buat `kendaraan_repository.dart` - data kendaraan
-- [ ] 2.14 Buat `riwayat_kesehatan_repository.dart` - riwayat kesehatan
+- [x] 2.6 Buat `rujukan_repository.dart` - CRUD rujukan
+- [x] 2.7 Buat `pengantaran_repository.dart` - CRUD pengantaran
+- [x] 2.8 Buat `storage_repository.dart` - upload/download file
+- [x] 2.9 Buat `dokter_repository.dart` - data dokter
+- [x] 2.10 Buat `rumah_sakit_repository.dart` - data rumah sakit
+- [x] 2.11 Buat `petugas_repository.dart` - data petugas
+- [x] 2.12 Buat `asrama_repository.dart` - data asrama
+- [x] 2.13 Buat `kendaraan_repository.dart` - data kendaraan
+- [x] 2.14 Buat `riwayat_kesehatan_repository.dart` - riwayat kesehatan
 
 ### Fase 3: ViewModels/Providers (State Management - Riverpod)
 
