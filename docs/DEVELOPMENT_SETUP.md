@@ -21,8 +21,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   await Supabase.initialize(
-    url: 'https://pcrwsjdaujzuucumuqqf.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjcndzamRhdWp6dXVjdW11cXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMyNjk3OTksImV4cCI6MjA2ODg0NTc5OX0.0YGTOWGJxYgexvcaX-dgQxMwf0n-MgFsH3B1_c5FJd8',
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
   runApp(MyApp());
 }
