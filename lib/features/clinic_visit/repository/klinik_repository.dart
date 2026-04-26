@@ -55,6 +55,16 @@ class KunjunganKlinikRepository {
     await _supabase.from('kunjungan_klinik').update(data).eq('id', id);
   }
 
+  Future<List<KunjunganKlinikModel>> getBySantriId(String santuarioId) async {
+    _log.info('Getting kunjungan_klinik by santii id: $santuarioId');
+    final response = await _supabase
+        .from('kunjungan_klinik')
+        .select()
+        .eq('santri_id', santuarioId)
+        .order('created_at', ascending: false);
+    return response.map((e) => KunjunganKlinikModel.fromJson(e)).toList();
+  }
+
   Future<void> delete(String id) async {
     _log.info('Deleting kunjungan_klinik: $id');
     await _supabase.from('kunjungan_klinik').delete().eq('id', id);
