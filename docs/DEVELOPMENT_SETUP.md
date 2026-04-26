@@ -14,6 +14,32 @@
    ```
 8. Run the app: `flutter run`
 
+## Supabase Initialization
+
+```dart
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+void main() async {
+  await Supabase.initialize(
+    url: 'https://pcrwsjdaujzuucumuqqf.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjcndzamRhdWp6dXVjdW11cXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMyNjk3OTksImV4cCI6MjA2ODg0NTc5OX0.0YGTOWGJxYgexvcaX-dgQxMwf0n-MgFsH3B1_c5FJd8',
+  );
+  runApp(MyApp());
+}
+
+final supabase = Supabase.instance.client;
+```
+
+## Dependencies
+
+```yaml
+# pubspec.yaml
+dependencies:
+  supabase_flutter: ^2.0.0
+  file_picker: ^8.0.0
+  url_launcher: ^6.0.0
+```
+
 ## IDE Configuration (VS Code)
 It is highly recommended to install the following VS Code extensions for an optimal development experience:
 - `Dart`

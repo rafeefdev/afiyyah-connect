@@ -1,5 +1,11 @@
 # Features
 
+## User Roles
+The application has three user roles:
+- **asatidzPiketMaskan**: Petugas piket asrama (dormitory duty officer)
+- **resepsionisKlinik**: Klinik resepsionis (clinic receptionist)
+- **dokter**: Dokter (doctor)
+
 ## Authentication
 Users can log in with their email and a one-time password (OTP). The app uses Supabase for authentication.
 
@@ -26,17 +32,18 @@ Users can input health data for students. The health input form has 5 steps:
 4. Enter when the illness started.
 5. Check if the student needs to go to the clinic.
 
-The health input data includes the following information:
+The health input data is stored in the `pendataan_kesehatan` table and includes the following information:
 - The ID of the health input.
 - The timestamp of the health input.
 - The ID of the student.
 - A list of symptoms.
 - The start time of the illness.
+- Status periksa (sudah/belum/di luar)
 
 ## Monitoring
 Users can monitor the health of students. The monitoring page has three tabs:
 - **Periksa:** Displays a list of students who need to be examined.
-- **Arahan:** Displays a list of students with instructions from the clinic.
+- **Arahan:** Displays a list of students with instructions from the clinic (masuk_sekolah/istirahat_asrama).
 - **Rujukan RS:** Displays a list of students who have been referred to a hospital and need transportation.
 
 ## Medical History
