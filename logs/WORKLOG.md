@@ -70,6 +70,37 @@
 - Fixed unused import di `pemeriksaan_service.dart` ✓
 - `flutter analyze` - No issues found ✓
 
+### Duplicate Prevention Rule - Complete Implementation (FIXED)
+
+**Problem Found:** Timezone mismatch between frontend (local time) and database (UTC)
+
+**Fixes Applied:**
+
+1. **Database Trigger** (PostgreSQL):
+   - Function `check_duplicate_pendataan_kesehatan()` with explicit UTC timezone handling ✓
+   - Trigger `prevent_duplicate_daily_entry` fires BEFORE INSERT ✓
+   - Tested: Direct SQL INSERT blocked with error "Santri ini sudah didata hari ini" ✓
+
+2. **Repository Level** (`health_input_repository.dart`):
+   - Fixed `checkDuplicateToday()` to use UTC timezone (`DateTime.now().toUtc()`) ✓
+   - Fixed `addHealthEntry()` to use UTC timezone for duplicate check ✓
+   - Both methods now use `DateTime.utc()` for consistent date range calculation ✓
+
+3. **UI Validation** (Frontend):
+   - **Step 1** (`step1_carisantri.dart:136-154`): Async check on santri selection, shows error SnackBar ✓
+   - **Step 2** (`step2_pilihsantri.dart:117-145`): Async check on "Next" button, loading state, blocks button during check ✓
+
+**Verification:**
+- Database trigger tested and working: duplicate INSERT rejected ✓
+- No duplicate entries in database after cleanup ✓
+- Frontend validation prevents user from proceeding with duplicate ✓
+
+**Files Modified:**
+- `lib/features/health_input/repository/health_input_repository.dart` - UTC timezone fix
+- `lib/features/health_input/view/input_bottomsheet/step1_carisantri.dart` - UI validation
+- `lib/features/health_input/view/input_bottomsheet/step2_pilihsantri.dart` - UI validation with loading state
+- Database: Trigger function recreated with UTC timezone handling
+
 ---
 
 ## RINGKASAN: ALL PHASES COMPLETE

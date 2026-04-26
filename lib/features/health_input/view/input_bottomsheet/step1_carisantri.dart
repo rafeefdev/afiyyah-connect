@@ -1,11 +1,12 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
-import 'package:afiyyah_connect/features/common/view_model/santri_search_viewmodel.dart'; // DIUBAH: Import provider baru
+import 'package:afiyyah_connect/features/common/view_model/santri_search_viewmodel.dart';
 import 'package:afiyyah_connect/features/common/widgets/loadingindicator_component.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/stepcontroller_provider.dart';
+import 'package:afiyyah_connect/features/health_input/view_model/health_input_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -132,7 +133,27 @@ class _Step1CariSantriState extends ConsumerState<Step1CariSantri> {
         itemBuilder: (context, index) {
           final santri = result[index];
           return InkWell(
-            onTap: () {
+            onTap: () async {
+              // Check for duplicate before selecting
+              final isDuplicate = await ref
+                  .read(healthInputViewModelProvider.notifier)
+                  .checkDuplicateToday(santri.id);
+
+              if (!context.mounted) return;
+
+              if (isDuplicate) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Santri "${santri.nama}" sudah didata hari ini. Tidak dapat menambahkan data duplikat.',
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+                return;
+              }
+
               // Set santri yang dipilih ke provider utama
               ref.read(pendataanKesehatanProvider.notifier).setSantri(santri);
               // Pindah ke step selanjutnya

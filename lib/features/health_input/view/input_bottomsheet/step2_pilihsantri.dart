@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/extensions.dart';
 import 'package:afiyyah_connect/features/health_input/constants/health_input_strings.dart';
+import 'package:afiyyah_connect/features/health_input/view_model/health_input_view_model.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/pendataan_kesehatan_provider.dart';
 import 'package:afiyyah_connect/features/health_input/view_model/stepcontroller_provider.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,9 @@ class Step2PilihSantri extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final santri = ref.watch(pendataanKesehatanProvider).santri;
+    final isCheckingDuplicate = ref.watch(
+      healthInputViewModelProvider.select((value) => value.isLoading),
+    );
 
     // Fallback if santri is somehow null
     if (santri == null) {
@@ -71,7 +75,8 @@ class Step2PilihSantri extends ConsumerWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   filled: true,
-                  labelText: santri.namaHujroh ?? HealthInputStrings.notAvailable,
+                  labelText:
+                      santri.namaHujroh ?? HealthInputStrings.notAvailable,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -110,14 +115,44 @@ class Step2PilihSantri extends ConsumerWidget {
             ),
             SizedBox(width: AppSpacing.m),
             FilledButton(
-              onPressed: () {
-                // Santri sudah di-set di state, jadi langsung lanjut
-                ref.read(stepcontrollerProviderProvider.notifier).next();
-              },
+              onPressed: isCheckingDuplicate
+                  ? null
+                  : () async {
+                      // Check for duplicate before proceeding
+                      final isDuplicate = await ref
+                          .read(healthInputViewModelProvider.notifier)
+                          .checkDuplicateToday(santri.id);
+
+                      if (!context.mounted) return;
+
+                      if (isDuplicate) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Santri "${santri.nama}" sudah didata hari ini. Tidak dapat menambahkan data duplikat.',
+                            ),
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.error,
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                        return;
+                      }
+
+                      // Santri sudah di-set di state, jadi langsung lanjut
+                      ref.read(stepcontrollerProviderProvider.notifier).next();
+                    },
               style: ButtonStyle(
                 fixedSize: WidgetStatePropertyAll(Size.fromWidth(120)),
               ),
-              child: const Text(HealthInputStrings.next),
+              child: isCheckingDuplicate
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Text(HealthInputStrings.next),
             ),
           ],
         ),
