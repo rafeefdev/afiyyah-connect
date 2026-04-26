@@ -37,35 +37,35 @@
 
 ### Fase 1: Model Entities (sesuaiikan dengan schema database)
 
-- [ ] 1.1 Review & update `user.dart` - tambahkan semua field dari tabel `profiles`
-- [ ] 1.2 Review & update `santri.dart` - tambahkan field dari `data_santri`
-- [ ] 1.3 Review & update `hujroh.dart` - sesuai schema
-- [ ] 1.4 Review & update `kelas.dart` - sesuai schema
-- [ ] 1.5 Review & update `pendataan_kesehatan_model.dart` - sesuai schema lengkap
-- [ ] 1.6 Buat `kunjungan_klinik_model.dart` - sesuai schema
-- [ ] 1.7 Buat `pemeriksaan_dokter_model.dart` - sesuai schema
-- [ ] 1.8 Buat `resep_obat_model.dart` - sesuai schema
-- [ ] 1.9 Buat `rujukan_model.dart` - sesuai schema (update dari yang ada)
-- [ ] 1.10 Buat `pengantaran_rujukan_model.dart` - sesuai schema
-- [ ] 1.11 Buat `hasil_rujukan_model.dart` - sesuai schema
-- [ ] 1.12 Buat `dokumen_hasil_rujukan_model.dart` - sesuai schema
-- [ ] 1.13 Buat `kwitansi_pengantaran_model.dart` - sesuai schema
-- [ ] 1.14 Buat `dokter_model.dart` - sesuai schema
-- [ ] 1.15 Buat `rumah_sakit_model.dart` - sesuai schema
-- [ ] 1.16 Buat `petugas_model.dart` - sesuai schema
-- [ ] 1.17 Buat `riwayat_kesehatan_santri_model.dart` - sesuai schema
-- [ ] 1.18 Buat `histori_hujroh_siswa_model.dart` - sesuai schema
-- [ ] 1.19 Buat `asrama_model.dart` - sesuai schema
-- [ ] 1.20 Buat `kendaraan_model.dart` - sesuai schema
-- [ ] 1.21 Buat enum file untuk semua enum di database
+- [x] 1.1 Review & update `user.dart` - tambahkan semua field dari tabel `profiles`
+- [x] 1.2 Review & update `santri.dart` - tambahkan field dari `data_santri`
+- [x] 1.3 Review & update `hujroh.dart` - sesuai schema
+- [x] 1.4 Review & update `kelas.dart` - sesuai schema
+- [x] 1.5 Review & update `pendataan_kesehatan_model.dart` - sesuai schema lengkap
+- [x] 1.6 Buat `kunjungan_klinik_model.dart` - sesuai schema
+- [x] 1.7 Buat `pemeriksaan_dokter_model.dart` - sesuai schema
+- [x] 1.8 Buat `resep_obat_model.dart` - sesuai schema
+- [x] 1.9 Buat `rujukan_model.dart` - sesuai schema (update dari yang ada)
+- [x] 1.10 Buat `pengantaran_rujukan_model.dart` - sesuai schema
+- [x] 1.11 Buat `hasil_rujukan_model.dart` - sesuai schema
+- [x] 1.12 Buat `dokumen_hasil_rujukan_model.dart` - sesuai schema
+- [x] 1.13 Buat `kwitansi_pengantaran_model.dart` - sesuai schema
+- [x] 1.14 Buat `dokter_model.dart` - sesuai schema
+- [x] 1.15 Buat `rumah_sakit_model.dart` - sesuai schema
+- [x] 1.16 Buat `petugas_model.dart` - sesuai schema
+- [x] 1.17 Buat `riwayat_kesehatan_santri_model.dart` - sesuai schema
+- [x] 1.18 Buat `histori_hujroh_siswa_model.dart` - sesuai schema
+- [x] 1.19 Buat `asrama_model.dart` - sesuai schema
+- [x] 1.20 Buat `kendaraan_model.dart` - sesuai schema
+- [x] 1.21 Buat enum file untuk semua enum di database
 
 ### Fase 2: Repositories (Data Layer - satu-satunya sumber kebenaran)
 
-- [ ] 2.1 Review & update `auth_repository.dart` - sesuai API docs
-- [ ] 2.2 Review & update `santri_repository.dart` - tambah method get by ID
-- [ ] 2.3 Review & update `health_input_repository.dart`
-- [ ] 2.4 Buat `pendataan_kesehatan_repository.dart` - CRUD lengkap
-- [ ] 2.5 Buat `klinik_repository.dart` - untuk kunjungan, pemeriksaan
+- [x] 2.1 Review & update `auth_repository.dart` - sesuai API docs
+- [x] 2.2 Review & update `santri_repository.dart` - tambah method get by ID
+- [x] 2.3 Review & update `health_input_repository.dart`
+- [x] 2.4 Buat `pendataan_kesehatan_repository.dart` - CRUD lengkap
+- [x] 2.5 Buat `klinik_repository.dart` - untuk kunjungan, pemeriksaan
 - [ ] 2.6 Buat `rujukan_repository.dart` - CRUD rujukan
 - [ ] 2.7 Buat `pengantaran_repository.dart` - CRUD pengantaran
 - [ ] 2.8 Buat `storage_repository.dart` - upload/download file
@@ -90,7 +90,7 @@
 
 ### Fase 4: Business Process (Workflows)
 
-- [ ] 4.1 **Alur Pendataan Kesehatan** (asatidzPiketMaskan)
+- [x] 4.1 **Alur Pendataan Kesehatan** (asatidzPiketMaskan)
   - Input keluhan → simpan ke `pendataan_kesehatan`
   
 - [ ] 4.2 **Alur Pemeriksaan** (resepsionisKlinik/dokter)
@@ -120,7 +120,7 @@
   - Get list rujukan RS
 
 - [ ] 4.8 **Medical History**
-  - Get riwayat kesehatan santri
+  - Get riwayat kesehatanasantrian
 
 ---
 
