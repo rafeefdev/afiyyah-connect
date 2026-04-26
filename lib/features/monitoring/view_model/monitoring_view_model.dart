@@ -6,9 +6,11 @@ import 'package:afiyyah_connect/app/core/model/activities/rujukan_model.dart';
 import 'package:afiyyah_connect/app/core/model/activities/rujukan_enums.dart';
 import 'package:afiyyah_connect/app/core/model/activities/monitoring_models.dart';
 import 'package:afiyyah_connect/app/core/services/supabase_service.dart';
+import 'package:afiyyah_connect/app/core/services/logger_service.dart';
 import 'package:afiyyah_connect/features/clinic_visit/repository/klinik_repository.dart';
 import 'package:afiyyah_connect/features/health_input/repository/pendataan_kesehatan_repository.dart';
 import 'package:afiyyah_connect/features/rujukan/repository/rujukan_repository.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'monitoring_view_model.g.dart';
@@ -27,12 +29,15 @@ class MonitoringData {
 
 @riverpod
 class MonitoringViewModel extends _$MonitoringViewModel {
+  final Logger _log = LoggerService.getLogger('MonitoringViewModel');
+
   @override
   Future<MonitoringData> build() async {
     return _fetchMonitoringData();
   }
 
   Future<MonitoringData> _fetchMonitoringData() async {
+    _log.info('Fetching monitoring data');
     final pendataanRepo = ref.read(pendataanKesehatanRepositoryProvider);
     final klinikRepo = ref.read(kunjunganKlinikRepositoryProvider);
     final rujukanRepo = ref.read(rujukanRepositoryProvider);
@@ -64,6 +69,7 @@ class MonitoringViewModel extends _$MonitoringViewModel {
   }
 
   Future<void> refresh() async {
+    _log.info('Refreshing monitoring data');
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => _fetchMonitoringData());
   }
@@ -71,30 +77,64 @@ class MonitoringViewModel extends _$MonitoringViewModel {
 
 @riverpod
 Future<List<PendataanWithSantri>> periksaListToday(ref) async {
+  final Logger _log = LoggerService.getLogger('periksaListToday');
+  _log.info('Fetching periksa list today');
+
   final supabase = ref.watch(supabaseClientProvider);
   final response = await supabase
       .from('v_pendataan_santri_today')
       .select()
       .eq('status_periksa', 'belum');
-  return response.map((e) => PendataanWithSantri.fromJson(e)).toList();
+
+  _log.fine('Found ${response.length} records');
+
+  return (response as List<dynamic>)
+      .map(
+        (e) =>
+            PendataanWithSantri.fromJson(Map<String, dynamic>.from(e as Map)),
+      )
+      .toList();
 }
 
 @riverpod
 Future<List<KunjunganWithSantri>> arahanListToday(ref) async {
+  final Logger _log = LoggerService.getLogger('arahanListToday');
+  _log.info('Fetching arahan list today');
+
   final supabase = ref.watch(supabaseClientProvider);
   final response = await supabase
       .from('v_kunjungan_butuh_tindakan')
       .select()
       .eq('status_pengarahan', 'istirahat_asrama');
-  return response.map((e) => KunjunganWithSantri.fromJson(e)).toList();
+
+  _log.fine('Found ${response.length} records');
+
+  return (response as List<dynamic>)
+      .map(
+        (e) =>
+            KunjunganWithSantri.fromJson(Map<String, dynamic>.from(e as Map)),
+      )
+      .toList();
 }
 
 @riverpod
 Future<List<RujukanBelumDitindaklanjuti>> rujukanListToday(ref) async {
+  final Logger _log = LoggerService.getLogger('rujukanListToday');
+  _log.info('Fetching rujukan list today');
+
   final supabase = ref.watch(supabaseClientProvider);
   final response = await supabase
       .from('v_rujukan_belum_ditindaklanjuti')
       .select()
       .eq('belum_diantar', true);
-  return response.map((e) => RujukanBelumDitindaklanjuti.fromJson(e)).toList();
+
+  _log.fine('Found ${response.length} records');
+
+  return (response as List<dynamic>)
+      .map(
+        (e) => RujukanBelumDitindaklanjuti.fromJson(
+          Map<String, dynamic>.from(e as Map),
+        ),
+      )
+      .toList();
 }
