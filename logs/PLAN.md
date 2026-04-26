@@ -78,15 +78,15 @@
 
 ### Fase 3: ViewModels/Providers (State Management - Riverpod)
 
-- [ ] 3.1 Review & update `auth_provider.dart`
-- [ ] 3.2 Review `app_user_provider.dart`
-- [ ] 3.3 Review `santri_search_viewmodel.dart`
-- [ ] 3.4 Review `pendataan_kesehatan_provider.dart`
-- [ ] 3.5 Review `health_input_view_model.dart`
-- [ ] 3.6 Review `main_layout_view_model.dart`
-- [ ] 3.7 Buat `dashboard_view_model.dart` - untuk statistics
-- [ ] 3.8 Buat `monitoring_view_model.dart` - untuk monitoring page
-- [ ] 3.9 Buat `medical_history_view_model.dart` - untuk history page
+- [x] 3.1 Review & update `auth_provider.dart`
+- [x] 3.2 Review `app_user_provider.dart`
+- [x] 3.3 Review `santri_search_viewmodel.dart`
+- [x] 3.4 Review `pendataan_kesehatan_provider.dart`
+- [x] 3.5 Review `health_input_view_model.dart`
+- [x] 3.6 Review `main_layout_view_model.dart`
+- [x] 3.7 Buat `dashboard_view_model.dart` - untuk statistics
+- [x] 3.8 Buat `monitoring_view_model.dart` - untuk monitoring page
+- [x] 3.9 Buat `medical_history_view_model.dart` - untuk history page
 
 ### Fase 4: Business Process (Workflows)
 
