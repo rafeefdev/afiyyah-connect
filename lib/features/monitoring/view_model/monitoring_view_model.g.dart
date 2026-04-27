@@ -6,8 +6,82 @@ part of 'monitoring_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$periksaListTodayHash() => r'd9f38b5ad7a5f2dc0febdf324f87bbf1b2a84ec8';
+
+/// See also [periksaListToday].
+@ProviderFor(periksaListToday)
+final periksaListTodayProvider =
+    AutoDisposeFutureProvider<List<PendataanWithSantri>>.internal(
+      periksaListToday,
+      name: r'periksaListTodayProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$periksaListTodayHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef PeriksaListTodayRef =
+    AutoDisposeFutureProviderRef<List<PendataanWithSantri>>;
+String _$arahanListTodayHash() => r'8be43df5d746af46004f60d7f0f64e2d38138426';
+
+/// See also [arahanListToday].
+@ProviderFor(arahanListToday)
+final arahanListTodayProvider =
+    AutoDisposeFutureProvider<List<KunjunganWithSantri>>.internal(
+      arahanListToday,
+      name: r'arahanListTodayProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$arahanListTodayHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ArahanListTodayRef =
+    AutoDisposeFutureProviderRef<List<KunjunganWithSantri>>;
+String _$rujukanListTodayHash() => r'20e304ca2bd0866a1137fd911d843fdcc03c6dfc';
+
+/// See also [rujukanListToday].
+@ProviderFor(rujukanListToday)
+final rujukanListTodayProvider =
+    AutoDisposeFutureProvider<List<RujukanBelumDitindaklanjuti>>.internal(
+      rujukanListToday,
+      name: r'rujukanListTodayProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$rujukanListTodayHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef RujukanListTodayRef =
+    AutoDisposeFutureProviderRef<List<RujukanBelumDitindaklanjuti>>;
+String _$totalSantriSakitHash() => r'cfd212933f158feeb27eb05963b148a02ece5de2';
+
+/// See also [totalSantriSakit].
+@ProviderFor(totalSantriSakit)
+final totalSantriSakitProvider = AutoDisposeFutureProvider<int>.internal(
+  totalSantriSakit,
+  name: r'totalSantriSakitProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$totalSantriSakitHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef TotalSantriSakitRef = AutoDisposeFutureProviderRef<int>;
 String _$monitoringViewModelHash() =>
-    r'9550d7a7bb16ac07036b537a77e8086aa3ed6366';
+    r'9012eb07195beac15309c354e329a4d7d8913b61';
 
 /// See also [MonitoringViewModel].
 @ProviderFor(MonitoringViewModel)
@@ -26,59 +100,5 @@ final monitoringViewModelProvider =
     );
 
 typedef _$MonitoringViewModel = AutoDisposeAsyncNotifier<MonitoringData>;
-String _$periksaListHash() => r'25c994c142e59922b3e8863cf033e3c337ea3d5e';
-
-/// See also [PeriksaList].
-@ProviderFor(PeriksaList)
-final periksaListProvider =
-    AutoDisposeAsyncNotifierProvider<
-      PeriksaList,
-      List<PendataanKesehatanModel>
-    >.internal(
-      PeriksaList.new,
-      name: r'periksaListProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$periksaListHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$PeriksaList = AutoDisposeAsyncNotifier<List<PendataanKesehatanModel>>;
-String _$arahanListHash() => r'3aaafdfffdcc885bd1b5e6e3d9375596c7ddd808';
-
-/// See also [ArahanList].
-@ProviderFor(ArahanList)
-final arahanListProvider =
-    AutoDisposeAsyncNotifierProvider<
-      ArahanList,
-      List<KunjunganKlinikModel>
-    >.internal(
-      ArahanList.new,
-      name: r'arahanListProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$arahanListHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$ArahanList = AutoDisposeAsyncNotifier<List<KunjunganKlinikModel>>;
-String _$rujukanListHash() => r'23b03c9edc4a995420606b04030a8b13128a7e54';
-
-/// See also [RujukanList].
-@ProviderFor(RujukanList)
-final rujukanListProvider =
-    AutoDisposeAsyncNotifierProvider<RujukanList, List<RujukanModel>>.internal(
-      RujukanList.new,
-      name: r'rujukanListProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$rujukanListHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$RujukanList = AutoDisposeAsyncNotifier<List<RujukanModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

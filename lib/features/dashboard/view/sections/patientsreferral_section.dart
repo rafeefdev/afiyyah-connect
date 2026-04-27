@@ -28,7 +28,7 @@ class PatientsReferralSection extends ConsumerWidget {
             children: List.generate(santriReferred.length, (index) {
               //TODO : real data !
               return ListCardItem(
-                santri: Santri.generateDummyData(),
+                customNotchColor: Colors.red,
                 info: 'Mual, Pusing, batuk, pilek, dll',
                 onTap: () {
                   Navigator.push(

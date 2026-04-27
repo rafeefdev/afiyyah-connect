@@ -29,7 +29,7 @@ class TodaypatientsSection extends ConsumerWidget {
             children: List.generate(todayPatients.length, (index) {
               //TODO : real data !
               return ListCardItem(
-                santri: Santri.generateDummyData(),
+                customNotchColor: Colors.blue,
                 info: 'Mual, Pusing, batuk, pilek, dll',
                 onTap: () {
                   Navigator.push(

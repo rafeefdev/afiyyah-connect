@@ -11,6 +11,11 @@ class HealthInputViewModel extends _$HealthInputViewModel {
     // No-op, initial state is AsyncData(null)
   }
 
+  Future<bool> checkDuplicateToday(String santriId) async {
+    final repository = ref.read(healthInputRepositoryProvider);
+    return await repository.checkDuplicateToday(santriId);
+  }
+
   Future<void> submitData(PendataanKesehatanModel data) async {
     final repository = ref.read(healthInputRepositoryProvider);
     state = const AsyncLoading();

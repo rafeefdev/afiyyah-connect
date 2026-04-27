@@ -115,12 +115,18 @@
   - Get referrals today
 
 - [x] 4.7 **Monitoring**
-  - Get list periksa (belum)
+  - Get list periksa (semua status: belum, sudah, di luar)
   - Get list arahan
   - Get list rujukan RS
 
 - [x] 4.8 **Medical History**
   - Get riwayat kesehatanasantrian
+
+- [x] 4.9 **Duplicate Prevention**
+  - Database trigger untuk cegah duplikasi santri per hari
+
+- [x] 4.10 **RLS Policy Fix**
+  - Added SELECT policy for `pendataan_kesehatan` to enable v_total_today view
 
 ---
 

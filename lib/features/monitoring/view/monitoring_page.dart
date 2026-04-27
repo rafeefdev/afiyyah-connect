@@ -3,15 +3,16 @@ import 'package:afiyyah_connect/features/monitoring/constants/monitoring_strings
 import 'package:afiyyah_connect/features/monitoring/view/insightcard_dateinfo_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tabs/monitoring_tabview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MonitoringPage extends StatefulWidget {
+class MonitoringPage extends ConsumerStatefulWidget {
   const MonitoringPage({super.key});
 
   @override
-  State<MonitoringPage> createState() => _MonitoringPageState();
+  ConsumerState<MonitoringPage> createState() => _MonitoringPageState();
 }
 
-class _MonitoringPageState extends State<MonitoringPage>
+class _MonitoringPageState extends ConsumerState<MonitoringPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -46,7 +47,7 @@ class _MonitoringPageState extends State<MonitoringPage>
                       vertical: (appBarHeight - 120) / 2,
                       horizontal: 16,
                     ),
-                    child: InsightCardDateInfo(value: 16),
+                    child: InsightCardDateInfo(),
                   ),
                 ),
                 // Transparent spacer to push content down

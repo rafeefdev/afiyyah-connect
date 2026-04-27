@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ListCardItem extends ConsumerWidget {
-  final Santri santri;
+  final Santri? siswa;
   final String info;
   final Color? customNotchColor;
   final List<String> keluhan;
@@ -14,10 +14,9 @@ class ListCardItem extends ConsumerWidget {
   final VoidCallback? onTap;
 
   const ListCardItem({
-    required this.santri,
+    this.siswa,
     required this.info,
     this.customNotchColor,
-    //TODO : use real keluhan
     this.keluhan = const ['demam', 'batuk', 'pilek'],
     this.additionalTiles,
     super.key,
@@ -26,8 +25,8 @@ class ListCardItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //TODO : implement real kelas
-    String kelasDanHujroh = santri.namaHujroh ?? 'Belum ada data';
+    final student = siswa ?? Santri.generateDummyData();
+    String kelasDanHujroh = student.namaHujroh ?? 'Belum ada data';
 
     var notchIndicator = Container(
       width: 8,
@@ -49,13 +48,12 @@ class ListCardItem extends ConsumerWidget {
                 child: notchIndicator,
               ),
               const SizedBox(width: 16),
-              CircleAvatar(child: Text(santri.nama.getInitials())),
+              CircleAvatar(child: Text(student.nama.getInitials())),
               SizedBox(width: AppSpacing.m),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(santri.nama, style: context.textTheme.titleSmall),
-                  // TODO : display kelas and hujroh
+                  Text(student.nama, style: context.textTheme.titleSmall),
                   Text(
                     kelasDanHujroh,
                     style: context.textTheme.bodyMedium!.copyWith(
