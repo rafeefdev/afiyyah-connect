@@ -38,7 +38,7 @@ class HealthInputRepositoryImpl implements HealthInputRepository {
 
     final hasDuplicate = existingEntry != null;
     if (hasDuplicate) {
-      _log.warning('Duplicate found for santri: $santriId on ${startOfDayUtc}');
+      _log.warning('Duplicate found for santri: $santriId on $startOfDayUtc');
     }
     return hasDuplicate;
   }
@@ -68,7 +68,7 @@ class HealthInputRepositoryImpl implements HealthInputRepository {
 
     if (existingEntry != null) {
       _log.warning(
-        'Duplicate health entry detected for santri: ${data.santuarioId} on ${startOfDayUtc}',
+        'Duplicate health entry detected for santri: ${data.santuarioId} on $startOfDayUtc',
       );
       throw Exception(
         'Santri ini sudah didata hari ini. Tidak dapat menambahkan data duplikat.',

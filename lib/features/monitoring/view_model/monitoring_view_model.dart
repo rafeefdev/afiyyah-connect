@@ -77,8 +77,8 @@ class MonitoringViewModel extends _$MonitoringViewModel {
 
 @riverpod
 Future<List<PendataanWithSantri>> periksaListToday(ref) async {
-  final Logger _log = LoggerService.getLogger('periksaListToday');
-  _log.info('Fetching periksa list today');
+  final Logger log = LoggerService.getLogger('periksaListToday');
+  log.info('Fetching periksa list today');
 
   final supabase = ref.watch(supabaseClientProvider);
   // final response = await supabase
@@ -88,7 +88,7 @@ Future<List<PendataanWithSantri>> periksaListToday(ref) async {
   
   final response = await supabase.from("v_pendataan_santri_today").select();
 
-  _log.fine('Found ${response.length} records');
+  log.fine('Found ${response.length} records');
 
   return (response as List<dynamic>)
       .map(
@@ -100,8 +100,8 @@ Future<List<PendataanWithSantri>> periksaListToday(ref) async {
 
 @riverpod
 Future<List<KunjunganWithSantri>> arahanListToday(ref) async {
-  final Logger _log = LoggerService.getLogger('arahanListToday');
-  _log.info('Fetching arahan list today');
+  final Logger log = LoggerService.getLogger('arahanListToday');
+  log.info('Fetching arahan list today');
 
   final supabase = ref.watch(supabaseClientProvider);
   final response = await supabase
@@ -109,7 +109,7 @@ Future<List<KunjunganWithSantri>> arahanListToday(ref) async {
       .select()
       .eq('status_pengarahan', 'istirahat_asrama');
 
-  _log.fine('Found ${response.length} records');
+  log.fine('Found ${response.length} records');
 
   return (response as List<dynamic>)
       .map(
@@ -121,8 +121,8 @@ Future<List<KunjunganWithSantri>> arahanListToday(ref) async {
 
 @riverpod
 Future<List<RujukanBelumDitindaklanjuti>> rujukanListToday(ref) async {
-  final Logger _log = LoggerService.getLogger('rujukanListToday');
-  _log.info('Fetching rujukan list today');
+  final Logger log = LoggerService.getLogger('rujukanListToday');
+  log.info('Fetching rujukan list today');
 
   final supabase = ref.watch(supabaseClientProvider);
   final response = await supabase
@@ -130,7 +130,7 @@ Future<List<RujukanBelumDitindaklanjuti>> rujukanListToday(ref) async {
       .select()
       .eq('belum_diantar', true);
 
-  _log.fine('Found ${response.length} records');
+  log.fine('Found ${response.length} records');
 
   return (response as List<dynamic>)
       .map(
