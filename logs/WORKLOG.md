@@ -158,8 +158,18 @@
 
 ---
 
-## Next Steps
+## View v_riwayat_kesehatan_lengkapi - Complete Medical Record
 
-- [ ] Fix flutter analyze warnings (unused underscore vars, unnecessary braces)
-- [ ] Test monitoring tabs with real data
-- [ ] UI layer implementation
+**Purpose:** Single view for complete medical history (Option 2: 1 view + filter by role)
+
+**View Created:** `v_riwayat_kesehatan_lengkapi` ✓
+- 769 records found ✓
+
+**Implementation (Option 2):**
+- Single source of truth - filter di Flutter berdasarkan role
+- asatidzPiketMaskan: profil, gol_darah, alergi, penyakit kronis, pengarahan istirahat, status rujukan
+- resepsionisKlinik/dokter: all columns
+
+**Next Steps:**
+- [ ] Create Flutter model for view
+- [ ] Update MedicalHistoryViewModel with role-based filtering
