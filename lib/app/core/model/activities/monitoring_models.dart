@@ -7,6 +7,7 @@ class PendataanWithSantri {
   final String? waktuMulaiSakit;
   final String santuarioId;
   final String? namaSantri;
+  final String? hujrohId;
   final String? namaHujroh;
   final int? nomorHujroh;
   final int? jenjang;
@@ -20,6 +21,7 @@ class PendataanWithSantri {
     this.waktuMulaiSakit,
     required this.santuarioId,
     this.namaSantri,
+    this.hujrohId,
     this.namaHujroh,
     this.nomorHujroh,
     this.jenjang,
@@ -43,6 +45,7 @@ class PendataanWithSantri {
       waktuMulaiSakit: json['waktu_mulai_sakit'] as String?,
       santuarioId: json['santri_id'] as String? ?? '',
       namaSantri: json['nama_santri'] as String?,
+      hujrohId: json['hujroh_id'] as String?,
       namaHujroh: json['nama_hujroh'] as String?,
       nomorHujroh: json['nomor_hujroh'] as int?,
       jenjang: json['jenjang'] as int?,

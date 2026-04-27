@@ -111,3 +111,55 @@
 - Fase 4: Business Services ✓
 
 **Next: View Layer (UI) - sesuai request, handle setelah business process selesai**
+
+---
+
+## Monitoring Tab Updates - April 27, 2026
+
+### Tab "Periksa" - Show All Santri Sick Today
+
+**Changes:**
+
+1. **Model Update** (`monitoring_models.dart`):
+   - Added `hujrohId` field to `PendataanWithSantri` ✓
+
+2. **UI Update** (`periksa_tab.dart`):
+   - Added 3-color legend: Belum Periksa (orange), Sudah Periksa (blue), Periksa di Luar (green) ✓
+   - Show ALL santri sick today (not just belum & sudah) ✓
+   - Dynamic notch color based on `statusPeriksa` field ✓
+   - Updated empty state message ✓
+
+3. **Database Constraint** (Supabase):
+   - Created trigger `trg_unique_pendataan_per_day` ✓
+   - Function `check_unique_pendataan_per_day()` blocks duplicate santri entries per day ✓
+   - Prevents same santri being registered twice on same date ✓
+
+**Status Values:**
+- `belum` - Belum diperiksa (orange)
+- `sudah` - Sudah diperiksa di klinik (blue)
+- `di luar` - Diperiksa di luar (green)
+
+---
+
+## RLS Policy Fix - v_total_today View
+
+**Problem:** Total santri count not showing correctly in arahan tab
+
+**Root Cause:** Missing SELECT policy on `pendataan_kesehatan` table for authenticated users
+
+**Fix Applied:**
+- Created policy `authenticated_read_pendataan` on `pendataan_kesehatan` ✓
+- Allows SELECT for roles: `asatidzPiketMaskan`, `resepsionisKlinik`, `dokter` ✓
+- View `v_total_today` now accessible through proper RLS ✓
+
+**Verification:**
+- Current DB count: 3 santri sick today ✓
+- Policy grants SELECT to authenticated users with valid roles ✓
+
+---
+
+## Next Steps
+
+- [ ] Fix flutter analyze warnings (unused underscore vars, unnecessary braces)
+- [ ] Test monitoring tabs with real data
+- [ ] UI layer implementation

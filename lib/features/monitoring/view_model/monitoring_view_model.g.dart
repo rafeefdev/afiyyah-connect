@@ -6,7 +6,7 @@ part of 'monitoring_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$periksaListTodayHash() => r'c411eb3ac583fe97f61206416701e28643342cf1';
+String _$periksaListTodayHash() => r'd9f38b5ad7a5f2dc0febdf324f87bbf1b2a84ec8';
 
 /// See also [periksaListToday].
 @ProviderFor(periksaListToday)
@@ -25,7 +25,7 @@ final periksaListTodayProvider =
 // ignore: unused_element
 typedef PeriksaListTodayRef =
     AutoDisposeFutureProviderRef<List<PendataanWithSantri>>;
-String _$arahanListTodayHash() => r'9a39935ae58422ebacd63752696aa744ffd180f6';
+String _$arahanListTodayHash() => r'8be43df5d746af46004f60d7f0f64e2d38138426';
 
 /// See also [arahanListToday].
 @ProviderFor(arahanListToday)
@@ -44,7 +44,7 @@ final arahanListTodayProvider =
 // ignore: unused_element
 typedef ArahanListTodayRef =
     AutoDisposeFutureProviderRef<List<KunjunganWithSantri>>;
-String _$rujukanListTodayHash() => r'f7b9026382a5f9bb549ffed83159260c715d55df';
+String _$rujukanListTodayHash() => r'20e304ca2bd0866a1137fd911d843fdcc03c6dfc';
 
 /// See also [rujukanListToday].
 @ProviderFor(rujukanListToday)
@@ -63,8 +63,25 @@ final rujukanListTodayProvider =
 // ignore: unused_element
 typedef RujukanListTodayRef =
     AutoDisposeFutureProviderRef<List<RujukanBelumDitindaklanjuti>>;
+String _$totalSantriSakitHash() => r'cfd212933f158feeb27eb05963b148a02ece5de2';
+
+/// See also [totalSantriSakit].
+@ProviderFor(totalSantriSakit)
+final totalSantriSakitProvider = AutoDisposeFutureProvider<int>.internal(
+  totalSantriSakit,
+  name: r'totalSantriSakitProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$totalSantriSakitHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef TotalSantriSakitRef = AutoDisposeFutureProviderRef<int>;
 String _$monitoringViewModelHash() =>
-    r'9550d7a7bb16ac07036b537a77e8086aa3ed6366';
+    r'9012eb07195beac15309c354e329a4d7d8913b61';
 
 /// See also [MonitoringViewModel].
 @ProviderFor(MonitoringViewModel)

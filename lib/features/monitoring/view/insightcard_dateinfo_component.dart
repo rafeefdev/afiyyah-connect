@@ -1,16 +1,20 @@
+import 'package:afiyyah_connect/app/core/services/logger_service.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/common/utils/extension/theme_extension.dart';
 import 'package:afiyyah_connect/features/common/widgets/dateinfo_component.dart';
 import 'package:afiyyah_connect/features/monitoring/constants/monitoring_strings.dart';
+import 'package:afiyyah_connect/features/monitoring/view_model/monitoring_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 
-class InsightCardDateInfo extends StatelessWidget {
-  final int value;
-
-  const InsightCardDateInfo({super.key, required this.value});
+class InsightCardDateInfo extends ConsumerWidget {
+  const InsightCardDateInfo({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final totalSantriSakit = ref.watch(totalSantriSakitProvider);
+
     return SizedBox(
       height: 90,
       child: Card(
@@ -23,11 +27,19 @@ class InsightCardDateInfo extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                value.toString(),
-                style: context.textTheme.displaySmall!.copyWith(
-                  fontWeight: FontWeight.bold,
+              totalSantriSakit.when(
+                data: (total) => Text(
+                  total.toString(),
+                  style: context.textTheme.displaySmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stackTrace) {
+                  Logger log = LoggerService.getLogger("totalSakitToday");
+                  log.warning("error occured : $stackTrace");
+                  return Icon(Icons.error_outline);
+                },
               ),
               SizedBox(width: AppSpacing.m),
               Column(

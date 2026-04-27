@@ -13,7 +13,7 @@ class PeriksaTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final periksaAsync = ref.watch(periksaListTodayProvider);
 
-    List<MaterialColor> colors = [Colors.orange, Colors.blue];
+    List<MaterialColor> colors = [Colors.orange, Colors.blue, Colors.green];
 
     return periksaAsync.when(
       data: (periksaList) => ListView(
@@ -21,14 +21,14 @@ class PeriksaTab extends ConsumerWidget {
           tabLegend(
             context,
             indicatorColors: colors,
-            labels: ['Belum\nPeriksa', 'Sudah\nPeriksa'],
+            labels: ['Belum\nPeriksa', 'Sudah\nPeriksa', 'Periksa\ndi Luar'],
           ),
           const SizedBox(height: 12),
           periksaList.isEmpty
               ? DisplayZeroData(
                   height: 480,
                   icon: Icons.health_and_safety_rounded,
-                  message: 'Tidak ada yang belum diperiksa',
+                  message: 'Tidak ada santri sakit hari ini',
                 )
               : Column(
                   children: periksaList.map((pendataan) {
@@ -38,9 +38,17 @@ class PeriksaTab extends ConsumerWidget {
                       namaHujroh: pendataan.namaHujroh,
                       jenjang: pendataan.jenjang,
                     );
+                    Color notchColor;
+                    if (pendataan.statusPeriksa == 'belum') {
+                      notchColor = colors[0];
+                    } else if (pendataan.statusPeriksa == 'di luar') {
+                      notchColor = colors[2];
+                    } else {
+                      notchColor = colors[1];
+                    }
                     return ListCardItem(
                       siswa: student,
-                      customNotchColor: colors[0],
+                      customNotchColor: notchColor,
                       info: pendataan.keluhan.isNotEmpty
                           ? pendataan.keluhan.join(', ')
                           : 'Tanpa keluhan',

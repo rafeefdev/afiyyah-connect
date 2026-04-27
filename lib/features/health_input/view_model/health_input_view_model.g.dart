@@ -7,7 +7,7 @@ part of 'health_input_view_model.dart';
 // **************************************************************************
 
 String _$healthInputViewModelHash() =>
-    r'0168cbb2121757cc92d67cb592caaba1f7a02e73';
+    r'2051bb82a1f595cd52b08b507b9419efa923dd85';
 
 /// See also [HealthInputViewModel].
 @ProviderFor(HealthInputViewModel)

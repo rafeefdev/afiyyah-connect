@@ -81,10 +81,12 @@ Future<List<PendataanWithSantri>> periksaListToday(ref) async {
   _log.info('Fetching periksa list today');
 
   final supabase = ref.watch(supabaseClientProvider);
-  final response = await supabase
-      .from('v_pendataan_santri_today')
-      .select()
-      .eq('status_periksa', 'belum');
+  // final response = await supabase
+  //     .from('v_pendataan_santri_today')
+  //     .select()
+  //     .eq('status_periksa', 'belum');
+  
+  final response = await supabase.from("v_pendataan_santri_today").select();
 
   _log.fine('Found ${response.length} records');
 
@@ -137,4 +139,18 @@ Future<List<RujukanBelumDitindaklanjuti>> rujukanListToday(ref) async {
         ),
       )
       .toList();
+}
+
+@riverpod
+Future<int> totalSantriSakit(ref) async {
+  final Logger log = LoggerService.getLogger('totalSakitToday');
+  log.info('fetching total santri sakit today');
+
+  final supabase = ref.watch(supabaseClientProvider);
+  final response = await supabase.from('v_total_today').select().single();
+  
+  log.info("response data: $response");
+  
+  var total = response['count'];
+  return total;
 }
