@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
+import 'package:afiyyah_connect/features/monitoring/view/detail_dialog/health_detail_dialog.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tablegend_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view_model/monitoring_view_model.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,12 @@ class RujukanNTransportasiTab extends ConsumerWidget {
                       siswa: student,
                       customNotchColor: colors[0],
                       info: 'Dirujuk ke ${rujukan.rumahSakit ?? 'RS'}',
+                      onTap: () => _showDetailDialog(
+                        context,
+                        rujukan.id,
+                        DetailTab.rujukan,
+                        student,
+                      ),
                     );
                   }).toList(),
                 ),
@@ -48,6 +55,18 @@ class RujukanNTransportasiTab extends ConsumerWidget {
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text('Error: $e')),
+    );
+  }
+
+  void _showDetailDialog(
+    BuildContext context,
+    int rujukanId,
+    DetailTab tab,
+    Santri student,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) => HealthDetailDialog(rujukanId: rujukanId, tab: tab),
     );
   }
 }

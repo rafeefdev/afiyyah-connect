@@ -1,6 +1,7 @@
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
+import 'package:afiyyah_connect/features/monitoring/view/detail_dialog/health_detail_dialog.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tablegend_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view_model/monitoring_view_model.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,12 @@ class PeriksaTab extends ConsumerWidget {
                       info: pendataan.keluhan.isNotEmpty
                           ? pendataan.keluhan.join(', ')
                           : 'Tanpa keluhan',
+                      onTap: () => _showDetailDialog(
+                        context,
+                        pendataan.pendataanId,
+                        DetailTab.periksa,
+                        student,
+                      ),
                     );
                   }).toList(),
                 ),
@@ -59,6 +66,19 @@ class PeriksaTab extends ConsumerWidget {
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text('Error: $e')),
+    );
+  }
+
+  void _showDetailDialog(
+    BuildContext context,
+    String pendataanId,
+    DetailTab tab,
+    Santri student,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) =>
+          HealthDetailDialog(pendataanId: pendataanId, tab: tab),
     );
   }
 }
