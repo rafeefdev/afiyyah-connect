@@ -9,6 +9,7 @@ class ActionButtons extends StatelessWidget {
   final int? kunjunganId;
   final int? rujukanId;
   final Role? userRole;
+  final String? namaSantri;
 
   const ActionButtons({
     super.key,
@@ -17,6 +18,7 @@ class ActionButtons extends StatelessWidget {
     this.kunjunganId,
     this.rujukanId,
     this.userRole,
+    this.namaSantri,
   });
 
   @override

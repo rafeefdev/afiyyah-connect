@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/app/core/model/activities/monitoring_models.dart';
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
@@ -13,45 +14,38 @@ class ArahanTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final arahanAsync = ref.watch(arahanListTodayProvider);
-
     List<MaterialColor> colors = [Colors.green, Colors.orange, Colors.red];
 
     return arahanAsync.when(
-      data: (arahanList) => ListView(
+      data: (list) => ListView(
         children: [
           tabLegend(
             context,
             indicatorColors: colors,
-            labels: ['Lanjut\n Kegiatan', 'Istirahat\nMaskan', 'Rujuk\nRS'],
+            labels: ['Lanjut\nKegiatan', 'Istirahat\nMaskan', 'Rujuk\nRS'],
           ),
           const SizedBox(height: 12),
-          arahanList.isEmpty
-              ? DisplayZeroData(
-                  height: 480,
-                  icon: Icons.health_and_safety_rounded,
-                  message: 'Tidak ada arahan istirahat',
-                )
-              : Column(
-                  children: arahanList.map((kunjungan) {
-                    final student = Santri(
-                      id: kunjungan.santuarioId ?? '',
-                      nama: kunjungan.namaSantri ?? 'Tanpa Nama',
-                      namaHujroh: kunjungan.namaHujroh,
-                      jenjang: kunjungan.jenjang,
-                    );
-                    return ListCardItem(
-                      siswa: student,
-                      customNotchColor: colors[1],
-                      info: kunjungan.keluhan?.join(', ') ?? 'Tanpa keluhan',
-                      onTap: () => _showDetailDialog(
-                        context,
-                        kunjungan.idKunjungan,
-                        DetailTab.arahan,
-                        student,
-                      ),
-                    );
-                  }).toList(),
-                ),
+          if (list.isEmpty)
+            DisplayZeroData(
+              height: 480,
+              icon: Icons.health_and_safety_rounded,
+              message: 'Tidak ada arahan istirahat',
+            )
+          else
+            ...list.map((k) {
+              final student = Santri(
+                id: k.santuarioId ?? '',
+                nama: k.namaSantri ?? '-',
+                namaHujroh: k.namaHujroh,
+                jenjang: k.jenjang,
+              );
+              return ListCardItem(
+                siswa: student,
+                customNotchColor: colors[1],
+                info: k.keluhan?.join(', ') ?? 'Tanpa keluhan',
+                onTap: () => _showDialog(context, k, student),
+              );
+            }),
         ],
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -59,16 +53,20 @@ class ArahanTab extends ConsumerWidget {
     );
   }
 
-  void _showDetailDialog(
+  void _showDialog(
     BuildContext context,
-    int kunjunganId,
-    DetailTab tab,
+    KunjunganWithSantri kunjungan,
     Santri student,
   ) {
     showDialog(
       context: context,
-      builder: (context) =>
-          HealthDetailDialog(kunjunganId: kunjunganId, tab: tab),
+      builder: (ctx) => HealthDetailDialog(
+        kunjunganId: kunjungan.idKunjungan,
+        tab: DetailTab.arahan,
+        namaSantri: student.nama,
+        namaHujroh: student.namaHujroh,
+        jenjang: student.jenjang,
+      ),
     );
   }
 }

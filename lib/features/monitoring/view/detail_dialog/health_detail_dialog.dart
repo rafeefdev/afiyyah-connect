@@ -15,6 +15,12 @@ class HealthDetailDialog extends ConsumerStatefulWidget {
   final int? kunjunganId;
   final int? rujukanId;
   final DetailTab tab;
+  final String? namaSantri;
+  final String? namaHujroh;
+  final int? jenjang;
+  final String? golDarah;
+  final List<String>? alergi;
+  final String? riwayatId;
 
   const HealthDetailDialog({
     super.key,
@@ -22,6 +28,12 @@ class HealthDetailDialog extends ConsumerStatefulWidget {
     this.kunjunganId,
     this.rujukanId,
     required this.tab,
+    this.namaSantri,
+    this.namaHujroh,
+    this.jenjang,
+    this.golDarah,
+    this.alergi,
+    this.riwayatId,
   });
 
   @override
@@ -50,17 +62,21 @@ class _HealthDetailDialogState extends ConsumerState<HealthDetailDialog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     StudentInfoCard(
-                      nama: _getNama(),
-                      namaHujroh: _getNamaHujroh(),
-                      jenjang: _getJenjang(),
+                      nama: widget.namaSantri ?? '-',
+                      namaHujroh: widget.namaHujroh,
+                      jenjang: widget.jenjang,
+                      golDarah: widget.golDarah,
+                      allergies: widget.alergi,
                     ),
                     SizedBox(height: AppSpacing.m),
-                    MedicalInfoCard(santruiId: _getSantriId()),
+                    MedicalInfoCard(
+                      riwayatId: widget.riwayatId,
+                      alergias: widget.alergi,
+                    ),
                     SizedBox(height: AppSpacing.m),
                     if (widget.tab == DetailTab.periksa)
                       VisitHistoryCard(
                         pendataanId: widget.pendataanId,
-                        kunjunganId: widget.kunjunganId,
                         tab: widget.tab,
                       ),
                     if (widget.tab == DetailTab.arahan ||
@@ -82,6 +98,7 @@ class _HealthDetailDialogState extends ConsumerState<HealthDetailDialog> {
                       kunjunganId: widget.kunjunganId,
                       rujukanId: widget.rujukanId,
                       userRole: userRole,
+                      namaSantri: widget.namaSantri,
                     ),
                   ],
                 ),
@@ -130,15 +147,4 @@ class _HealthDetailDialogState extends ConsumerState<HealthDetailDialog> {
       ),
     );
   }
-
-  String _getNama() {
-    if (widget.tab == DetailTab.periksa) {
-      return '';
-    }
-    return '';
-  }
-
-  String? _getNamaHujroh() => null;
-  int? _getJenjang() => null;
-  String? _getSantriId() => null;
 }

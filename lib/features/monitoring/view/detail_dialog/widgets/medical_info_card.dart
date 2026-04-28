@@ -2,9 +2,10 @@ import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 class MedicalInfoCard extends StatelessWidget {
-  final String? santruiId;
+  final String? riwayatId;
+  final List<String>? alergias;
 
-  const MedicalInfoCard({super.key, required this.santruiId});
+  const MedicalInfoCard({super.key, this.riwayatId, this.alergias});
 
   @override
   Widget build(BuildContext context) {
@@ -30,34 +31,22 @@ class MedicalInfoCard extends StatelessWidget {
               ],
             ),
             SizedBox(height: AppSpacing.m),
-            FutureBuilder<List<dynamic>>(
-              future: _fetchRiwayat(context),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text(
-                    'Belum ada riwayat medis',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
-                  );
-                }
-                return _buildRiwayatList(context, snapshot.data!);
-              },
-            ),
+            if (alergias != null && alergias!.isNotEmpty) ...[
+              Text(
+                'Alergi: ${alergias!.join(', ')}',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ] else ...[
+              Text(
+                'Belum ada riwayat medis',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+              ),
+            ],
           ],
         ),
       ),
     );
-  }
-
-  Future<List<dynamic>> _fetchRiwayat(BuildContext context) async {
-    return [];
-  }
-
-  Widget _buildRiwayatList(BuildContext context, List<dynamic> data) {
-    return Text('Data: ${data.length}');
   }
 }

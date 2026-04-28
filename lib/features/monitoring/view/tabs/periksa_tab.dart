@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/app/core/model/activities/monitoring_models.dart';
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
@@ -13,7 +14,6 @@ class PeriksaTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final periksaAsync = ref.watch(periksaListTodayProvider);
-
     List<MaterialColor> colors = [Colors.orange, Colors.blue, Colors.green];
 
     return periksaAsync.when(
@@ -25,43 +25,32 @@ class PeriksaTab extends ConsumerWidget {
             labels: ['Belum\nPeriksa', 'Sudah\nPeriksa', 'Periksa\ndi Luar'],
           ),
           const SizedBox(height: 12),
-          periksaList.isEmpty
-              ? DisplayZeroData(
-                  height: 480,
-                  icon: Icons.health_and_safety_rounded,
-                  message: 'Tidak ada santri sakit hari ini',
-                )
-              : Column(
-                  children: periksaList.map((pendataan) {
-                    final student = Santri(
-                      id: pendataan.santuarioId,
-                      nama: pendataan.namaSantri ?? 'Tanpa Nama',
-                      namaHujroh: pendataan.namaHujroh,
-                      jenjang: pendataan.jenjang,
-                    );
-                    Color notchColor;
-                    if (pendataan.statusPeriksa == 'belum') {
-                      notchColor = colors[0];
-                    } else if (pendataan.statusPeriksa == 'di luar') {
-                      notchColor = colors[2];
-                    } else {
-                      notchColor = colors[1];
-                    }
-                    return ListCardItem(
-                      siswa: student,
-                      customNotchColor: notchColor,
-                      info: pendataan.keluhan.isNotEmpty
-                          ? pendataan.keluhan.join(', ')
-                          : 'Tanpa keluhan',
-                      onTap: () => _showDetailDialog(
-                        context,
-                        pendataan.pendataanId,
-                        DetailTab.periksa,
-                        student,
-                      ),
-                    );
-                  }).toList(),
-                ),
+          if (periksaList.isEmpty)
+            DisplayZeroData(
+              height: 480,
+              icon: Icons.health_and_safety_rounded,
+              message: 'Tidak ada santri sakit hari ini',
+            )
+          else
+            ...periksaList.map((p) {
+              final student = Santri(
+                id: p.santuarioId,
+                nama: p.namaSantri ?? 'Tanpa Nama',
+                namaHujroh: p.namaHujroh,
+                jenjang: p.jenjang,
+              );
+              final notchColor = p.statusPeriksa == 'belum'
+                  ? colors[0]
+                  : (p.statusPeriksa == 'di luar' ? colors[2] : colors[1]);
+              return ListCardItem(
+                siswa: student,
+                customNotchColor: notchColor,
+                info: p.keluhan.isNotEmpty
+                    ? p.keluhan.join(', ')
+                    : 'Tanpa keluhan',
+                onTap: () => _showDialog(context, p),
+              );
+            }),
         ],
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -69,16 +58,22 @@ class PeriksaTab extends ConsumerWidget {
     );
   }
 
-  void _showDetailDialog(
-    BuildContext context,
-    String pendataanId,
-    DetailTab tab,
-    Santri student,
-  ) {
+  void _showDialog(BuildContext context, PendataanWithSantri pendataan) {
+    final student = Santri(
+      id: pendataan.santuarioId,
+      nama: pendataan.namaSantri ?? '-',
+      namaHujroh: pendataan.namaHujroh,
+      jenjang: pendataan.jenjang,
+    );
     showDialog(
       context: context,
-      builder: (context) =>
-          HealthDetailDialog(pendataanId: pendataanId, tab: tab),
+      builder: (ctx) => HealthDetailDialog(
+        pendataanId: pendataan.pendataanId,
+        tab: DetailTab.periksa,
+        namaSantri: student.nama,
+        namaHujroh: student.namaHujroh,
+        jenjang: student.jenjang,
+      ),
     );
   }
 }

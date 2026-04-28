@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/app/core/model/activities/monitoring_models.dart';
 import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
@@ -16,7 +17,7 @@ class RujukanNTransportasiTab extends ConsumerWidget {
     List<MaterialColor> colors = [Colors.orange, Colors.blue];
 
     return rujukanAsync.when(
-      data: (rujukanList) => ListView(
+      data: (list) => ListView(
         children: [
           tabLegend(
             context,
@@ -24,33 +25,27 @@ class RujukanNTransportasiTab extends ConsumerWidget {
             labels: ['Perlu\nDiantar', 'Sudah\nDiantar'],
           ),
           const SizedBox(height: 12),
-          rujukanList.isEmpty
-              ? DisplayZeroData(
-                  height: 480,
-                  icon: Icons.check_circle_outline_rounded,
-                  message: 'Tidak ada rujukan yang perlu ditindaklanjuti',
-                )
-              : Column(
-                  children: rujukanList.map((rujukan) {
-                    final student = Santri(
-                      id: rujukan.santuarioId ?? '',
-                      nama: rujukan.namaSantri ?? 'Tanpa Nama',
-                      namaHujroh: rujukan.namaHujroh,
-                      jenjang: rujukan.jenjang,
-                    );
-                    return ListCardItem(
-                      siswa: student,
-                      customNotchColor: colors[0],
-                      info: 'Dirujuk ke ${rujukan.rumahSakit ?? 'RS'}',
-                      onTap: () => _showDetailDialog(
-                        context,
-                        rujukan.id,
-                        DetailTab.rujukan,
-                        student,
-                      ),
-                    );
-                  }).toList(),
-                ),
+          if (list.isEmpty)
+            DisplayZeroData(
+              height: 480,
+              icon: Icons.check_circle_outline_rounded,
+              message: 'Tidak ada rujukan yang perlu ditindaklanjuti',
+            )
+          else
+            ...list.map((r) {
+              final student = Santri(
+                id: r.santuarioId ?? '',
+                nama: r.namaSantri ?? '-',
+                namaHujroh: r.namaHujroh,
+                jenjang: r.jenjang,
+              );
+              return ListCardItem(
+                siswa: student,
+                customNotchColor: colors[0],
+                info: 'Dirujuk ke ${r.rumahSakit ?? 'RS'}',
+                onTap: () => _showDialog(context, r, student),
+              );
+            }),
         ],
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -58,15 +53,20 @@ class RujukanNTransportasiTab extends ConsumerWidget {
     );
   }
 
-  void _showDetailDialog(
+  void _showDialog(
     BuildContext context,
-    int rujukanId,
-    DetailTab tab,
+    RujukanBelumDitindaklanjuti rujukan,
     Santri student,
   ) {
     showDialog(
       context: context,
-      builder: (context) => HealthDetailDialog(rujukanId: rujukanId, tab: tab),
+      builder: (ctx) => HealthDetailDialog(
+        rujukanId: rujukan.id,
+        tab: DetailTab.rujukan,
+        namaSantri: student.nama,
+        namaHujroh: student.namaHujroh,
+        jenjang: student.jenjang,
+      ),
     );
   }
 }
