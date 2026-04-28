@@ -29,7 +29,7 @@
 ### Catatan
 
 - Jangan kerjakan View layer dulu (non-VM优先)
--Setelah business process selesai, baru handle View layer
+- Setelah business process selesai, baru handle View layer
 - Ikuti nama field sesuai schema database
 - Setiap selesai pengerjaan, wajib jalankan `flutter analyze` untuk cek error
 - Jika ada error, perbaiki sebelum push/commit

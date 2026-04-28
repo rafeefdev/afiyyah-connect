@@ -130,6 +130,81 @@
 
 ---
 
+## Fase 5: UI RBAC - Detail Dialog & Fullscreen Pages
+
+### Struktur Halaman & Navigasi
+
+| Tab | asatidzPiketMaskan | resepsionisKlinik | dokter |
+|-----|-------------------|-------------------|--------|
+| **Periksa** | Dialog (view/edit/delete own) | Fullscreen langsung | Fullscreen langsung |
+| **Arahan** | Dialog (view only) | Fullscreen langsung | Fullscreen langsung |
+| **Rujukan RS** | Fullscreen langsung | Fullscreen langsung | Fullscreen langsung |
+
+### Layout Strategy
+
+- **Periksa Tab:**
+  - asatidzPiketMaskan: Dialog dengan view + edit/delete (data miliknya saja)
+  - resepsionisKlinik/dokter: Langsung PatientDetailPage (tidak ada dialog)
+  
+- **Arahan Tab:**
+  - asatidzPiketMaskan: Dialog preview saja
+  - resepsionisKlinik/dokter: Langsung PatientDetailPage
+  
+- **Rujukan Tab:**
+  - Semua role: Langsung PatientDetailPage
+
+### Files to Create/Modify
+
+- [ ] 5.1 **Create: PatientDetailPage** (`lib/features/monitoring/view/patient_detail_page.dart`)
+  - Fullscreen page dengan sections:
+    - StudentInfoCard (nama, hujroh, jenjang)
+    - MedicalInfoCard (gol.darah, alergi, penyakit kronis)
+    - PendataanCard (keluhan, waktu mulai, status)
+    - KunjunganCard (status pengarahan, tanggal istirahat)
+    - PemeriksaanCard (diagnosis, resep, catatan)
+    - RujukanCard (RS, tanggal, catatan)
+    - PengantaranCard (tanggal, status)
+  - Role-based action buttons di bottom
+  - Fetch dari `v_riwayat_kesehatan_lengkap`
+
+- [ ] 5.2 **Modify: HealthDetailDialog** (`lib/features/monitoring/view/detail_dialog/health_detail_dialog.dart`)
+  - Quick preview only (nama, hujroh, keluhan, status)
+  - Minimized action buttons
+  - Tambahkan button "Lihat Lengkap" untuk resepsionisKlinik/dokter
+
+- [ ] 5.3 **Modify: periksa_tab.dart**
+  - Jika resepsionisKlinik/dokter: langsung push PatientDetailPage
+  - Jika asatidzPiketMaskan: show dialog
+
+- [ ] 5.4 **Modify: arahan_tab.dart**
+  - Jika resepsionisKlinik/dokter: langsung push PatientDetailPage
+  - Jika asatidzPiketMaskan: show dialog
+
+- [ ] 5.5 **Modify: rujukan_transportasi_tab.dart**
+  - Langsung push PatientDetailPage untuk semua role
+
+- [ ] 5.6 **Modify: action_buttons.dart**
+  - Tambahkan parameter untuk navigasi ke fullscreen
+  - Tambahkan logic untuk edit/delete own data (asatidz only)
+
+### Action Buttons per Tab & Role
+
+| Tab | Action | asatidzPiketMaskan | resepsionisKlinik | dokter |
+|-----|--------|-------------------|-------------------|--------|
+| **Periksa** | View | Dialog | Fullscreen | Fullscreen |
+| | Edit | ✓ (own only) | ✓ | ✓ |
+| | Delete | ✓ (own only) | ✓ | - |
+| | Buat Kunjungan | - | ✓ | - |
+| **Arahan** | View | Dialog | Fullscreen | Fullscreen |
+| | Edit Catatan | - | ✓ | ✓ |
+| | Rujuk RS | - | ✓ | ✓ |
+| | Ubah Status | - | ✓ | - |
+| **Rujukan** | View | Fullscreen | Fullscreen | Fullscreen |
+| | Jadwalkan Pengantaran | ✓ | ✓ | - |
+| | Input Hasil | - | ✓ | - |
+
+---
+
 ## Catatan
 
 - View layer (UI) belum termasuk dalam plan ini
