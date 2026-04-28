@@ -3,6 +3,7 @@ import 'package:afiyyah_connect/app/core/model/entities/santri.dart';
 import 'package:afiyyah_connect/features/common/widgets/displayzerodata_component.dart';
 import 'package:afiyyah_connect/features/common/widgets/patientlistcard_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view/detail_dialog/health_detail_dialog.dart';
+import 'package:afiyyah_connect/features/monitoring/view/patient_detail_page.dart';
 import 'package:afiyyah_connect/features/monitoring/view/tablegend_component.dart';
 import 'package:afiyyah_connect/features/monitoring/view_model/monitoring_view_model.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class RujukanNTransportasiTab extends ConsumerWidget {
                 siswa: student,
                 customNotchColor: colors[0],
                 info: 'Dirujuk ke ${r.rumahSakit ?? 'RS'}',
-                onTap: () => _showDialog(context, r, student),
+                onTap: () => _navigateToDetail(context, r, student),
               );
             }),
         ],
@@ -53,19 +54,20 @@ class RujukanNTransportasiTab extends ConsumerWidget {
     );
   }
 
-  void _showDialog(
+  void _navigateToDetail(
     BuildContext context,
     RujukanBelumDitindaklanjuti rujukan,
     Santri student,
   ) {
-    showDialog(
-      context: context,
-      builder: (ctx) => HealthDetailDialog(
-        rujukanId: rujukan.id,
-        tab: DetailTab.rujukan,
-        namaSantri: student.nama,
-        namaHujroh: student.namaHujroh,
-        jenjang: student.jenjang,
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => PatientDetailPage(
+          rujukanId: rujukan.id,
+          tab: DetailTab.rujukan,
+          namaSantri: student.nama,
+          namaHujroh: student.namaHujroh,
+          jenjang: student.jenjang,
+        ),
       ),
     );
   }

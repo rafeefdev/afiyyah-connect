@@ -75,6 +75,7 @@ class VisitHistoryCard extends StatelessWidget {
           );
         }
         return _buildDetailList(context, snapshot.data!);
+        // return _buildDetailList(context, snapshot.data!);
       },
     );
   }
@@ -84,6 +85,8 @@ class VisitHistoryCard extends StatelessWidget {
   }
 
   Widget _buildDetailList(BuildContext context, Map<String, dynamic> data) {
-    return Text('ID: ${data.keys.length}');
+    return Text(
+      data.keys.isEmpty ? "belum ada riwayat pendataan" : data.keys.toString(),
+    );
   }
 }

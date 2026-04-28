@@ -1,3 +1,4 @@
+import 'package:afiyyah_connect/app/core/model/user.dart';
 import 'package:afiyyah_connect/app/themes/app_spacing.dart';
 import 'package:afiyyah_connect/features/auth/view_model/app_user_provider.dart';
 import 'package:afiyyah_connect/features/monitoring/view/detail_dialog/widgets/student_info_card.dart';
@@ -5,6 +6,7 @@ import 'package:afiyyah_connect/features/monitoring/view/detail_dialog/widgets/m
 import 'package:afiyyah_connect/features/monitoring/view/detail_dialog/widgets/visit_history_card.dart';
 import 'package:afiyyah_connect/features/monitoring/view/detail_dialog/widgets/referral_info_card.dart';
 import 'package:afiyyah_connect/features/monitoring/view/detail_dialog/widgets/action_buttons.dart';
+import 'package:afiyyah_connect/features/monitoring/view/patient_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -99,6 +101,8 @@ class _HealthDetailDialogState extends ConsumerState<HealthDetailDialog> {
                       rujukanId: widget.rujukanId,
                       userRole: userRole,
                       namaSantri: widget.namaSantri,
+                      onViewFullscreen: () =>
+                          _navigateToFullscreen(context, userRole),
                     ),
                   ],
                 ),
@@ -108,6 +112,25 @@ class _HealthDetailDialogState extends ConsumerState<HealthDetailDialog> {
         ),
       ),
     );
+  }
+
+  void _navigateToFullscreen(BuildContext context, Role? userRole) {
+    if (userRole == Role.resepsionisKlinik || userRole == Role.dokter) {
+      Navigator.of(context).pop();
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => PatientDetailPage(
+            pendataanId: widget.pendataanId,
+            kunjunganId: widget.kunjunganId,
+            rujukanId: widget.rujukanId,
+            tab: widget.tab,
+            namaSantri: widget.namaSantri,
+            namaHujroh: widget.namaHujroh,
+            jenjang: widget.jenjang,
+          ),
+        ),
+      );
+    }
   }
 
   Widget _buildHeader(BuildContext context) {

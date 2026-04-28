@@ -10,6 +10,7 @@ class ActionButtons extends StatelessWidget {
   final int? rujukanId;
   final Role? userRole;
   final String? namaSantri;
+  final VoidCallback? onViewFullscreen;
 
   const ActionButtons({
     super.key,
@@ -19,6 +20,7 @@ class ActionButtons extends StatelessWidget {
     this.rujukanId,
     this.userRole,
     this.namaSantri,
+    this.onViewFullscreen,
   });
 
   @override
@@ -27,6 +29,16 @@ class ActionButtons extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildButtonsForRole(context),
+        if (onViewFullscreen != null &&
+            (userRole == Role.resepsionisKlinik ||
+                userRole == Role.dokter)) ...[
+          SizedBox(height: AppSpacing.s),
+          FilledButton.icon(
+            onPressed: onViewFullscreen,
+            icon: const Icon(Icons.open_in_full),
+            label: const Text('Lihat Lengkap'),
+          ),
+        ],
         SizedBox(height: AppSpacing.m),
         OutlinedButton(
           onPressed: () => Navigator.of(context).pop(),
@@ -51,6 +63,24 @@ class ActionButtons extends StatelessWidget {
 
   Widget _buildAsatidzButtons(BuildContext context) {
     final buttons = <Widget>[];
+
+    if (tab == DetailTab.periksa && pendataanId != null) {
+      buttons.add(
+        FilledButton.icon(
+          onPressed: () => _editPendataan(context),
+          icon: const Icon(Icons.edit),
+          label: const Text('Edit'),
+        ),
+      );
+      buttons.add(
+        OutlinedButton.icon(
+          onPressed: () => _deletePendataan(context),
+          icon: const Icon(Icons.delete),
+          label: const Text('Hapus'),
+          style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
+        ),
+      );
+    }
 
     if (tab == DetailTab.rujukan && rujukanId != null) {
       buttons.add(
@@ -247,6 +277,22 @@ class ActionButtons extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Fitur: Lihat Hasil RS - Belum implementasi'),
+      ),
+    );
+  }
+
+  void _editPendataan(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Fitur: Edit Pendataan - Belum implementasi'),
+      ),
+    );
+  }
+
+  void _deletePendataan(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Fitur: Hapus Pendataan - Belum implementasi'),
       ),
     );
   }
